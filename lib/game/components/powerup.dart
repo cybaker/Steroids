@@ -1,10 +1,9 @@
 import 'dart:math';
 
+import 'package:Roids/game/roids.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/foundation.dart';
-
-import '../roids.dart';
 
 class PowerUp extends SpriteComponent
     with HasGameRef<Roids>,

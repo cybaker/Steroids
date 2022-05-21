@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:Roids/game/components/background_sound.dart';
 import 'package:Roids/game/components/game_edge.dart';
 import 'package:Roids/game/components/powerup_spawn.dart';
 import 'package:Roids/game/components/stars_parallax.dart';
@@ -53,6 +54,7 @@ class Roids extends FlameGame
     await add(Stars1Parallax());
 
     await add(GameEdge());
+    await add(BackgroundSound(level: 1));
 
     await add(player = singlePlayer..y = 40);
 
@@ -61,7 +63,7 @@ class Roids extends FlameGame
         ..x = -80
         ..y = -40,
     );
-    await addAll(asteroidFactory.makeAsteroids());
+    await addAll(asteroidFactory.makeAsteroids(1));
     await add(Powerups());
 
     camera.followComponent(player);
