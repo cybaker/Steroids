@@ -1,7 +1,7 @@
-import 'package:Roids/game/model/game_item.dart';
 import 'package:Roids/game/roids.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/foundation.dart';
 
 ///
@@ -23,6 +23,8 @@ class Station extends SpriteComponent
 
     await add(RectangleHitbox());
 
+    await FlameAudio.audioCache.loadAll(['saucerBig.wav']);
+
     anchor = Anchor.center;
 
     sprite = await gameRef.loadSprite('station_C.png');
@@ -37,5 +39,6 @@ class Station extends SpriteComponent
   void addStorage(double material) {
     debugPrint('Station receiving $material');
     stationStorage.value += material;
+    FlameAudio.audioCache.play('saucerSmall.wav');
   }
 }

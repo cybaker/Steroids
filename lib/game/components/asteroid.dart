@@ -6,6 +6,7 @@ import 'package:Roids/game/roids.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
+import 'package:flame_audio/flame_audio.dart';
 
 class Asteroid extends CircleComponent with HasGameRef<Roids> {
   Asteroid({required double radius, required this.initialPosition, required this.initialSpeed}) : super(radius: radius);
@@ -23,6 +24,8 @@ class Asteroid extends CircleComponent with HasGameRef<Roids> {
     } else {
       paint = BasicPalette.magenta.paint()..style = PaintingStyle.fill;
     }
+
+    await FlameAudio.audioCache.loadAll(['bangSmall.wav', 'bangLarge.wav']);
 
     position = initialPosition;
 
@@ -45,7 +48,16 @@ class Asteroid extends CircleComponent with HasGameRef<Roids> {
     if (size.x > AsteroidFactory.smallAsteroidMaxSize) {
       splitAsteroid();
     }
+    _makeAsteroidBang();
     gameRef.remove(this);
+  }
+
+  void _makeAsteroidBang() {
+    if (size.x < AsteroidFactory.smallAsteroidMaxSize) {
+      FlameAudio.audioCache.play('bangSmall.wav');
+    } else {
+      FlameAudio.audioCache.play('bangLarge.wav');
+    }
   }
 
   void splitAsteroid() {

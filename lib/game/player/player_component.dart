@@ -7,6 +7,7 @@ import 'package:Roids/game/extensions/component_effects.dart';
 import 'package:Roids/game/game.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -77,6 +78,7 @@ class Player extends SpriteComponent
     await super.onLoad();
 
     await add(CircleHitbox());
+    await FlameAudio.audioCache.loadAll(['thrust.wav', 'fire.wav']);
 
     anchor = Anchor.center;
 
@@ -172,8 +174,10 @@ class Player extends SpriteComponent
     }
     if (gameRef.pressedKeySet.contains(LogicalKeyboardKey.arrowUp)) {
       _thrustShip(angle, 1);
+      _makeThrustSound();
     } else if (gameRef.pressedKeySet.contains(LogicalKeyboardKey.arrowDown)) {
       _thrustShip(angle, -0.1);
+      _makeThrustSound();
     }
     if(gameRef.pressedKeySet.contains(LogicalKeyboardKey.space)) {
       if (_canFireBullet()) _fireBullet();
@@ -196,5 +200,18 @@ class Player extends SpriteComponent
         timeToLive: 1 );
     gameRef.add(bullet);
     bulletTimeout = 0.5;
+
+    _makeBulletSound();
+  }
+
+  int thrustCount = 0; // just throttling the thrust playing not every frame
+  void _makeThrustSound() {
+    if (thrustCount++ % 10 == 0) {
+      FlameAudio.audioCache.play('thrust.wav');
+    }
+  }
+
+  void _makeBulletSound() {
+    FlameAudio.audioCache.play('fire.wav');
   }
 }

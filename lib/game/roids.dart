@@ -18,10 +18,10 @@ final Map<LogicalKeyboardKey, LogicalKeyboardKey> playersKeys =
   };
 
 // TODO Github
-// TODO Player and Station game_view looks
-// TODO GameBalance holding most game parameters, like #asteroids, #levels, maxShipEnergy, etc.
+// TODO audio
+// TODO Player and Station view looks
+// TODO GameBalance - pass level number to components
 // TODO upgrades like faster rotation, faster shots, shorter shot recharging, etc
-// TODO sounds
 // TODO Disruptor powerup - like flechette, shatters all roids down to smallest on hit
 // TODO Level logic so players can play a campaign.
 

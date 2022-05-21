@@ -1,5 +1,5 @@
+import 'package:Roids/game/view/game_page.dart';
 import 'package:flutter/material.dart';
-import 'package:Roids/game/game.dart';
 
 class TitleView extends StatelessWidget {
   const TitleView({Key? key}) : super(key: key);

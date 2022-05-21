@@ -1,3 +1,4 @@
+import 'package:Roids/game/view/game_view.dart';
 import 'package:flutter/material.dart';
 
 class GamePage extends StatelessWidget {
