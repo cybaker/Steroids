@@ -19,12 +19,13 @@ final Map<LogicalKeyboardKey, LogicalKeyboardKey> playersKeys =
   };
 
 // TODO Github
-// TODO audio
+// TODO gh_pages to deploy web version
+// TODO end level
+// TODO Level logic so players can play a campaign.
 // TODO Player and Station view looks
 // TODO GameBalance - pass level number to components
 // TODO upgrades like faster rotation, faster shots, shorter shot recharging, etc
 // TODO Disruptor powerup - like flechette, shatters all roids down to smallest on hit
-// TODO Level logic so players can play a campaign.
 
 class Roids extends FlameGame
     with KeyboardEvents, HasCollisionDetection {
@@ -51,7 +52,7 @@ class Roids extends FlameGame
 
     final asteroidFactory = AsteroidFactory();
 
-    await add(Stars1Parallax());
+    await add(StarsParallax());
 
     await add(GameEdge());
     await add(BackgroundSound(level: 1));
@@ -60,8 +61,8 @@ class Roids extends FlameGame
 
     await add(
       singleStation
-        ..x = -80
-        ..y = -40,
+        ..x = 0
+        ..y = 0,
     );
     await addAll(asteroidFactory.makeAsteroids(1));
     await add(Powerups());

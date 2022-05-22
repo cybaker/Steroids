@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:Roids/game/model/Sounds.dart';
 import 'package:Roids/game/model/asteroid_factory.dart';
 import 'package:Roids/game/roids.dart';
 import 'package:flame/collisions.dart';
@@ -48,16 +49,8 @@ class Asteroid extends CircleComponent with HasGameRef<Roids> {
     if (size.x > AsteroidFactory.smallAsteroidMaxSize) {
       splitAsteroid();
     }
-    _makeAsteroidBang();
+    Sounds.playAsteroidSound(size);
     gameRef.remove(this);
-  }
-
-  void _makeAsteroidBang() {
-    if (size.x < AsteroidFactory.smallAsteroidMaxSize) {
-      FlameAudio.audioCache.play('bangSmall.wav');
-    } else {
-      FlameAudio.audioCache.play('bangLarge.wav');
-    }
   }
 
   void splitAsteroid() {
@@ -75,7 +68,8 @@ class Asteroid extends CircleComponent with HasGameRef<Roids> {
         initialSpeed: Vector2(
           randomVelocity(),
           randomVelocity(),
-        ));
+        ),
+    );
   }
 
   double randomVelocity() {

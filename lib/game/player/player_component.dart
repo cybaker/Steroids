@@ -5,14 +5,14 @@ import 'package:Roids/game/components/bullet.dart';
 import 'package:Roids/game/components/powerup.dart';
 import 'package:Roids/game/extensions/component_effects.dart';
 import 'package:Roids/game/game.dart';
+import 'package:Roids/game/model/Sounds.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class PlayerPowerUp extends SpriteComponent
-    with HasGameRef<Roids> {
+class PlayerPowerUp extends SpriteComponent with HasGameRef<Roids> {
   PlayerPowerUp({
     required this.slot,
     required this.item,
@@ -47,11 +47,7 @@ class PlayerPowerUp extends SpriteComponent
   }
 }
 
-class Player extends SpriteComponent
-    with
-        KeyboardHandler,
-        HasGameRef<Roids>,
-        CollisionCallbacks {
+class Player extends SpriteComponent with KeyboardHandler, HasGameRef<Roids>, CollisionCallbacks {
   Player()
       : super(
           size: Vector2(30, 60),
@@ -62,13 +58,13 @@ class Player extends SpriteComponent
   Vector2 deltaPosition = Vector2.zero();
   double bulletTimeout = 0;
 
-  static const halfPi = pi/2;
+  static const halfPi = pi / 2;
   static const speed = 2.0;
-  static const rotationSpeed = pi/30;
+  static const rotationSpeed = pi / 30;
 
   static const maxShipStrength = 100.0;
   static const maxShipStorage = 100.0;
-  static const shipStrengthRecovery = 1/60;
+  static const shipStrengthRecovery = 1 / 60;
 
   ValueNotifier<double> shipStrength = ValueNotifier<double>(maxShipStrength);
   ValueNotifier<double> shipStorage = ValueNotifier<double>(0);
@@ -125,9 +121,9 @@ class Player extends SpriteComponent
 
   void applyAsteroidHit(Asteroid asteroid) {
     if (asteroid.size.x < AsteroidFactory.smallAsteroidMaxSize) {
-      storeMaterial(asteroid.size.x/2);
+      storeMaterial(asteroid.size.x / 2);
     } else {
-      damageShip(asteroid.size.x/2);
+      damageShip(asteroid.size.x / 2);
       shake();
     }
   }
@@ -157,9 +153,10 @@ class Player extends SpriteComponent
   }
 
   void _thrustShip(double rotation, double thrust) {
-    final newThrust = Vector2(cos(rotation-halfPi) * thrust, sin(rotation-halfPi) * thrust);
+    final newThrust = Vector2(cos(rotation - halfPi) * thrust, sin(rotation - halfPi) * thrust);
     final total = direction + newThrust;
-    if (total.x * total.x + total.y * total.y < 100*100) { // maximum speed
+    if (total.x * total.x + total.y * total.y < 100 * 100) {
+      // maximum speed
       direction = total;
     }
   }
@@ -167,7 +164,7 @@ class Player extends SpriteComponent
   void _handleKeyPresses() {
     // debugPrint('onKeyEvent ${gameRef.pressedKeySet}');
 
-    if(gameRef.pressedKeySet.contains(LogicalKeyboardKey.arrowLeft)) {
+    if (gameRef.pressedKeySet.contains(LogicalKeyboardKey.arrowLeft)) {
       angle -= rotationSpeed;
     } else if (gameRef.pressedKeySet.contains(LogicalKeyboardKey.arrowRight)) {
       angle += rotationSpeed;
@@ -179,7 +176,7 @@ class Player extends SpriteComponent
       _thrustShip(angle, -0.1);
       _makeThrustSound();
     }
-    if(gameRef.pressedKeySet.contains(LogicalKeyboardKey.space)) {
+    if (gameRef.pressedKeySet.contains(LogicalKeyboardKey.space)) {
       if (_canFireBullet()) _fireBullet();
     }
   }
@@ -189,29 +186,24 @@ class Player extends SpriteComponent
   }
 
   void _fireBullet() {
-    final shipDirection = Vector2(cos(angle-pi/2), sin(angle-pi/2));
-    final nose = Vector2(15, 0)
-                ..rotate(angle-pi/2);
+    final shipDirection = Vector2(cos(angle - pi / 2), sin(angle - pi / 2));
+    final nose = Vector2(15, 0)..rotate(angle - pi / 2);
     final bullet = Bullet(
         radius: 2,
         direction: shipDirection,
         initialSpeed: deltaPosition,
         initialPosition: position + nose,
-        timeToLive: 1 );
+        timeToLive: 1);
     gameRef.add(bullet);
     bulletTimeout = 0.5;
 
-    _makeBulletSound();
+    Sounds.playBulletSound();
   }
 
   int thrustCount = 0; // just throttling the thrust playing not every frame
   void _makeThrustSound() {
     if (thrustCount++ % 10 == 0) {
-      FlameAudio.audioCache.play('thrust.wav');
+      Sounds.playPlayerThrustSound();
     }
-  }
-
-  void _makeBulletSound() {
-    FlameAudio.audioCache.play('fire.wav');
   }
 }

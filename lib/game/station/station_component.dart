@@ -1,3 +1,4 @@
+import 'package:Roids/game/model/Sounds.dart';
 import 'package:Roids/game/roids.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -6,9 +7,9 @@ import 'package:flutter/foundation.dart';
 
 ///
 /// Space Station where player drops off asteroid material
-class Station extends SpriteComponent
-    with HasGameRef<Roids> {
-  Station() : super(
+class Station extends SpriteComponent with HasGameRef<Roids> {
+  Station()
+      : super(
           priority: 2,
           size: Vector2(40, 40),
         );
@@ -39,6 +40,9 @@ class Station extends SpriteComponent
   void addStorage(double material) {
     debugPrint('Station receiving $material');
     stationStorage.value += material;
-    FlameAudio.audioCache.play('saucerSmall.wav');
+    Sounds.playStationReceiveStorage();
+
+    //TODO level completion goes somewhere else
+    Sounds.levelCompletionPercent(stationStorage.value.toInt());
   }
 }

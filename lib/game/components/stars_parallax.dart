@@ -3,8 +3,8 @@ import 'package:flame/parallax.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:Roids/game/game.dart';
 
-class Stars1Parallax extends ParallaxComponent  {
-  Stars1Parallax()
+class StarsParallax extends ParallaxComponent  {
+  StarsParallax()
       : super(
           priority: 1,
         );
