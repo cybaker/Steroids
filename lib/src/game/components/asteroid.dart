@@ -5,7 +5,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
 
-import '../model/Sounds.dart';
+import '../model/sounds.dart';
 import '../model/asteroid_factory.dart';
 import '../steroids.dart';
 

@@ -14,7 +14,7 @@ import '../station/station_component.dart';
 import '../steroids.dart';
 import '../components/asteroid.dart';
 import '../components/powerup.dart';
-import '../model/Sounds.dart';
+import '../model/sounds.dart';
 
 class PlayerPowerUp extends SpriteComponent with HasGameRef<Steroids> {
   PlayerPowerUp({

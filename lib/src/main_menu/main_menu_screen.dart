@@ -30,13 +30,14 @@ class MainMenuScreen extends StatelessWidget {
         squarishMainArea: Center(
           child: Transform.rotate(
             angle: -0.1,
-            child: const Text(
-              'Flutter Game Template!',
+            child: Text(
+              'Steroids',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Permanent Marker',
-                fontSize: 55,
+                fontSize: 78,
                 height: 1,
+                color: palette.darkPen,
               ),
             ),
           ),
@@ -88,8 +89,6 @@ class MainMenuScreen extends StatelessWidget {
               ),
             ),
             _gap,
-            const Text('Music by Mr Smith'),
-            _gap,
           ],
         ),
       ),
@@ -119,5 +118,5 @@ class MainMenuScreen extends StatelessWidget {
     );
   }
 
-  static const _gap = SizedBox(height: 10);
+  static const _gap = SizedBox(height: 20);
 }

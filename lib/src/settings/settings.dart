@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 
 import 'persistence/settings_persistence.dart';
 
-/// An class that holds settings like [playerName] or [musicOn],
+/// An class that holds settings like [playerName] or [backgroundMusicOn],
 /// and saves them to an injected persistence store.
 class SettingsController {
   final SettingsPersistence _persistence;
@@ -19,7 +19,7 @@ class SettingsController {
 
   ValueNotifier<bool> soundsOn = ValueNotifier(false);
 
-  ValueNotifier<bool> musicOn = ValueNotifier(false);
+  ValueNotifier<bool> backgroundMusicOn = ValueNotifier(false);
 
   /// Creates a new instance of [SettingsController] backed by [persistence].
   SettingsController({required SettingsPersistence persistence})
@@ -35,7 +35,7 @@ class SettingsController {
           .getMuted(defaultValue: kIsWeb)
           .then((value) => muted.value = value),
       _persistence.getSoundsOn().then((value) => soundsOn.value = value),
-      _persistence.getMusicOn().then((value) => musicOn.value = value),
+      _persistence.getMusicOn().then((value) => backgroundMusicOn.value = value),
       _persistence.getPlayerName().then((value) => playerName.value = value),
     ]);
   }
@@ -46,8 +46,8 @@ class SettingsController {
   }
 
   void toggleMusicOn() {
-    musicOn.value = !musicOn.value;
-    _persistence.saveMusicOn(musicOn.value);
+    backgroundMusicOn.value = !backgroundMusicOn.value;
+    _persistence.saveMusicOn(backgroundMusicOn.value);
   }
 
   void toggleMuted() {

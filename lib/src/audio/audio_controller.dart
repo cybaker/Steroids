@@ -84,7 +84,7 @@ class AudioController {
 
   /// Enables the [AudioController] to track changes to settings.
   /// Namely, when any of [SettingsController.muted],
-  /// [SettingsController.musicOn] or [SettingsController.soundsOn] changes,
+  /// [SettingsController.backgroundMusicOn] or [SettingsController.soundsOn] changes,
   /// the audio controller will act accordingly.
   void attachSettings(SettingsController settingsController) {
     if (_settings == settingsController) {
@@ -96,7 +96,7 @@ class AudioController {
     final oldSettings = _settings;
     if (oldSettings != null) {
       oldSettings.muted.removeListener(_mutedHandler);
-      oldSettings.musicOn.removeListener(_musicOnHandler);
+      oldSettings.backgroundMusicOn.removeListener(_musicOnHandler);
       oldSettings.soundsOn.removeListener(_soundsOnHandler);
     }
 
@@ -104,10 +104,10 @@ class AudioController {
 
     // Add handlers to the new settings controller
     settingsController.muted.addListener(_mutedHandler);
-    settingsController.musicOn.addListener(_musicOnHandler);
+    settingsController.backgroundMusicOn.addListener(_musicOnHandler);
     settingsController.soundsOn.addListener(_soundsOnHandler);
 
-    if (!settingsController.muted.value && settingsController.musicOn.value) {
+    if (!settingsController.muted.value && settingsController.backgroundMusicOn.value) {
       _startMusic();
     }
   }
@@ -174,7 +174,7 @@ class AudioController {
         _stopAllSound();
         break;
       case AppLifecycleState.resumed:
-        if (!_settings!.muted.value && _settings!.musicOn.value) {
+        if (!_settings!.muted.value && _settings!.backgroundMusicOn.value) {
           _resumeMusic();
         }
         break;
@@ -185,7 +185,7 @@ class AudioController {
   }
 
   void _musicOnHandler() {
-    if (_settings!.musicOn.value) {
+    if (_settings!.backgroundMusicOn.value) {
       // Music got turned on.
       if (!_settings!.muted.value) {
         _resumeMusic();
@@ -202,7 +202,7 @@ class AudioController {
       _stopAllSound();
     } else {
       // All sound just got un-muted.
-      if (_settings!.musicOn.value) {
+      if (_settings!.backgroundMusicOn.value) {
         _resumeMusic();
       }
     }
