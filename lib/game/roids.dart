@@ -18,9 +18,8 @@ final Map<LogicalKeyboardKey, LogicalKeyboardKey> playersKeys =
     LogicalKeyboardKey.arrowRight: LogicalKeyboardKey.arrowRight,
   };
 
-// TODO Github
+// TODO Casual games template for all the extra goodies and structure.
 // TODO gh_pages to deploy web version
-// TODO end level
 // TODO Level logic so players can play a campaign.
 // TODO Player and Station view looks
 // TODO GameBalance - pass level number to components

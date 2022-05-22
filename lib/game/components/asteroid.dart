@@ -26,8 +26,6 @@ class Asteroid extends CircleComponent with HasGameRef<Roids> {
       paint = BasicPalette.magenta.paint()..style = PaintingStyle.fill;
     }
 
-    await FlameAudio.audioCache.loadAll(['bangSmall.wav', 'bangLarge.wav']);
-
     position = initialPosition;
 
     await add(CircleHitbox());

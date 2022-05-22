@@ -24,8 +24,6 @@ class Station extends SpriteComponent with HasGameRef<Roids> {
 
     await add(RectangleHitbox());
 
-    await FlameAudio.audioCache.loadAll(['saucerBig.wav']);
-
     anchor = Anchor.center;
 
     sprite = await gameRef.loadSprite('station_C.png');

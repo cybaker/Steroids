@@ -74,7 +74,6 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<Roids>, Co
     await super.onLoad();
 
     await add(CircleHitbox());
-    await FlameAudio.audioCache.loadAll(['thrust.wav', 'fire.wav']);
 
     anchor = Anchor.center;
 
