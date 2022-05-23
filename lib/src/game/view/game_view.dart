@@ -35,11 +35,16 @@ class GameViewState extends State<GameView> {
 
   late LevelState _levelState;
 
+  late SteroidsLevel _steroidsLevel;
+
   late GameWidget _gameWidget;
 
   @override
   void initState() {
     super.initState();
+
+    debugPrint('GameView.initState()');
+    _steroidsLevel = SteroidsLevel(level: widget.level);
 
     _levelState = LevelState(
       goal: widget.level.difficulty,
@@ -52,16 +57,15 @@ class GameViewState extends State<GameView> {
 
     _gameWidget = GameWidget<SteroidsLevel>(
       focusNode: gameFocusNode,
-      game: SteroidsLevel(level: widget.level),
+      game: _steroidsLevel,
     );
-
-    debugPrint('Level ${widget.level.number} started');
   }
 
   @override
   void dispose() {
+    debugPrint('GameView.dispose');
     gameFocusNode.dispose();
-
+    _levelState.dispose();
     super.dispose();
   }
 
@@ -92,11 +96,11 @@ class GameViewState extends State<GameView> {
                 child: Column(
                   children: [
                     PlayerViewPanel(
-                        shipStrength: SteroidsLevel.singlePlayer.shipStrength,
-                        shipStorage: SteroidsLevel.singlePlayer.shipStorage),
+                        shipStrength: _steroidsLevel.singlePlayer.shipStrength,
+                        shipStorage: _steroidsLevel.singlePlayer.shipStorage),
                     Expanded(
                         child: StationViewPanel(
-                      stationStorage: SteroidsLevel.singleStation.stationStorage,
+                      stationStorage: _steroidsLevel.singleStation.stationStorage,
                           levelState: _levelState,
                     )),
                     Consumer<LevelState>(
@@ -113,9 +117,11 @@ class GameViewState extends State<GameView> {
 
   Future<void> _playerWonLevel() async {
     _log.info('Level ${widget.level.number} won');
-    debugPrint('Level ${widget.level.number} won');
+    debugPrint('GameView.playerWonLevel ${widget.level.number}');
 
     (_gameWidget.game as SteroidsLevel).onDispose();
+
+    _levelState.setProgress(0);
 
     final score = Score(
       widget.level.number,

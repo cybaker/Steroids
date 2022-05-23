@@ -27,12 +27,11 @@ class SteroidsLevel extends FlameGame
 
   final GameLevel level;
 
-  late final Player player;
   late Set<LogicalKeyboardKey> pressedKeySet;
   bool isGameOver = false;
 
-  static final singlePlayer = Player(); // Global only one player
-  static final singleStation = Station(); // Global only one player
+  Player singlePlayer = Player(); // Global only one player
+  Station singleStation = Station(); // Global only one player
 
   @override
   Future<void>? onLoad() async {
@@ -52,7 +51,7 @@ class SteroidsLevel extends FlameGame
     await add(GameEdge(level: level));
     await add(BackgroundSound(level: 1));
 
-    await add(player = singlePlayer..y = 40);
+    await add(singlePlayer..y = 40);
 
     await add(
       singleStation
@@ -62,10 +61,11 @@ class SteroidsLevel extends FlameGame
     await addAll(asteroidFactory.makeAsteroids(level));
     await add(Powerups());
 
-    camera.followComponent(player);
+    camera.followComponent(singlePlayer);
   }
 
   void onDispose() {
+    debugPrint('Steroids.onDispose');
     this.removeFromParent();
   }
 

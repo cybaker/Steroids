@@ -20,12 +20,14 @@ class LevelState extends ChangeNotifier {
   int get progress => _progress;
 
   void setProgress(int value) {
+    debugPrint('LevelState.setProgress $value');
     _progress = value;
     evaluate();
     notifyListeners();
   }
 
   void evaluate() {
+    debugPrint('LevelState.evaluate');
     if (_progress >= goal) {
       onWin();
     }
