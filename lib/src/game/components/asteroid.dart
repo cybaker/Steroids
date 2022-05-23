@@ -6,19 +6,20 @@ import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
 
 import '../model/sounds.dart';
-import '../model/asteroid_factory.dart';
 import '../steroids.dart';
 
-class Asteroid extends CircleComponent with HasGameRef<Steroids> {
-  Asteroid({required double radius, required this.initialPosition, required this.initialSpeed}) : super(radius: radius);
+class Asteroid extends CircleComponent with HasGameRef<SteroidsLevel> {
+  Asteroid({required double radius, required this.initialPosition, required this.initialSpeed, required this.minimumRadius}) : super(radius: radius);
 
   final Vector2 initialPosition;
   final Vector2 initialSpeed;
+  final double minimumRadius;
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    if (size.x < AsteroidFactory.smallAsteroidMaxSize) {
+
+    if (size.x < minimumRadius) {
       paint = BasicPalette.green.paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
@@ -39,24 +40,23 @@ class Asteroid extends CircleComponent with HasGameRef<Steroids> {
 
   void updatePositionWithinBounds() {
     position = position - initialSpeed;
-    // if (position.x.abs() > Roids.fieldSize) position.x = -position.x;
-    // if (position.x.abs() > Roids.fieldSize) position.y = -position.y;
   }
 
   void hitAsteroid() {
-    if (size.x > AsteroidFactory.smallAsteroidMaxSize) {
+    if (size.x > minimumRadius) {
       splitAsteroid();
     }
-    Sounds.playAsteroidSound(size);
+    Sounds.playAsteroidSound(this);
     gameRef.remove(this);
   }
 
   void splitAsteroid() {
+    var newSize = size.x/4;
     gameRef
-      ..add(smallerAsteroid(size.x / 4))
-      ..add(smallerAsteroid(size.x / 4))
-      ..add(smallerAsteroid(size.x / 4))
-      ..add(smallerAsteroid(size.x / 4));
+      ..add(smallerAsteroid(newSize))
+      ..add(smallerAsteroid(newSize))
+      ..add(smallerAsteroid(newSize))
+      ..add(smallerAsteroid(newSize));
   }
 
   Asteroid smallerAsteroid(double radius) {
@@ -67,10 +67,15 @@ class Asteroid extends CircleComponent with HasGameRef<Steroids> {
           randomVelocity(),
           randomVelocity(),
         ),
+        minimumRadius: minimumRadius,
     );
   }
 
   double randomVelocity() {
     return Random().nextDouble() * 1 - 0.5;
+  }
+
+  bool isSmallAsteroid() {
+    return size.x < minimumRadius;
   }
 }

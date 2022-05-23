@@ -7,7 +7,7 @@ import 'powerup.dart';
 import '../steroids.dart';
 
 class Powerups extends Component
-    with HasGameRef<Steroids> {
+    with HasGameRef<SteroidsLevel> {
   Powerups() : super(priority: 4);
 
   double timeToSpawn = 0;

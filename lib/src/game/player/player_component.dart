@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../components/bullet.dart';
-import '../model/asteroid_factory.dart';
 import '../model/game_item.dart';
 import '../station/station_component.dart';
 import '../steroids.dart';
@@ -16,7 +15,7 @@ import '../components/asteroid.dart';
 import '../components/powerup.dart';
 import '../model/sounds.dart';
 
-class PlayerPowerUp extends SpriteComponent with HasGameRef<Steroids> {
+class PlayerPowerUp extends SpriteComponent with HasGameRef<SteroidsLevel> {
   PlayerPowerUp({
     required this.slot,
     required this.item,
@@ -51,7 +50,7 @@ class PlayerPowerUp extends SpriteComponent with HasGameRef<Steroids> {
   }
 }
 
-class Player extends SpriteComponent with KeyboardHandler, HasGameRef<Steroids>, CollisionCallbacks {
+class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLevel>, CollisionCallbacks {
   Player()
       : super(
           size: Vector2(30, 60),
@@ -123,7 +122,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<Steroids>,
   }
 
   void applyAsteroidHit(Asteroid asteroid) {
-    if (asteroid.size.x < AsteroidFactory.smallAsteroidMaxSize) {
+    if (asteroid.isSmallAsteroid()) {
       storeMaterial(asteroid.size.x / 2);
     } else {
       damageShip(asteroid.size.x / 2);

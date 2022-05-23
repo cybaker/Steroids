@@ -7,7 +7,7 @@ import '../steroids.dart';
 
 ///
 /// Space Station where player drops off asteroid material
-class Station extends SpriteComponent with HasGameRef<Steroids> {
+class Station extends SpriteComponent with HasGameRef<SteroidsLevel> {
   Station()
       : super(
           priority: 2,

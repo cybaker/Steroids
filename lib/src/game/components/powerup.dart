@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import '../steroids.dart';
 
 class PowerUp extends SpriteComponent
-    with HasGameRef<Steroids>,
+    with HasGameRef<SteroidsLevel>,
         CollisionCallbacks {
   PowerUp({
     required this.assetName,

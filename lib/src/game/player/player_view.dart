@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../widgets/panel_container.dart';
@@ -14,16 +13,6 @@ class PlayerViewPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Align(
-          alignment: Alignment.centerRight,
-          child: InkResponse(
-            onTap: () => GoRouter.of(context).push('/settings'),
-            child: Image.asset(
-              'assets/images/settings.png',
-              semanticLabel: 'Settings',
-            ),
-          ),
-        ),
         Container(
           width: 200,
           height: 200,

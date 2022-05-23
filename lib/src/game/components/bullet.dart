@@ -10,7 +10,7 @@ import '../steroids.dart';
 import 'asteroid.dart';
 
 class Bullet extends CircleComponent
-    with HasGameRef<Steroids>,
+    with HasGameRef<SteroidsLevel>,
         CollisionCallbacks {
   Bullet({
     required double radius,

@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flame/components.dart' hide Timer;
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/services.dart';
+import 'package:steroids/src/game/components/asteroid.dart';
 
-import 'asteroid_factory.dart';
 
 class Sounds {
   Sounds({required this.level});
@@ -22,8 +21,8 @@ class Sounds {
     await FlameAudio.audioCache.loadAll(soundFiles);
   }
 
-  static void playAsteroidSound(Vector2 size) {
-    if (size.x < AsteroidFactory.smallAsteroidMaxSize) {
+  static void playAsteroidSound(Asteroid asteroid) {
+    if (asteroid.isSmallAsteroid()) {
       FlameAudio.audioCache.play('bangSmall.wav');
     } else {
       FlameAudio.audioCache.play('bangLarge.wav');

@@ -1,12 +1,15 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
+import '../../level_selection/levels.dart';
 import '../player/player_view.dart';
 import '../steroids.dart';
 import '../station/station_view.dart';
 
 class GameView extends StatefulWidget {
-  const GameView({Key? key}) : super(key: key);
+  const GameView({Key? key, required this.level}) : super(key: key);
+
+  final GameLevel level;
 
   @override
   State<GameView> createState() =>
@@ -45,7 +48,7 @@ class GameViewState
               },
               child: GameWidget(
                 focusNode: gameFocusNode,
-                game: Steroids(),
+                game: SteroidsLevel(level: widget.level),
               ),
             ),
           ),
@@ -54,9 +57,9 @@ class GameViewState
             height: double.infinity,
             child: Column(
               children: [
-                PlayerViewPanel(shipStrength: Steroids.singlePlayer.shipStrength, shipStorage: Steroids.singlePlayer.shipStorage),
+                PlayerViewPanel(shipStrength: SteroidsLevel.singlePlayer.shipStrength, shipStorage: SteroidsLevel.singlePlayer.shipStorage),
                 Expanded(child: StationViewPanel(
-                  stationStorage: Steroids.singleStation.stationStorage,)),
+                  stationStorage: SteroidsLevel.singleStation.stationStorage,)),
                 const SizedBox(height: 8),
               ],
             ),

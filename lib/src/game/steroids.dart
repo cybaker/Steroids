@@ -4,6 +4,7 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../level_selection/levels.dart';
 import 'components/background_sound.dart';
 import 'components/game_edge.dart';
 import 'components/powerup_spawn.dart';
@@ -20,7 +21,6 @@ final Map<LogicalKeyboardKey, LogicalKeyboardKey> playersKeys =
     LogicalKeyboardKey.arrowRight: LogicalKeyboardKey.arrowRight,
   };
 
-// TODO Casual games template for all the extra goodies and structure.
 // TODO gh_pages to deploy web version
 // TODO Level logic so players can play a campaign.
 // TODO Player and Station view looks
@@ -28,9 +28,11 @@ final Map<LogicalKeyboardKey, LogicalKeyboardKey> playersKeys =
 // TODO upgrades like faster rotation, faster shots, shorter shot recharging, etc
 // TODO Disruptor powerup - like flechette, shatters all roids down to smallest on hit
 
-class Steroids extends FlameGame
+class SteroidsLevel extends FlameGame
     with KeyboardEvents, HasCollisionDetection {
-  static final Vector2 resolution = Vector2(600, 600);
+  SteroidsLevel({required this.level});
+
+  final GameLevel level;
 
   late final Player player;
   late Set<LogicalKeyboardKey> pressedKeySet;
@@ -39,12 +41,11 @@ class Steroids extends FlameGame
   static final singlePlayer = Player(); // Global only one player
   static final singleStation = Station(); // Global only one player
 
-  static const double fieldSize = 600; // half size of the playing field
-
   @override
   Future<void>? onLoad() async {
     await super.onLoad();
 
+    final Vector2 resolution = Vector2(level.cameraDimension.toDouble(), level.cameraDimension.toDouble());
     pressedKeySet = {};
 
     camera.viewport = FixedResolutionViewport(
@@ -55,7 +56,7 @@ class Steroids extends FlameGame
 
     await add(StarsParallax());
 
-    await add(GameEdge());
+    await add(GameEdge(level: level));
     await add(BackgroundSound(level: 1));
 
     await add(player = singlePlayer..y = 40);
@@ -65,7 +66,7 @@ class Steroids extends FlameGame
         ..x = 0
         ..y = 0,
     );
-    await addAll(asteroidFactory.makeAsteroids(1));
+    await addAll(asteroidFactory.makeAsteroids(level));
     await add(Powerups());
 
     camera.followComponent(player);

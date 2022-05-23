@@ -50,7 +50,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
         ChangeNotifierProvider(
           create: (context) => LevelState(
             goal: widget.level.difficulty,
-            onWin: _playerWon,
+            onWin: _playerWonLevel,
           ),
         ),
       ],
@@ -134,7 +134,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
     }
   }
 
-  Future<void> _playerWon() async {
+  Future<void> _playerWonLevel() async {
     _log.info('Level ${widget.level.number} won');
 
     final score = Score(
