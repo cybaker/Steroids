@@ -21,13 +21,6 @@ final Map<LogicalKeyboardKey, LogicalKeyboardKey> playersKeys =
     LogicalKeyboardKey.arrowRight: LogicalKeyboardKey.arrowRight,
   };
 
-// TODO gh_pages to deploy web version
-// TODO Level logic so players can play a campaign.
-// TODO Player and Station view looks
-// TODO GameBalance - pass level number to components
-// TODO upgrades like faster rotation, faster shots, shorter shot recharging, etc
-// TODO Disruptor powerup - like flechette, shatters all roids down to smallest on hit
-
 class SteroidsLevel extends FlameGame
     with KeyboardEvents, HasCollisionDetection {
   SteroidsLevel({required this.level});
@@ -70,6 +63,10 @@ class SteroidsLevel extends FlameGame
     await add(Powerups());
 
     camera.followComponent(player);
+  }
+
+  void onDispose() {
+    this.removeFromParent();
   }
 
   /*

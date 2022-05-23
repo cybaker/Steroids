@@ -21,6 +21,7 @@ class LevelState extends ChangeNotifier {
 
   void setProgress(int value) {
     _progress = value;
+    evaluate();
     notifyListeners();
   }
 

@@ -12,6 +12,7 @@ const gameLevels = [
     maxAsteroidSpeed: 1,
     maxAsteroidSize: 20,
     minAsteroidSize: 5,
+    storageTarget: 100,
     // TODO: When ready, change these achievement IDs.
     // You configure this in App Store Connect.
     achievementIdIOS: 'first_win',
@@ -27,6 +28,7 @@ const gameLevels = [
     maxAsteroidSpeed: 2,
     maxAsteroidSize: 20,
     minAsteroidSize: 5,
+    storageTarget: 100,
   ),
   GameLevel(
     number: 3,
@@ -37,6 +39,7 @@ const gameLevels = [
     maxAsteroidSpeed: 3,
     maxAsteroidSize: 20,
     minAsteroidSize: 5,
+    storageTarget: 100,
     achievementIdIOS: 'finished',
     achievementIdAndroid: 'CdfIhE96aspNWLGSQg',
   ),
@@ -53,6 +56,7 @@ class GameLevel {
   final double maxAsteroidSpeed;
   final double maxAsteroidSize;
   final double minAsteroidSize;
+  final double storageTarget;
 
   /// The achievement to unlock when the level is finished, if any.
   final String? achievementIdIOS;
@@ -70,6 +74,7 @@ class GameLevel {
     required this.maxAsteroidSpeed,
     required this.maxAsteroidSize,
     required this.minAsteroidSize,
+    required this.storageTarget,
     this.achievementIdIOS,
     this.achievementIdAndroid,
   }) : assert(

@@ -65,16 +65,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: InkResponse(
-                        onTap: () => GoRouter.of(context).push('/settings'),
-                        child: Image.asset(
-                          'assets/images/settings.png',
-                          semanticLabel: 'Settings',
-                        ),
-                      ),
-                    ),
+                    settingsWidget(context),
                     const Spacer(),
                     Text('Drag the slider to ${widget.level.difficulty}%'
                         ' or above!'),
@@ -84,21 +75,14 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                         autofocus: true,
                         value: levelState.progress / 100,
                         onChanged: (value) =>
+
                             levelState.setProgress((value * 100).round()),
+
                         onChangeEnd: (value) => levelState.evaluate(),
                       ),
                     ),
                     const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () => GoRouter.of(context).pop(),
-                          child: const Text('Back'),
-                        ),
-                      ),
-                    ),
+                    backButtonWidget(context),
                   ],
                 ),
               ),
@@ -117,6 +101,32 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
         ),
       ),
     );
+  }
+
+  Padding backButtonWidget(BuildContext context) {
+    return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () => GoRouter.of(context).pop(),
+                        child: const Text('Back'),
+                      ),
+                    ),
+                  );
+  }
+
+  Align settingsWidget(BuildContext context) {
+    return Align(
+                    alignment: Alignment.centerRight,
+                    child: InkResponse(
+                      onTap: () => GoRouter.of(context).push('/settings'),
+                      child: Image.asset(
+                        'assets/images/settings.png',
+                        semanticLabel: 'Settings',
+                      ),
+                    ),
+                  );
   }
 
   @override

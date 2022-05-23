@@ -1,7 +1,14 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:logging/logging.dart';
+import 'package:provider/provider.dart';
 
+import '../../game_internals/level_state.dart';
+import '../../games_services/games_services.dart';
+import '../../games_services/score.dart';
 import '../../level_selection/levels.dart';
+import '../../player_progress/player_progress.dart';
 import '../player/player_view.dart';
 import '../steroids.dart';
 import '../station/station_view.dart';
@@ -12,19 +19,43 @@ class GameView extends StatefulWidget {
   final GameLevel level;
 
   @override
-  State<GameView> createState() =>
-      GameViewState();
+  State<GameView> createState() => GameViewState();
 }
 
-class GameViewState
-    extends State<GameView> {
+class GameViewState extends State<GameView> {
   late FocusNode gameFocusNode;
+
+  static final _log = Logger('PlaySessionScreen');
+
+  static const _celebrationDuration = Duration(milliseconds: 2000);
+
+  static const _preCelebrationDuration = Duration(milliseconds: 500);
+
+  late DateTime _startOfPlay;
+
+  late LevelState _levelState;
+
+  late GameWidget _gameWidget;
 
   @override
   void initState() {
     super.initState();
 
+    _levelState = LevelState(
+      goal: widget.level.difficulty,
+      onWin: _playerWonLevel,
+    );
+
+    _startOfPlay = DateTime.now();
+
     gameFocusNode = FocusNode();
+
+    _gameWidget = GameWidget<SteroidsLevel>(
+      focusNode: gameFocusNode,
+      game: SteroidsLevel(level: widget.level),
+    );
+
+    debugPrint('Level ${widget.level.number} started');
   }
 
   @override
@@ -36,36 +67,91 @@ class GameViewState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Row(
-        children: [
-          Expanded(
-            child: MouseRegion(
-              onHover: (_) {
-                if (!gameFocusNode.hasFocus) {
-                  gameFocusNode.requestFocus();
-                }
-              },
-              child: GameWidget(
-                focusNode: gameFocusNode,
-                game: SteroidsLevel(level: widget.level),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 250,
-            height: double.infinity,
-            child: Column(
-              children: [
-                PlayerViewPanel(shipStrength: SteroidsLevel.singlePlayer.shipStrength, shipStorage: SteroidsLevel.singlePlayer.shipStorage),
-                Expanded(child: StationViewPanel(
-                  stationStorage: SteroidsLevel.singleStation.stationStorage,)),
-                const SizedBox(height: 8),
-              ],
-            ),
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => _levelState,
           ),
         ],
-      ),
+        child: Scaffold(
+          body: Row(
+            children: [
+              Expanded(
+                child: MouseRegion(
+                  onHover: (_) {
+                    if (!gameFocusNode.hasFocus) {
+                      gameFocusNode.requestFocus();
+                    }
+                  },
+                  child: _gameWidget,
+                ),
+              ),
+              SizedBox(
+                width: 250,
+                height: double.infinity,
+                child: Column(
+                  children: [
+                    PlayerViewPanel(
+                        shipStrength: SteroidsLevel.singlePlayer.shipStrength,
+                        shipStorage: SteroidsLevel.singlePlayer.shipStorage),
+                    Expanded(
+                        child: StationViewPanel(
+                      stationStorage: SteroidsLevel.singleStation.stationStorage,
+                          levelState: _levelState,
+                    )),
+                    Consumer<LevelState>(
+                      builder: (context, levelState, child) => Text('Level progress: ${levelState.progress}'),
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ));
+  }
+
+  Future<void> _playerWonLevel() async {
+    _log.info('Level ${widget.level.number} won');
+    debugPrint('Level ${widget.level.number} won');
+
+    (_gameWidget.game as SteroidsLevel).onDispose();
+
+    final score = Score(
+      widget.level.number,
+      widget.level.difficulty,
+      DateTime.now().difference(_startOfPlay),
     );
+
+    final playerProgress = context.read<PlayerProgress>();
+    playerProgress.setLevelReached(widget.level.number);
+
+    // Let the player see the game just after winning for a bit.
+    await Future<void>.delayed(_preCelebrationDuration);
+    if (!mounted) return;
+
+    // final audioController = context.read<AudioController>();
+    // audioController.playSfx(SfxType.congrats);
+
+    final gamesServicesController = context.read<GamesServicesController?>();
+    if (gamesServicesController != null) {
+      // Award achievement.
+      if (widget.level.awardsAchievement) {
+        await gamesServicesController.awardAchievement(
+          android: widget.level.achievementIdAndroid!,
+          iOS: widget.level.achievementIdIOS!,
+        );
+      }
+
+      // Send score to leaderboard.
+      await gamesServicesController.submitLeaderboardScore(score);
+    }
+
+    /// Give the player some time to see the celebration animation.
+    await Future<void>.delayed(_celebrationDuration);
+    if (!mounted) return;
+
+    GoRouter.of(context).pop();
+    GoRouter.of(context).go('/play/won', extra: {'score': score});
   }
 }
