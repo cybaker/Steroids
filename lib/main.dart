@@ -139,7 +139,6 @@ class MyApp extends StatelessWidget {
                       final levelNumber = int.parse(state.params['level']!);
                       final gameLevel = gameLevels
                           .singleWhere((e) => e.number == levelNumber);
-                      debugPrint('GoRouter started a new session level $levelNumber');
                       return buildMyTransition(
                         child: GameView(
                           key: Key('play session $levelNumber'),

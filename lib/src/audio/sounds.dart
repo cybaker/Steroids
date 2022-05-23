@@ -4,11 +4,11 @@
 
 List<String> soundTypeToFilename(SfxType type) {
   switch (type) {
-    case SfxType.huhsh:
+    case SfxType.asteroid:
       return const [
-        'hash1.mp3',
-        'hash2.mp3',
-        'hash3.mp3',
+        'bangLarge.wav',
+        'bangLarge.wav',
+        'bangMedium.wav',
       ];
     case SfxType.wssh:
       return const [
@@ -49,7 +49,7 @@ List<String> soundTypeToFilename(SfxType type) {
 /// Allows control over loudness of different SFX types.
 double soundTypeToVolume(SfxType type) {
   switch (type) {
-    case SfxType.huhsh:
+    case SfxType.asteroid:
       return 0.4;
     case SfxType.wssh:
       return 0.2;
@@ -62,7 +62,7 @@ double soundTypeToVolume(SfxType type) {
 }
 
 enum SfxType {
-  huhsh,
+  asteroid,
   wssh,
   buttonTap,
   congrats,

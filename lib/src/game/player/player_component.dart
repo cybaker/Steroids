@@ -8,47 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../components/bullet.dart';
-import '../model/game_item.dart';
 import '../station/station_component.dart';
 import '../steroids.dart';
 import '../components/asteroid.dart';
 import '../components/powerup.dart';
 import '../model/sounds.dart';
-
-class PlayerPowerUp extends SpriteComponent with HasGameRef<SteroidsLevel> {
-  PlayerPowerUp({
-    required this.slot,
-    required this.item,
-  }) : super(priority: slot == GearSlot.head ? 4 : 5);
-
-  final GearSlot slot;
-  final GameItem item;
-
-  @override
-  Future<void> onLoad() async {
-    await super.onLoad();
-
-    sprite = await gameRef.loadSprite('${item.name}_gear.png');
-
-    switch (slot) {
-      case GearSlot.head:
-        anchor = Anchor.bottomCenter;
-        size = Vector2(70, 40);
-        position = Vector2(15, 8);
-        break;
-      case GearSlot.leftHand:
-        anchor = Anchor.center;
-        size = Vector2(40, 75);
-        position = Vector2(0, 20);
-        break;
-      case GearSlot.rightHand:
-        anchor = Anchor.center;
-        size = Vector2(45, 75);
-        position = Vector2(30, 20);
-        break;
-    }
-  }
-}
 
 class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLevel>, CollisionCallbacks {
   Player()

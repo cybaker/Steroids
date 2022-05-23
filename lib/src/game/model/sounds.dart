@@ -7,7 +7,9 @@ import 'package:steroids/src/game/components/asteroid.dart';
 
 
 class Sounds {
-  Sounds({required this.level});
+  Sounds({required this.level}) {
+    init();
+  }
 
   final int level;
 
@@ -15,8 +17,6 @@ class Sounds {
     final assets = await rootBundle.loadString('AssetManifest.json');
     var json = jsonDecode(assets) as Map<String, dynamic>;
     final List<String> soundFiles = json.keys.where((element) => element.endsWith('.wav')).toList();
-
-    await FlameAudio.audioCache.load('thrust.wav');
 
     await FlameAudio.audioCache.loadAll(soundFiles);
   }

@@ -9,6 +9,7 @@ import '../../games_services/games_services.dart';
 import '../../games_services/score.dart';
 import '../../level_selection/levels.dart';
 import '../../player_progress/player_progress.dart';
+import '../model/sounds.dart';
 import '../player/player_view.dart';
 import '../steroids.dart';
 import '../station/station_view.dart';
@@ -39,6 +40,8 @@ class GameViewState extends State<GameView> {
 
   late GameWidget _gameWidget;
 
+  late Sounds _sounds;
+
   @override
   void initState() {
     super.initState();
@@ -59,6 +62,8 @@ class GameViewState extends State<GameView> {
       focusNode: gameFocusNode,
       game: _steroidsLevel,
     );
+
+    _sounds = Sounds(level: widget.level.number);
   }
 
   @override
@@ -66,6 +71,7 @@ class GameViewState extends State<GameView> {
     debugPrint('GameView.dispose');
     gameFocusNode.dispose();
     _levelState.dispose();
+    Sounds.levelCompletionPercent(0);
     super.dispose();
   }
 
@@ -118,10 +124,6 @@ class GameViewState extends State<GameView> {
   Future<void> _playerWonLevel() async {
     _log.info('Level ${widget.level.number} won');
     debugPrint('GameView.playerWonLevel ${widget.level.number}');
-
-    (_gameWidget.game as SteroidsLevel).onDispose();
-
-    _levelState.setProgress(0);
 
     final score = Score(
       widget.level.number,

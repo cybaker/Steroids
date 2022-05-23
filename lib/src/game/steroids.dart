@@ -64,11 +64,6 @@ class SteroidsLevel extends FlameGame
     camera.followComponent(singlePlayer);
   }
 
-  void onDispose() {
-    debugPrint('Steroids.onDispose');
-    this.removeFromParent();
-  }
-
   /*
     This allows continuous key pressing for a real keyboard
    */
