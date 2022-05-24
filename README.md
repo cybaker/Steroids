@@ -2,7 +2,7 @@ A casual game in Flutter intended as a web app, based on Flutter's Casual Game t
 
 Steroids
 
-![Status](https://github.com/cybaker/Steroids/actions/workflows/publish.yml/badge.svg)
+![Status](https://github.com/cybaker/Steroids/actions/workflows/publish.yaml/badge.svg)
 
 # Getting started
 
