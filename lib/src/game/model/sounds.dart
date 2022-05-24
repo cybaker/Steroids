@@ -14,11 +14,11 @@ class Sounds {
   final int level;
 
   Future<void> init() async {
-    final assets = await rootBundle.loadString('AssetManifest.json');
-    var json = jsonDecode(assets) as Map<String, dynamic>;
-    final List<String> soundFiles = json.keys.where((element) => element.endsWith('.wav')).toList();
-
-    await FlameAudio.audioCache.loadAll(soundFiles);
+    // final assets = await rootBundle.loadString('AssetManifest.json');
+    // var json = jsonDecode(assets) as Map<String, dynamic>;
+    // final List<String> soundFiles = json.keys.where((element) => element.endsWith('.wav')).toList();
+    //
+    // await FlameAudio.audioCache.loadAll(soundFiles);
   }
 
   static void playAsteroidSound(Asteroid asteroid) {
