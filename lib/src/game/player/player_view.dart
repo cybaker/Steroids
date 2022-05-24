@@ -24,7 +24,7 @@ class PlayerViewPanel extends StatelessWidget {
         Column(
           children: [
             ValueListenableBuilder<double>(
-              valueListenable: player.shipStrength,
+              valueListenable: player.shipPower,
               builder: (context, value, child) {
                 return Column(children: [
                   Text('Shields:'),

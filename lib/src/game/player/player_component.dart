@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:steroids/src/level_selection/levels.dart';
+
 import '../extensions/component_effects.dart';
 
 import 'package:flame/collisions.dart';
@@ -15,11 +17,13 @@ import '../components/powerup.dart';
 import '../util/sounds.dart';
 
 class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLevel>, CollisionCallbacks {
-  Player()
+  Player({required this.level})
       : super(
           size: Vector2(30, 60),
           priority: 3,
         );
+
+  final GameLevel level;
 
   Vector2 direction = Vector2.zero();
   Vector2 deltaPosition = Vector2.zero();
@@ -32,8 +36,10 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   static const maxShipStrength = 100.0;
   static const maxShipStorage = 100.0;
   static const shipStrengthRecovery = 1 / 60;
+  static const firePowerConsumption = 2;
+  static const thrustPowerConsumption = 0.1;
 
-  ValueNotifier<double> shipStrength = ValueNotifier<double>(maxShipStrength);
+  ValueNotifier<double> shipPower = ValueNotifier<double>(maxShipStrength);
   ValueNotifier<double> shipStorage = ValueNotifier<double>(0);
 
   @override
@@ -57,7 +63,11 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
 
     bulletTimeout -= dt;
     _handleKeyPresses();
-    shipStrength.value += shipStrengthRecovery * dt;
+    _powerRegeneration(dt);
+  }
+
+  void _powerRegeneration(double dt) {
+    shipPower.value += shipStrengthRecovery * level.powerRegenMultiplier * dt;
   }
 
   @override
@@ -96,17 +106,17 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   }
 
   void restoreShields() {
-    shipStrength.value = maxShipStrength;
+    shipPower.value = maxShipStrength;
   }
 
   void damageShip(double damage) {
-    var strength = shipStrength.value;
-    strength -= damage;
+    var strength = shipPower.value;
+    strength -= damage * level.asteroidDamageMultiplier;
     if (strength <= 0) {
       strength = 0;
-      // end turn?
+      // TODO end turn?
     }
-    shipStrength.value = strength;
+    shipPower.value = strength;
   }
 
   void storeMaterial(double amount) {
@@ -131,9 +141,14 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
       // maximum speed
       direction = total;
     }
+    _thrustConsumePower();
   }
 
-  void _handleKeyPresses() {
+  _thrustConsumePower() {
+    shipPower.value -= level.thrustMultiplier * thrustPowerConsumption;
+  }
+
+  _handleKeyPresses() {
     // debugPrint('onKeyEvent ${gameRef.pressedKeySet}');
 
     if (gameRef.pressedKeySet.contains(LogicalKeyboardKey.arrowLeft)) {
@@ -159,17 +174,23 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
 
   void _fireBullet() {
     final shipDirection = Vector2(cos(angle - pi / 2), sin(angle - pi / 2));
-    final nose = Vector2(15, 0)..rotate(angle - pi / 2);
-    final bullet = Bullet(
+    final nosePoint = Vector2(15, 0)..rotate(angle - pi / 2);
+    gameRef.add(Bullet(
         radius: 2,
         direction: shipDirection,
         initialSpeed: deltaPosition,
-        initialPosition: position + nose,
-        timeToLive: 1);
-    gameRef.add(bullet);
+        initialPosition: position + nosePoint,
+        timeToLive: 1));
+
     bulletTimeout = 0.5;
 
+    _fireConsumePower();
+
     Sounds.playBulletSound();
+  }
+
+  void _fireConsumePower() {
+    shipPower.value -= level.fireMultiplier * 2.0;
   }
 
   int thrustCount = 0; // just throttling the thrust playing not every frame
