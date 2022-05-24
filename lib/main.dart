@@ -6,6 +6,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:steroids/src/instructions/instructions_screen.dart';
 import 'src/game/view/game_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
@@ -168,6 +169,11 @@ class MyApp extends StatelessWidget {
               path: 'settings',
               builder: (context, state) =>
                   const SettingsScreen(key: Key('settings')),
+            ),
+            GoRoute(
+              path: 'instructions',
+              builder: (context, state) =>
+              const InstructionsScreen(key: Key('instructions')),
             ),
           ]),
     ],
