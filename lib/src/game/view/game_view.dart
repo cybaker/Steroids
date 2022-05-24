@@ -50,7 +50,7 @@ class GameViewState extends State<GameView> {
     _steroidsLevel = SteroidsLevel(level: widget.level);
 
     _levelState = LevelState(
-      goal: widget.level.difficulty,
+      goal: widget.level.storageTarget.toInt(),
       onWin: _playerWonLevel,
     );
 
@@ -68,7 +68,6 @@ class GameViewState extends State<GameView> {
 
   @override
   void dispose() {
-    debugPrint('GameView.dispose');
     gameFocusNode.dispose();
     Sounds.levelCompletionPercent(0);
     super.dispose();
@@ -105,8 +104,8 @@ class GameViewState extends State<GameView> {
                         shipStorage: _steroidsLevel.singlePlayer.shipStorage),
                     Expanded(
                         child: StationViewPanel(
-                      stationStorage: _steroidsLevel.singleStation.stationStorage,
-                          levelState: _levelState,
+                      station: _steroidsLevel.singleStation,
+                      levelState: _levelState,
                     )),
                     Consumer<LevelState>(
                       builder: (context, levelState, child) => Text('Level progress: ${levelState.progress}'),
