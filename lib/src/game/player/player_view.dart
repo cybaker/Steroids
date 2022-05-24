@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:steroids/src/game/player/player_component.dart';
 
 import '../widgets/panel_container.dart';
 
 class PlayerViewPanel extends StatelessWidget {
-  const PlayerViewPanel({required this.shipStrength, required this.shipStorage, Key? key}) : super(key: key);
+  const PlayerViewPanel({required this.player, Key? key}) : super(key: key);
 
-  final ValueNotifier<double> shipStrength;
-  final ValueNotifier<double> shipStorage;
+  final Player player;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class PlayerViewPanel extends StatelessWidget {
                 top: 0,
                 left: 88,
                 child: ValueListenableBuilder(
-                  valueListenable: shipStrength,
+                  valueListenable: player.shipStrength,
                   builder: (context, value, child) {
                     final numberFormat = NumberFormat('##0.0', 'en_US');
                     return Text('Shield: ${numberFormat.format(value)}');
@@ -43,7 +43,7 @@ class PlayerViewPanel extends StatelessWidget {
                 top: 42,
                 left: 40,
                 child: ValueListenableBuilder(
-                  valueListenable: shipStorage,
+                  valueListenable: player.shipStorage,
                   builder: (context, value, child) {
                     final numberFormat = NumberFormat('##0.0', 'en_US');
                     return Text('Cargo: ${numberFormat.format(value)}');

@@ -1,6 +1,6 @@
 import 'package:flame/components.dart';
 
-import '../model/sounds.dart';
+import '../util/sounds.dart';
 import '../steroids.dart';
 
 class BackgroundSound extends Component with HasGameRef<SteroidsLevel> {

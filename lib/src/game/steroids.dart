@@ -9,7 +9,7 @@ import 'components/background_sound.dart';
 import 'components/game_edge.dart';
 import 'components/powerup_spawn.dart';
 import 'components/stars_parallax.dart';
-import 'model/asteroid_factory.dart';
+import 'widgets/asteroid_factory.dart';
 import 'player/player_component.dart';
 import 'station/station_component.dart';
 
