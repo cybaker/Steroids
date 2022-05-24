@@ -102,7 +102,8 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   void damageShip(double damage) {
     var strength = shipStrength.value;
     strength -= damage;
-    if (strength < 0) {
+    if (strength <= 0) {
+      strength = 0;
       // end turn?
     }
     shipStrength.value = strength;
