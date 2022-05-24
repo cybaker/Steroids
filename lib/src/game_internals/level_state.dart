@@ -26,6 +26,7 @@ class LevelState extends ChangeNotifier {
   }
 
   void evaluate() {
+    debugPrint('LevelState evaluating progress $progress, goal $goal');
     if (_progress >= goal) {
       onWin();
     }

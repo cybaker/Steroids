@@ -6,6 +6,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:steroids/src/instructions/instructions_screen.dart';
 import 'src/game/view/game_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
@@ -105,7 +106,7 @@ void guardedMain() {
   // }
 
   runApp(
-    MyApp(
+    SteroidsApp(
       settingsPersistence: LocalStorageSettingsPersistence(),
       playerProgressPersistence: LocalStoragePlayerProgressPersistence(),
       inAppPurchaseController: inAppPurchaseController,
@@ -117,7 +118,7 @@ void guardedMain() {
 
 Logger _log = Logger('main.dart');
 
-class MyApp extends StatelessWidget {
+class SteroidsApp extends StatelessWidget {
   static final _router = GoRouter(
     routes: [
       GoRoute(
@@ -169,6 +170,11 @@ class MyApp extends StatelessWidget {
               builder: (context, state) =>
                   const SettingsScreen(key: Key('settings')),
             ),
+            GoRoute(
+              path: 'instructions',
+              builder: (context, state) =>
+              const InstructionsScreen(key: Key('instructions')),
+            ),
           ]),
     ],
   );
@@ -183,7 +189,7 @@ class MyApp extends StatelessWidget {
 
   final AdsController? adsController;
 
-  const MyApp({
+  const SteroidsApp({
     required this.playerProgressPersistence,
     required this.settingsPersistence,
     required this.inAppPurchaseController,

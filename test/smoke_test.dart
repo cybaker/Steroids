@@ -10,7 +10,7 @@ import 'package:steroids/src/settings/persistence/memory_settings_persistence.da
 void main() {
   testWidgets('smoke test', (tester) async {
     // Build our game and trigger a frame.
-    await tester.pumpWidget(MyApp(
+    await tester.pumpWidget(SteroidsApp(
       settingsPersistence: MemoryOnlySettingsPersistence(),
       playerProgressPersistence: MemoryOnlyPlayerProgressPersistence(),
       adsController: null,

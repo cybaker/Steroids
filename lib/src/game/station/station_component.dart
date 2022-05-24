@@ -6,7 +6,8 @@ import '../model/sounds.dart';
 import '../steroids.dart';
 
 ///
-/// Space Station where player drops off asteroid material
+/// Space Station where player deposits asteroid material
+///
 class Station extends SpriteComponent with HasGameRef<SteroidsLevel> {
   Station()
       : super(
@@ -39,8 +40,5 @@ class Station extends SpriteComponent with HasGameRef<SteroidsLevel> {
     debugPrint('Station receiving $material');
     stationStorage.value += material;
     Sounds.playStationReceiveStorage();
-
-    //TODO level completion goes somewhere else
-    Sounds.levelCompletionPercent(stationStorage.value.toInt());
   }
 }
