@@ -12,7 +12,7 @@ import '../station/station_component.dart';
 import '../steroids.dart';
 import '../components/asteroid.dart';
 import '../components/powerup.dart';
-import '../model/sounds.dart';
+import '../util/sounds.dart';
 
 class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLevel>, CollisionCallbacks {
   Player()
@@ -65,6 +65,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     // debugPrint('Collided with $other');
     if (other is Station) {
       transferMaterialToStation(other);
+      restoreShields();
     }
     if (other is Asteroid) {
       collideWithAsteroid(other);
@@ -94,10 +95,15 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     }
   }
 
+  void restoreShields() {
+    shipStrength.value = maxShipStrength;
+  }
+
   void damageShip(double damage) {
     var strength = shipStrength.value;
     strength -= damage;
-    if (strength < 0) {
+    if (strength <= 0) {
+      strength = 0;
       // end turn?
     }
     shipStrength.value = strength;

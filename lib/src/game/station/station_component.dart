@@ -2,7 +2,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/foundation.dart';
 
-import '../model/sounds.dart';
+import '../util/sounds.dart';
 import '../steroids.dart';
 
 ///

@@ -19,10 +19,10 @@ Use the arrow keys for movement:
 - Dock with the space station at the center to deposit your booty.
 
 # Development
-## TODO
-- Player and Station view UI refactor
-- powerups like faster rotation, shorter shot recharging, shields, etc
-  - Disruptor powerup - shatters all asteroids down to smallest when hit
+
+- TODO Player and Station view looks
+- TODO upgrades like faster rotation, shorter shot recharging, shields, etc
+- TODO Disruptor powerup - like flechette, shatters all roids down to smallest on hit
 
 To run the app in debug mode:
 

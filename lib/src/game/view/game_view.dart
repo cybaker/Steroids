@@ -9,7 +9,7 @@ import '../../games_services/games_services.dart';
 import '../../games_services/score.dart';
 import '../../level_selection/levels.dart';
 import '../../player_progress/player_progress.dart';
-import '../model/sounds.dart';
+import '../util/sounds.dart';
 import '../player/player_view.dart';
 import '../steroids.dart';
 import '../station/station_view.dart';
@@ -40,17 +40,14 @@ class GameViewState extends State<GameView> {
 
   late GameWidget _gameWidget;
 
-  late Sounds _sounds;
-
   @override
   void initState() {
     super.initState();
 
-    debugPrint('GameView.initState()');
     _steroidsLevel = SteroidsLevel(level: widget.level);
 
     _levelState = LevelState(
-      goal: widget.level.storageTarget.toInt(),
+      goal: widget.level.storageTarget,
       onWin: _playerWonLevel,
     );
 
@@ -63,7 +60,7 @@ class GameViewState extends State<GameView> {
       game: _steroidsLevel,
     );
 
-    _sounds = Sounds(level: widget.level.number);
+    Sounds(level: widget.level.number);
   }
 
   @override
@@ -99,9 +96,7 @@ class GameViewState extends State<GameView> {
                 height: double.infinity,
                 child: Column(
                   children: [
-                    PlayerViewPanel(
-                        shipStrength: _steroidsLevel.singlePlayer.shipStrength,
-                        shipStorage: _steroidsLevel.singlePlayer.shipStorage),
+                    PlayerViewPanel(player: _steroidsLevel.singlePlayer),
                     Expanded(
                         child: StationViewPanel(
                       station: _steroidsLevel.singleStation,
