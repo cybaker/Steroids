@@ -5,7 +5,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
 
-import '../model/sounds.dart';
+import '../util/sounds.dart';
 import '../steroids.dart';
 
 class Asteroid extends CircleComponent with HasGameRef<SteroidsLevel> {

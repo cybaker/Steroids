@@ -12,7 +12,7 @@ import '../station/station_component.dart';
 import '../steroids.dart';
 import '../components/asteroid.dart';
 import '../components/powerup.dart';
-import '../model/sounds.dart';
+import '../util/sounds.dart';
 
 class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLevel>, CollisionCallbacks {
   Player()
