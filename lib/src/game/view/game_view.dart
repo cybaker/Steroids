@@ -47,7 +47,7 @@ class GameViewState extends State<GameView> {
     _steroidsLevel = SteroidsLevel(level: widget.level);
 
     _levelState = LevelState(
-      goal: widget.level.difficulty,
+      goal: widget.level.storageTarget,
       onWin: _playerWonLevel,
     );
 

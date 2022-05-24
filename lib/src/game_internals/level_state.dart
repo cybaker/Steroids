@@ -11,7 +11,7 @@ import 'package:flutter/foundation.dart';
 class LevelState extends ChangeNotifier {
   final VoidCallback onWin;
 
-  final int goal;
+  final double goal;
 
   LevelState({required this.onWin, this.goal = 100});
 
