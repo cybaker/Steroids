@@ -65,6 +65,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     // debugPrint('Collided with $other');
     if (other is Station) {
       transferMaterialToStation(other);
+      restoreShields();
     }
     if (other is Asteroid) {
       collideWithAsteroid(other);
@@ -92,6 +93,10 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
       damageShip(asteroid.size.x / 2);
       shake();
     }
+  }
+
+  void restoreShields() {
+    shipStrength.value = maxShipStrength;
   }
 
   void damageShip(double damage) {

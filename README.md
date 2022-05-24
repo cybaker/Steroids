@@ -23,7 +23,6 @@ and in-app payments, read the _Integrations_ section below.
 
 # Development
 
-- TODO gh_pages to deploy web version
 - TODO Player and Station view looks
 - TODO upgrades like faster rotation, shorter shot recharging, shields, etc
 - TODO Disruptor powerup - like flechette, shatters all roids down to smallest on hit
