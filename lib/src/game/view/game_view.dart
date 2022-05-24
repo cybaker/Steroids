@@ -70,7 +70,6 @@ class GameViewState extends State<GameView> {
   void dispose() {
     debugPrint('GameView.dispose');
     gameFocusNode.dispose();
-    _levelState.dispose();
     Sounds.levelCompletionPercent(0);
     super.dispose();
   }
