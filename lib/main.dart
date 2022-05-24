@@ -106,7 +106,7 @@ void guardedMain() {
   // }
 
   runApp(
-    MyApp(
+    SteroidsApp(
       settingsPersistence: LocalStorageSettingsPersistence(),
       playerProgressPersistence: LocalStoragePlayerProgressPersistence(),
       inAppPurchaseController: inAppPurchaseController,
@@ -118,7 +118,7 @@ void guardedMain() {
 
 Logger _log = Logger('main.dart');
 
-class MyApp extends StatelessWidget {
+class SteroidsApp extends StatelessWidget {
   static final _router = GoRouter(
     routes: [
       GoRoute(
@@ -189,7 +189,7 @@ class MyApp extends StatelessWidget {
 
   final AdsController? adsController;
 
-  const MyApp({
+  const SteroidsApp({
     required this.playerProgressPersistence,
     required this.settingsPersistence,
     required this.inAppPurchaseController,

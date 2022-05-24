@@ -19,11 +19,10 @@ Use the arrow keys for movement:
 - Dock with the space station at the center to deposit your booty.
 
 # Development
-
-- TODO Help/Instructions screen
-- TODO Player and Station view UI refactor
-- TODO upgrades like faster rotation, shorter shot recharging, shields, etc
-- TODO Disruptor powerup - like flechette, shatters all roids down to smallest on hit
+## TODO
+- Player and Station view UI refactor
+- powerups like faster rotation, shorter shot recharging, shields, etc
+  - Disruptor powerup - shatters all asteroids down to smallest when hit
 
 To run the app in debug mode:
 
@@ -66,7 +65,6 @@ lib
 The state management approach is intentionally low-level. That way, it's easy to
 take this project and run with it, without having to learn new paradigms, or having
 to remember to run `flutter pub run build_runner watch`.
-
 
 ## Building for production
 
