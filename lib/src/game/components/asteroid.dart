@@ -5,7 +5,6 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
 
-import '../util/sounds.dart';
 import '../steroids.dart';
 
 class Asteroid extends CircleComponent with HasGameRef<SteroidsLevel> {
@@ -46,7 +45,7 @@ class Asteroid extends CircleComponent with HasGameRef<SteroidsLevel> {
     if (size.x > minimumRadius) {
       splitAsteroid();
     }
-    Sounds.playAsteroidSound(this);
+    // Sounds.playAsteroidSound(this);
     gameRef.remove(this);
   }
 

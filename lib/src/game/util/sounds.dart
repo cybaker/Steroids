@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flame_audio/flame_audio.dart';
-import 'package:flutter/services.dart';
-import 'package:steroids/src/game/components/asteroid.dart';
+import 'package:steroids/src/game/components/polygonAsteroid.dart';
 
 
 class Sounds {
@@ -21,8 +19,8 @@ class Sounds {
     // await FlameAudio.audioCache.loadAll(soundFiles);
   }
 
-  static void playAsteroidSound(Asteroid asteroid) {
-    if (asteroid.isSmallAsteroid()) {
+  static void playAsteroidSound(PolygonAsteroid asteroid) {
+    if (asteroid.isSmallAsteroid) {
       FlameAudio.audioCache.play('bangSmall.wav');
     } else {
       FlameAudio.audioCache.play('bangLarge.wav');
