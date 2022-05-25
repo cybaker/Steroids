@@ -98,9 +98,9 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
 
   void applyAsteroidHit(PolygonAsteroid asteroid) {
     if (asteroid.isSmallAsteroid) {
-      storeMaterial(asteroid.size.x / 2);
+      storeMaterial(asteroid.radius / 2);
     } else {
-      damageShip(asteroid.size.x / 2);
+      damageShip(asteroid.radius / 2);
       shake();
     }
   }
@@ -110,13 +110,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   }
 
   void damageShip(double damage) {
-    var power = shipPower.value;
-    power -= damage * level.asteroidDamageMultiplier;
-    if (power <= 0) {
-      power = 0;
-      // TODO end turn?
-    }
-    shipPower.value = power;
+    shipPower.value -= damage * level.asteroidDamageMultiplier;
   }
 
   void storeMaterial(double amount) {
@@ -140,8 +134,9 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     if (total.x * total.x + total.y * total.y < 100 * 100) {
       // maximum speed
       direction = total;
+      _thrustConsumePower();
     }
-    _thrustConsumePower();
+    _makeThrustSound();
   }
 
   _thrustConsumePower() {
@@ -158,10 +153,8 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     }
     if (gameRef.pressedKeySet.contains(LogicalKeyboardKey.arrowUp)) {
       _thrustShip(angle, 1);
-      _makeThrustSound();
     } else if (gameRef.pressedKeySet.contains(LogicalKeyboardKey.arrowDown)) {
       _thrustShip(angle, -0.1);
-      _makeThrustSound();
     }
     if (gameRef.pressedKeySet.contains(LogicalKeyboardKey.space)) {
       if (_canFireBullet) _fireBullet();
@@ -191,9 +184,9 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     shipPower.value -= level.fireMultiplier * 2.0;
   }
 
-  int thrustCount = 0; // just throttling the thrust playing not every frame
+  int thrustThrottleCount = 0; // just throttling the thrust playing not every frame
   void _makeThrustSound() {
-    if (thrustCount++ % 10 == 0) {
+    if (thrustThrottleCount++ % 2 == 0) {
       Sounds.playPlayerThrustSound();
     }
   }

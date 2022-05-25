@@ -20,6 +20,7 @@ class StationViewPanel extends StatelessWidget {
       valueListenable: station.stationStorage,
       builder: (context, value, child) {
         levelState.setProgress(value.toInt());
+        levelState.evaluate();
         return Column(children: [
           Text('Station Storage ${value.toInt()} / ${level.winStorageTarget}',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
