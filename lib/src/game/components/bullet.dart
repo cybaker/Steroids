@@ -4,10 +4,10 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/foundation.dart';
+import 'package:steroids/src/game/components/polygonAsteroid.dart';
 
 import '../station/station_component.dart';
 import '../steroids.dart';
-import 'asteroid.dart';
 
 class Bullet extends CircleComponent
     with HasGameRef<SteroidsLevel>,
@@ -40,7 +40,7 @@ class Bullet extends CircleComponent
     if (other is Station) {
       debugPrint('hit chest');
     }
-    if (other is Asteroid) {
+    if (other is PolygonAsteroid) {
       other.hitAsteroid();
       gameRef.remove(this);
     }

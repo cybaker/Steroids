@@ -12,7 +12,11 @@ const gameLevels = [
     maxAsteroidSpeed: 1,
     maxAsteroidSize: 20,
     minAsteroidSize: 5,
-    storageTarget: 100,
+    asteroidDamageMultiplier: 1,
+    winStorageTarget: 100,
+    thrustMultiplier: 1,
+    fireMultiplier: 1,
+    powerRegenMultiplier: 1,
     // TODO: When ready, change these achievement IDs.
     // You configure this in App Store Connect.
     achievementIdIOS: 'first_win',
@@ -28,7 +32,11 @@ const gameLevels = [
     maxAsteroidSpeed: 1.5,
     maxAsteroidSize: 20,
     minAsteroidSize: 5,
-    storageTarget: 150,
+    asteroidDamageMultiplier: 1,
+    winStorageTarget: 150,
+    thrustMultiplier: 1,
+    fireMultiplier: 1,
+    powerRegenMultiplier: 1,
   ),
   GameLevel(
     number: 3,
@@ -39,7 +47,11 @@ const gameLevels = [
     maxAsteroidSpeed: 2,
     maxAsteroidSize: 20,
     minAsteroidSize: 5,
-    storageTarget: 200,
+    asteroidDamageMultiplier: 1,
+    winStorageTarget: 200,
+    thrustMultiplier: 1,
+    fireMultiplier: 1,
+    powerRegenMultiplier: 1,
     achievementIdIOS: 'finished',
     achievementIdAndroid: 'CdfIhE96aspNWLGSQg',
   ),
@@ -52,11 +64,18 @@ class GameLevel {
 
   final int cameraDimension;
   final int playfieldDimension;
+
   final int asteroidCount;
   final double maxAsteroidSpeed;
   final double maxAsteroidSize;
   final double minAsteroidSize;
-  final double storageTarget;
+  final double asteroidDamageMultiplier;
+
+  final double winStorageTarget;
+
+  final double thrustMultiplier;
+  final double fireMultiplier;
+  final double powerRegenMultiplier;
 
   /// The achievement to unlock when the level is finished, if any.
   final String? achievementIdIOS;
@@ -70,11 +89,18 @@ class GameLevel {
     required this.difficulty,
     required this.cameraDimension,
     required this.playfieldDimension,
+
     required this.asteroidCount,
     required this.maxAsteroidSpeed,
     required this.maxAsteroidSize,
     required this.minAsteroidSize,
-    required this.storageTarget,
+    required this.asteroidDamageMultiplier,
+
+    required this.winStorageTarget,
+    required this.fireMultiplier,
+    required this.powerRegenMultiplier,
+    required this.thrustMultiplier,
+
     this.achievementIdIOS,
     this.achievementIdAndroid,
   }) : assert(

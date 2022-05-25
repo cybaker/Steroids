@@ -30,8 +30,8 @@ class SteroidsLevel extends FlameGame
   late Set<LogicalKeyboardKey> pressedKeySet;
   bool isGameOver = false;
 
-  Player singlePlayer = Player(); // Global only one player
-  Station singleStation = Station(); // Global only one player
+  late Player singlePlayer = Player(level: level); // Global only one player
+  late Station singleStation = Station(level: level); // Global only one player
 
   @override
   Future<void>? onLoad() async {
