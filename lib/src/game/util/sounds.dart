@@ -1,30 +1,32 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flame_audio/flame_audio.dart';
-import 'package:steroids/src/game/components/polygonAsteroid.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 
 
 class Sounds {
   Sounds({required this.level}) {
-    init();
+    // init();
   }
 
   final int level;
 
   Future<void> init() async {
-    // final assets = await rootBundle.loadString('AssetManifest.json');
-    // var json = jsonDecode(assets) as Map<String, dynamic>;
-    // final List<String> soundFiles = json.keys.where((element) => element.endsWith('.wav')).toList();
-    //
-    // await FlameAudio.audioCache.loadAll(soundFiles);
+    final assets = await rootBundle.loadString('AssetManifest.json');
+    var json = jsonDecode(assets) as Map<String, dynamic>;
+    final List<String> soundFiles = json.keys.where((element) => element.endsWith('.wav')).toList();
+
+    await FlameAudio.audioCache.loadAll(soundFiles);
   }
 
-  static void playAsteroidSound(PolygonAsteroid asteroid) {
-    if (asteroid.isSmallAsteroid) {
-      FlameAudio.audioCache.play('bangSmall.wav');
-    } else {
-      FlameAudio.audioCache.play('bangLarge.wav');
-    }
+  static void playAsteroidSound() {
+    FlameAudio.audioCache.play('bangSmall.wav');
+  }
+
+  static void playMineralSound() {
+    FlameAudio.audioCache.play('saucerSmall.wav');
   }
 
   static void playStationReceiveStorage() {
@@ -48,6 +50,7 @@ class Sounds {
   static void levelCompletionPercent(int percent) {
     if (percent >= 0 && percent <= 100) {
       completionPercent = percent;
+      debugPrint('Completion percent $percent');
     }
   }
 
@@ -55,7 +58,7 @@ class Sounds {
   static int _frameCount = 0;
   static int _beatCount = 0;
   static void backgroundBeat() {
-    final interval = _slowInterval * (1 - 4/5*completionPercent/100);
+    final interval = _slowInterval * (1 - 4*completionPercent/500);
     if (_frameCount++ >= interval) {
       _beatCount++;
       _frameCount = 0;

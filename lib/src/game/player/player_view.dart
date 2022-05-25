@@ -27,14 +27,20 @@ class PlayerViewPanel extends StatelessWidget {
               valueListenable: player.shipPower,
               builder: (context, value, child) {
                 return Column(children: [
-                  Text('Shields:'),
-                  Slider(
-                    value: value,
-                    onChanged: (_) {},
-                    min: 0,
-                    max: 100,
-                    thumbColor: Colors.lightGreen,
-                    activeColor: Colors.lightGreen,
+                  Text('Ship Power'),
+                  SliderTheme(
+                    child: Slider(
+                      value: value,
+                      onChanged: (_) {},
+                      min: 0,
+                      max: 100,
+                      divisions: 10,
+                      inactiveColor: Colors.grey,
+                      activeColor: Colors.blue,
+                    ),
+                    data: SliderTheme.of(context).copyWith(
+                        trackHeight: 20,
+                        thumbShape: SliderComponentShape.noThumb),
                   ),
                 ]);
               },
@@ -44,14 +50,20 @@ class PlayerViewPanel extends StatelessWidget {
               builder: (context, value, child) {
                 if (value < 0) value = 0;
                 return Column(children: [
-                  Text('Cargo:'),
-                  Slider(
-                    value: value,
-                    onChanged: (_) {},
-                    min: 0,
-                    max: 100,
-                    thumbColor: Colors.lightBlue,
-                    activeColor: Colors.lightBlue,
+                  Text('Ship Cargo'),
+                  SliderTheme(
+                    child: Slider(
+                      value: value,
+                      onChanged: (_) {},
+                      min: 0,
+                      max: 100,
+                      divisions: 10,
+                      inactiveColor: Colors.grey,
+                      activeColor: Colors.brown,
+                    ),
+                    data: SliderTheme.of(context).copyWith(
+                        trackHeight: 20,
+                        thumbShape: SliderComponentShape.noThumb),
                   ),
                 ]);
               },

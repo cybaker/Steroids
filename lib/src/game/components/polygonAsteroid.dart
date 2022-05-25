@@ -1,9 +1,9 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
+import 'package:steroids/src/game/extensions/component_effects.dart';
 import 'package:steroids/src/game/widgets/asteroid_factory.dart';
 
 import '../../level_selection/levels.dart';
@@ -31,18 +31,21 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+    setShapeColor();
+    position = initialPosition;
+    await add(PolygonHitbox(vertices));
+  }
+
+  void setShapeColor() {
     if (radius < level.minAsteroidSize) {
       paint
         ..color = Colors.blue
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..style = PaintingStyle.fill;
     } else {
       paint
         ..color = Colors.grey
         ..style = PaintingStyle.fill;
     }
-    position = initialPosition;
-    await add(PolygonHitbox(vertices));
   }
 
   @override
@@ -52,19 +55,22 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
   }
 
   void updatePositionWithinBounds() {
+    keepWithinGameBounds(level);
     position = position - initialSpeed;
   }
 
   void hitAsteroid() {
-    if (size.x > minimumRadius) {
+    if (radius > minimumRadius) {
       splitAsteroid();
+      Sounds.playAsteroidSound();
+    } else {
+      Sounds.playMineralSound();
     }
-    Sounds.playAsteroidSound(this);
     gameRef.remove(this);
   }
 
   void splitAsteroid() {
-    var newSize = size.x / 4;
+    var newSize = radius / 2;
     gameRef
       ..add(smallerAsteroid(newSize))
       ..add(smallerAsteroid(newSize))
@@ -72,7 +78,7 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
   }
 
   PolygonAsteroid smallerAsteroid(double radius) {
-    var vertices = AsteroidFactory.randomPolygonSweep(10, (radius - 2), (radius + 2));
+    var vertices = AsteroidFactory.randomPolygonSweep(16, (radius - 2), (radius + 2));
     return PolygonAsteroid(
       level: level,
       initialPosition: position,
@@ -88,5 +94,5 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
 
   double get randomVelocity => Random().nextDouble() * 1 - 0.5;
 
-  bool get isSmallAsteroid => size.x < minimumRadius;
+  bool get isSmallAsteroid => radius <= minimumRadius;
 }

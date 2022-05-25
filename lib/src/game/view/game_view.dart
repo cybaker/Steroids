@@ -101,6 +101,7 @@ class GameViewState extends State<GameView> {
                         child: StationViewPanel(
                       station: _steroidsLevel.singleStation,
                       levelState: _levelState,
+                          level: widget.level,
                     )),
                     Consumer<LevelState>(
                       builder: (context, levelState, child) => Text('Level progress: ${levelState.progress}'),

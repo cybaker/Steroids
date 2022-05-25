@@ -1,6 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:steroids/src/level_selection/levels.dart';
 
 import '../util/sounds.dart';
@@ -16,7 +17,7 @@ class Station extends SpriteComponent with HasGameRef<SteroidsLevel> {
           size: Vector2(40, 40),
         );
 
-  final double speed = 1;
+  final double rotationSpeed = 1;
 
   final GameLevel level;
 
@@ -36,12 +37,14 @@ class Station extends SpriteComponent with HasGameRef<SteroidsLevel> {
   @override
   void update(double dt) {
     super.update(dt);
-    angle += speed * dt;
+    angle += rotationSpeed * dt;
   }
 
   void addStorage(double material) {
     debugPrint('Station receiving $material');
     stationStorage.value += material;
     Sounds.playStationReceiveStorage();
+    var completionPercent = stationStorage.value * 100 / level.winStorageTarget;
+    Sounds.levelCompletionPercent(completionPercent.toInt());
   }
 }
