@@ -5,6 +5,7 @@
 const gameLevels = [
   GameLevel(
     number: 1,
+    name: 'Training',
     difficulty: 5,
     cameraDimension: 600,
     playfieldDimension: 300,
@@ -25,14 +26,15 @@ const gameLevels = [
   ),
   GameLevel(
     number: 2,
+    name: 'Cadet',
     difficulty: 42,
     cameraDimension: 600,
     playfieldDimension: 400,
-    asteroidCount: 20,
+    asteroidCount: 15,
     maxAsteroidSpeed: 1.5,
     maxAsteroidSize: 20,
     minAsteroidSize: 5,
-    asteroidDamageMultiplier: 1,
+    asteroidDamageMultiplier: 2,
     winStorageTarget: 150,
     thrustMultiplier: 1,
     fireMultiplier: 1,
@@ -40,15 +42,16 @@ const gameLevels = [
   ),
   GameLevel(
     number: 3,
+    name: 'Difficult',
     difficulty: 100,
     cameraDimension: 600,
     playfieldDimension: 600,
-    asteroidCount: 30,
+    asteroidCount: 20,
     maxAsteroidSpeed: 2,
     maxAsteroidSize: 20,
     minAsteroidSize: 5,
-    asteroidDamageMultiplier: 1,
-    winStorageTarget: 200,
+    asteroidDamageMultiplier: 3,
+    winStorageTarget: 300,
     thrustMultiplier: 1,
     fireMultiplier: 1,
     powerRegenMultiplier: 1,
@@ -59,7 +62,7 @@ const gameLevels = [
 
 class GameLevel {
   final int number;
-
+  final String name;
   final int difficulty;
 
   final int cameraDimension;
@@ -86,6 +89,7 @@ class GameLevel {
 
   const GameLevel({
     required this.number,
+    required this.name,
     required this.difficulty,
     required this.cameraDimension,
     required this.playfieldDimension,

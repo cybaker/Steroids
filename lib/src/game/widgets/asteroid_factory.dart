@@ -1,8 +1,7 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:steroids/src/game/components/polygonAsteroid.dart';
 
 import '../../level_selection/levels.dart';
@@ -17,21 +16,10 @@ class AsteroidFactory {
   }
 
   Component makeRandomPolygonAsteroid(GameLevel level) {
+    debugPrint('Making Polygon asteroid');
     var radius = _randomSize(level.maxAsteroidSize);
 
-    var paint = Paint();
-    if (radius < level.minAsteroidSize) {
-      paint
-        ..color = Colors.blue
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
-    } else {
-      paint
-        ..color = Colors.grey
-        ..style = PaintingStyle.fill;
-    }
-
-    var vertices = randomPolygonSweep(level.asteroidCount, level.minAsteroidSize, level.maxAsteroidSize);
+    var vertices = randomPolygonSweep(level.asteroidCount, radius - 3, radius + 3);
 
     return PolygonAsteroid(
       level: level,

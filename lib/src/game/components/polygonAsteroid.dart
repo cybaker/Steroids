@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -63,8 +62,10 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
   void hitAsteroid() {
     if (radius > minimumRadius) {
       splitAsteroid();
+      Sounds.playAsteroidSound();
+    } else {
+      Sounds.playMineralSound();
     }
-    Sounds.playAsteroidSound(this);
     gameRef.remove(this);
   }
 
