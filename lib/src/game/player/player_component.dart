@@ -27,7 +27,8 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
 
   Vector2 direction = Vector2.zero();
   Vector2 deltaPosition = Vector2.zero();
-  double bulletTimeout = 0;
+  double fireTimeout = 0;
+  double scaleFireTimeout = 1;
 
   static const halfPi = pi / 2;
   static const speed = 2.0;
@@ -61,7 +62,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     deltaPosition = position - newPosition;
     position = newPosition;
 
-    bulletTimeout -= dt;
+    fireTimeout -= dt;
     _handleKeyPresses();
     _powerRegeneration(dt);
   }
@@ -87,8 +88,13 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   }
 
   void collideWithPowerup(PowerUp powerup) {
-    //TODO add powerup
     gameRef.remove(powerup);
+    if (powerup is FasterShot) {
+      scaleFireTimeout *= 0.8;
+    }
+    if (powerup is Shield) {
+      shipPower.value = maxShipPower;
+    }
   }
 
   void collideWithAsteroid(PolygonAsteroid asteroid) {
@@ -98,9 +104,9 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
 
   void applyAsteroidHit(PolygonAsteroid asteroid) {
     if (asteroid.isSmallAsteroid) {
-      storeMaterial(asteroid.radius / 2);
+      storeMaterial(asteroid.radius);
     } else {
-      damageShip(asteroid.radius / 2);
+      damageShip(asteroid.radius);
       shake();
     }
   }
@@ -117,6 +123,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     var value = shipStorage.value + amount;
     if (value > maxShipStorage) value = maxShipStorage;
     shipStorage.value = value;
+    debugPrint('Ship storage adding $amount');
   }
 
   void transferMaterialToStation(Station station) {
@@ -134,8 +141,8 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     if (total.x * total.x + total.y * total.y < 100 * 100) {
       // maximum speed
       direction = total;
-      _thrustConsumePower();
     }
+    _thrustConsumePower();
     _makeThrustSound();
   }
 
@@ -161,7 +168,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     }
   }
 
-  bool get _canFireBullet => bulletTimeout <= 0;
+  bool get _canFireBullet => fireTimeout <= 0;
 
   void _fireBullet() {
     final shipDirection = Vector2(cos(angle - pi / 2), sin(angle - pi / 2));
@@ -173,7 +180,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
         initialPosition: position + nosePoint,
         timeToLive: 1));
 
-    bulletTimeout = 0.5;
+    fireTimeout = level.fireInitialTimeout * scaleFireTimeout;
 
     _fireConsumePower();
 

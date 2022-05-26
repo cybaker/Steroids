@@ -17,6 +17,7 @@ const gameLevels = [
     winStorageTarget: 100,
     thrustMultiplier: 1,
     fireMultiplier: 1,
+    fireInitialTimeout: 0.5,
     powerRegenMultiplier: 1,
     powerupAverageSpawnTimeSec: 20,
     powerupAverageLifetimeSec: 10,
@@ -40,6 +41,7 @@ const gameLevels = [
     winStorageTarget: 150,
     thrustMultiplier: 1,
     fireMultiplier: 1,
+    fireInitialTimeout: 0.6,
     powerRegenMultiplier: 1,
     powerupAverageSpawnTimeSec: 15,
     powerupAverageLifetimeSec: 10,
@@ -58,6 +60,7 @@ const gameLevels = [
     winStorageTarget: 300,
     thrustMultiplier: 1,
     fireMultiplier: 1,
+    fireInitialTimeout: 0.7,
     powerRegenMultiplier: 1,
     powerupAverageSpawnTimeSec: 30,
     powerupAverageLifetimeSec: 10,
@@ -85,6 +88,7 @@ class GameLevel {
   final double thrustMultiplier;
   final double fireMultiplier;
   final double powerRegenMultiplier;
+  final double fireInitialTimeout;
 
   final double powerupAverageSpawnTimeSec;
   final double powerupAverageLifetimeSec;
@@ -111,6 +115,7 @@ class GameLevel {
 
     required this.winStorageTarget,
     required this.fireMultiplier,
+    required this.fireInitialTimeout,
     required this.powerRegenMultiplier,
     required this.thrustMultiplier,
 

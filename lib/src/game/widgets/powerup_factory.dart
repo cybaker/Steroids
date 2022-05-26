@@ -23,10 +23,10 @@ class PowerupFactory extends Component
   @override
   void update(double dt) {
     futureSpawnTime -= dt;
-    if(futureSpawnTime < 0) spawnPowerup();
+    if(futureSpawnTime < 0) spawnRandomPowerup();
   }
 
-  void spawnPowerup() {
+  void spawnRandomPowerup() {
     gameRef.add( Random().nextBool() ? FasterShot(level) : Shield(level));
     futureSpawnTime = randomSpawnTime;
   }
