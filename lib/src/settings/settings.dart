@@ -35,7 +35,7 @@ class SettingsController {
           .getMuted(defaultValue: kIsWeb)
           .then((value) => muted.value = value),
       _persistence.getSoundsOn().then((value) => soundsOn.value = value),
-      _persistence.getMusicOn().then((value) => backgroundMusicOn.value = value),
+      // _persistence.getMusicOn().then((value) => backgroundMusicOn.value = value),
       _persistence.getPlayerName().then((value) => playerName.value = value),
     ]);
   }
