@@ -49,4 +49,13 @@ extension PositionComponentExtension on PositionComponent {
       );
     }
   }
+
+  Vector2 randomSpeed(double maxSpeed) {
+    return Vector2(randomFromTo(-maxSpeed, maxSpeed), randomFromTo(-maxSpeed, maxSpeed));
+  }
+
+  double randomFromTo(double minValue, double maxValue) {
+    return (Random().nextDouble() * (maxValue - minValue) + minValue);
+  }
+
 }

@@ -16,13 +16,12 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
   PolygonAsteroid(
       {required this.level,
       required this.listOfVertices,
-      required this.initialSpeed,
       required this.radius,
       required this.minimumRadius})
       : super(listOfVertices);
 
   final List<Vector2> listOfVertices;
-  final Vector2 initialSpeed;
+  late Vector2 initialSpeed;
   final double radius;
   final double minimumRadius;
 
@@ -69,23 +68,20 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
   void splitAsteroid() {
     var newSize = radius / 2;
     gameRef
-      ..add(smallerAsteroid(newSize))
-      ..add(smallerAsteroid(newSize))
-      ..add(smallerAsteroid(newSize));
+      ..add(newAsteroid(newSize))
+      ..add(newAsteroid(newSize))
+      ..add(newAsteroid(newSize));
   }
 
-  PolygonAsteroid smallerAsteroid(double radius) {
-    var vertices = AsteroidFactory.randomPolygonSweep(16, (radius - 2), (radius + 2));
+  PolygonAsteroid newAsteroid(double radius) {
+    var vertices = AsteroidFactory.randomPolygonSweepCircle(16, (radius - 2), (radius + 2));
     var asteroid = PolygonAsteroid(
       level: level,
-      initialSpeed: Vector2(
-        randomVelocity,
-        randomVelocity,
-      ),
       radius: radius,
       minimumRadius: level.minAsteroidSize,
       listOfVertices: vertices,
     );
+    asteroid.initialSpeed = asteroid.randomSpeed(randomVelocity);
     asteroid.position = this.position;
     return asteroid;
   }

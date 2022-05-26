@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flame/components.dart';
-import 'package:flutter/foundation.dart';
 import 'package:steroids/src/game/components/polygonAsteroid.dart';
 import 'package:steroids/src/game/extensions/component_effects.dart';
 
@@ -16,32 +15,32 @@ class AsteroidFactory {
     );
   }
 
-  Component makeRandomPolygonAsteroid(GameLevel level) {
-    debugPrint('Making Polygon asteroid');
+  PositionComponent makeRandomPolygonAsteroid(GameLevel level) {
+    var radius = _randomSize(level.maxAsteroidSize);
+    var asteroid = makeRadiusRandomPolygonAsteroid(level, radius);
+    asteroid.initialSpeed = asteroid.randomSpeed(level.maxAsteroidSpeed);
+    asteroid.setRandomPositionBetween(level.playfieldDimension*1, level.playfieldDimension/2);
+    return asteroid;
+  }
+
+  PolygonAsteroid makeRadiusRandomPolygonAsteroid(GameLevel level, double radius) {
     var radius = _randomSize(level.maxAsteroidSize);
 
-    var vertices = randomPolygonSweep(level.asteroidCount, radius - 3, radius + 3);
+    var vertices = randomPolygonSweepCircle(16, radius - 3, radius + 3);
 
     var asteroid = PolygonAsteroid(
       level: level,
-      initialSpeed: initialSpeed(level),
       radius: radius,
       minimumRadius: level.minAsteroidSize,
       listOfVertices: vertices,
     );
-    asteroid.setRandomPositionBetween(level.playfieldDimension*1, level.playfieldDimension/2);
-    debugPrint('Asteroid position = ${asteroid.position}');
     return asteroid;
   }
 
-  static Vector2 initialSpeed(GameLevel level) {
-    return Vector2(randomUpTo(level.maxAsteroidSpeed), randomUpTo(level.maxAsteroidSpeed));
-  }
-
-  static List<Vector2> randomPolygonSweep(int count, double minRadius, double maxRadius) {
+  static List<Vector2> randomPolygonSweepCircle(int count, double minValue, double maxValue) {
     return List<Vector2>.generate(count,
             (index) => coordinate(index * 2 * pi / count,
-                randomFromTo(minRadius, maxRadius)));
+                randomFromTo(minValue, maxValue)));
   }
 
   static Vector2 coordinate(double radians, double radius) {
