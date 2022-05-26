@@ -16,14 +16,12 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
   PolygonAsteroid(
       {required this.level,
       required this.listOfVertices,
-      required this.initialPosition,
       required this.initialSpeed,
       required this.radius,
       required this.minimumRadius})
       : super(listOfVertices);
 
   final List<Vector2> listOfVertices;
-  final Vector2 initialPosition;
   final Vector2 initialSpeed;
   final double radius;
   final double minimumRadius;
@@ -32,7 +30,6 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
   Future<void> onLoad() async {
     await super.onLoad();
     setShapeColor();
-    position = initialPosition;
     await add(PolygonHitbox(vertices));
   }
 
@@ -79,9 +76,8 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
 
   PolygonAsteroid smallerAsteroid(double radius) {
     var vertices = AsteroidFactory.randomPolygonSweep(16, (radius - 2), (radius + 2));
-    return PolygonAsteroid(
+    var asteroid = PolygonAsteroid(
       level: level,
-      initialPosition: position,
       initialSpeed: Vector2(
         randomVelocity,
         randomVelocity,
@@ -90,6 +86,8 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
       minimumRadius: level.minAsteroidSize,
       listOfVertices: vertices,
     );
+    asteroid.position = this.position;
+    return asteroid;
   }
 
   double get randomVelocity => Random().nextDouble() * 1 - 0.5;

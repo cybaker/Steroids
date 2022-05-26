@@ -13,7 +13,7 @@ import 'package:flutter/services.dart';
 import '../components/bullet.dart';
 import '../station/station_component.dart';
 import '../steroids.dart';
-import '../components/powerup.dart';
+import '../components/powerups.dart';
 import '../util/sounds.dart';
 
 class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLevel>, CollisionCallbacks {

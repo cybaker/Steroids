@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:steroids/src/level_selection/levels.dart';
@@ -23,6 +25,28 @@ extension PositionComponentExtension on PositionComponent {
       position.y = -level.playfieldDimension + 10;
     } else if (position.y <= - level.playfieldDimension) {
       position.y = level.playfieldDimension -10;
+    }
+  }
+
+  void setRandomPositionInside(double dimension) {
+    var xExtent = Random().nextDouble()*dimension;
+    var yExtent = Random().nextDouble()*dimension;
+    position = Vector2(
+      Random().nextBool() ? xExtent : -xExtent,
+      Random().nextBool() ? yExtent : -yExtent,
+    );
+  }
+
+  void setRandomPositionBetween(double outside, double inside) {
+    if(outside < inside) {
+      position = Vector2(0, 0);
+    } else {
+      var xExtent = inside + Random().nextDouble()*(outside - inside);
+      var yExtent = inside + Random().nextDouble()*(outside - inside);
+      position = Vector2(
+        Random().nextBool() ? xExtent : -xExtent,
+        Random().nextBool() ? yExtent : -yExtent,
+      );
     }
   }
 }

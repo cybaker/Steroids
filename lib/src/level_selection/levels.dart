@@ -18,6 +18,8 @@ const gameLevels = [
     thrustMultiplier: 1,
     fireMultiplier: 1,
     powerRegenMultiplier: 1,
+    powerupAverageSpawnTimeSec: 20,
+    powerupAverageLifetimeSec: 10,
     // TODO: When ready, change these achievement IDs.
     // You configure this in App Store Connect.
     achievementIdIOS: 'first_win',
@@ -39,6 +41,8 @@ const gameLevels = [
     thrustMultiplier: 1,
     fireMultiplier: 1,
     powerRegenMultiplier: 1,
+    powerupAverageSpawnTimeSec: 15,
+    powerupAverageLifetimeSec: 10,
   ),
   GameLevel(
     number: 3,
@@ -55,6 +59,8 @@ const gameLevels = [
     thrustMultiplier: 1,
     fireMultiplier: 1,
     powerRegenMultiplier: 1,
+    powerupAverageSpawnTimeSec: 30,
+    powerupAverageLifetimeSec: 10,
     achievementIdIOS: 'finished',
     achievementIdAndroid: 'CdfIhE96aspNWLGSQg',
   ),
@@ -80,6 +86,9 @@ class GameLevel {
   final double fireMultiplier;
   final double powerRegenMultiplier;
 
+  final double powerupAverageSpawnTimeSec;
+  final double powerupAverageLifetimeSec;
+
   /// The achievement to unlock when the level is finished, if any.
   final String? achievementIdIOS;
 
@@ -104,6 +113,9 @@ class GameLevel {
     required this.fireMultiplier,
     required this.powerRegenMultiplier,
     required this.thrustMultiplier,
+
+    required this.powerupAverageSpawnTimeSec,
+    required this.powerupAverageLifetimeSec,
 
     this.achievementIdIOS,
     this.achievementIdAndroid,

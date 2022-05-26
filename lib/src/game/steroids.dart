@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import '../level_selection/levels.dart';
 import 'components/background_sound.dart';
 import 'components/game_edge.dart';
-import 'components/powerup_spawn.dart';
+import 'widgets/powerup_factory.dart';
 import 'components/stars_parallax.dart';
 import 'widgets/asteroid_factory.dart';
 import 'player/player_component.dart';
@@ -59,7 +59,7 @@ class SteroidsLevel extends FlameGame
         ..y = 0,
     );
     await addAll(asteroidFactory.makeAsteroids(level));
-    await add(Powerups());
+    await add(PowerupFactory(level: level));
 
     camera.followComponent(singlePlayer);
   }

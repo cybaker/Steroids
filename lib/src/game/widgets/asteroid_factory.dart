@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:steroids/src/game/components/polygonAsteroid.dart';
+import 'package:steroids/src/game/extensions/component_effects.dart';
 
 import '../../level_selection/levels.dart';
 
@@ -21,14 +22,16 @@ class AsteroidFactory {
 
     var vertices = randomPolygonSweep(level.asteroidCount, radius - 3, radius + 3);
 
-    return PolygonAsteroid(
+    var asteroid = PolygonAsteroid(
       level: level,
-      initialPosition: initialPosition(level),
       initialSpeed: initialSpeed(level),
       radius: radius,
       minimumRadius: level.minAsteroidSize,
       listOfVertices: vertices,
     );
+    asteroid.setRandomPositionBetween(level.playfieldDimension*1, level.playfieldDimension/2);
+    debugPrint('Asteroid position = ${asteroid.position}');
+    return asteroid;
   }
 
   static Vector2 initialSpeed(GameLevel level) {
