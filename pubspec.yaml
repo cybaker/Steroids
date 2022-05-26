@@ -55,8 +55,8 @@ flutter:
         - asset: assets/Permanent_Marker/PermanentMarker-Regular.ttf
 
 flutter_icons:
-  android: true
-  ios: true
+  android: false
+  ios: false
   image_path: "assets/icon.png"
   adaptive_icon_background: "#FFFFFF"
   adaptive_icon_foreground: "assets/icon-adaptive-foreground.png"
