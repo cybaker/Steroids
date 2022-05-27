@@ -61,7 +61,7 @@ class GameViewState extends State<GameView> {
       game: _steroidsLevel,
     );
 
-    Sounds(level: widget.level.number);
+    Sounds();
   }
 
   @override

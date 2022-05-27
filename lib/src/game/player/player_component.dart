@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:steroids/src/level_selection/levels.dart';
-
 import '../components/polygonAsteroid.dart';
 import '../extensions/component_effects.dart';
 
@@ -17,13 +15,12 @@ import '../components/powerups.dart';
 import '../util/sounds.dart';
 
 class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLevel>, CollisionCallbacks {
-  Player({required this.level})
+  Player()
       : super(
           size: Vector2(30, 60),
           priority: 3,
         );
 
-  final GameLevel level;
 
   Vector2 direction = Vector2.zero();
   Vector2 deltaPosition = Vector2.zero();
@@ -68,7 +65,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   }
 
   void _powerRegeneration(double dt) {
-    shipPower.value += shipPowerRecovery * level.powerRegenMultiplier * dt;
+    shipPower.value += shipPowerRecovery * gameRef.level.powerRegenMultiplier * dt;
   }
 
   @override
@@ -116,7 +113,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   }
 
   void damageShip(double damage) {
-    shipPower.value -= damage * level.asteroidDamageMultiplier;
+    shipPower.value -= damage * gameRef.level.asteroidDamageMultiplier;
   }
 
   void storeMaterial(double amount) {
@@ -147,7 +144,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   }
 
   _thrustConsumePower() {
-    shipPower.value -= level.thrustMultiplier * thrustPowerConsumption;
+    shipPower.value -= gameRef.level.thrustMultiplier * thrustPowerConsumption;
   }
 
   _handleKeyPresses() {
@@ -179,7 +176,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
         initialPosition: position + nosePoint,
         timeToLive: 1));
 
-    fireTimeout = level.bulletFireLifetimeSecs * scaleFireTimeout;
+    fireTimeout = gameRef.level.bulletFireLifetimeSecs * scaleFireTimeout;
 
     _fireConsumePower();
 
@@ -187,7 +184,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   }
 
   void _fireConsumePower() {
-    shipPower.value -= level.fireMultiplier * 2.0;
+    shipPower.value -= gameRef.level.fireMultiplier * 2.0;
   }
 
   int thrustThrottleCount = 0; // just throttling the thrust playing not every frame

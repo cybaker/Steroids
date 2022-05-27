@@ -2,7 +2,6 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:steroids/src/game/extensions/component_effects.dart';
 
-import '../../level_selection/levels.dart';
 import '../steroids.dart';
 
 class PowerUp extends SpriteComponent
@@ -10,13 +9,11 @@ class PowerUp extends SpriteComponent
         CollisionCallbacks {
   PowerUp({
     required this.assetName,
-    required this.level,
   }) : super(priority: 4, size: Vector2(20, 20),);
 
   final String assetName;
-  final GameLevel level;
 
-  late double powerupLifeTime = level.powerupAverageLifetimeSec;
+  late double powerupLifeTime = gameRef.level.powerupAverageLifetimeSec;
 
   @override
   Future<void> onLoad() async {
@@ -26,7 +23,7 @@ class PowerUp extends SpriteComponent
 
     sprite = await gameRef.loadSprite(assetName);
 
-    var dimension = level.playfieldDimension / 3;
+    var dimension = gameRef.level.playfieldDimension / 3;
     this.setRandomPositionInside(dimension);
 
     anchor = Anchor.center;
@@ -43,9 +40,9 @@ class PowerUp extends SpriteComponent
 }
 
 class FasterShot extends PowerUp{
-  FasterShot(level) : super(assetName: 'multi_fire.png', level: level);
+  FasterShot(level) : super(assetName: 'multi_fire.png');
 }
 
 class Shield extends PowerUp{
-  Shield(level) : super(assetName: 'nuke.png', level: level);
+  Shield(level) : super(assetName: 'nuke.png');
 }
