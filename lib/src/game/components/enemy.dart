@@ -3,10 +3,10 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
-import '../components/bullet.dart';
 import '../player/player_component.dart';
 import '../steroids.dart';
 import '../util/sounds.dart';
+import 'enemy_bullet.dart';
 
 class Enemy extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {
   Enemy({required this.player})
@@ -74,6 +74,7 @@ class Enemy extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
 
   void damageShip(double damage) {
     shipPower -= damage;
+    if (shipPower < 0) gameRef.remove(this);
   }
 
   double get enemyAngle => atan2(player.position.x - this.position.x, player.position.y - this.position.y);
@@ -84,14 +85,14 @@ class Enemy extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
   bool get _canChangeDirection => moveTimeout <= 0;
 
   void _fireBullet(double playerAngle) {
-    final bulletDirection = enemyVector;
-    gameRef.add(Bullet(
+    final bulletVector = enemyVector;
+    gameRef.add(EnemyBullet(
         radius: 2,
-        velocityVector: bulletDirection * gameRef.level.enemyBulletSpeed,
-        initialPosition: position,
+        velocityVector: bulletVector * gameRef.level.enemyBulletSpeed,
+        initialPosition: position + bulletVector * 2,
         timeToLive: gameRef.level.enemyBulletLifetimeSecs));
 
-    fireTimeout = gameRef.level.bulletFireLifetimeSecs * scaleFireTimeout;
+    fireTimeout = gameRef.level.playerBulletFireLifetimeSecs * scaleFireTimeout;
 
     Sounds.playBulletSound();
   }

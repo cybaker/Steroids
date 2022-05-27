@@ -5,13 +5,13 @@ import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
 import 'package:steroids/src/game/components/polygonAsteroid.dart';
 
+import '../player/player_component.dart';
 import '../steroids.dart';
-import 'enemy.dart';
 
-class Bullet extends CircleComponent
+class EnemyBullet extends CircleComponent
     with HasGameRef<SteroidsLevel>,
         CollisionCallbacks {
-  Bullet({
+  EnemyBullet({
     required double radius,
     required this.velocityVector,
     required this.initialPosition,
@@ -33,13 +33,12 @@ class Bullet extends CircleComponent
 
   @override
   void onCollision(Set<Vector2> points, PositionComponent other) {
-    if (other is PolygonAsteroid) hitAsteroid(other);
-    else if (other is Enemy) hitEnemy(other);
+    if (other is Player) hitPlayer(other);
     super.onCollision(points, other);
   }
 
-  hitEnemy(Enemy enemy) {
-    enemy.damageShip(gameRef.level.playerBulletDamageToEnemy);
+  hitPlayer(Player player) {
+    player.damageShip(gameRef.level.enemyBulletDamageToPlayer);
     gameRef.remove(this);
   }
 

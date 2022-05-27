@@ -65,7 +65,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   }
 
   void _powerRegeneration(double dt) {
-    shipPower.value += shipPowerRecovery * gameRef.level.powerRegenMultiplier * dt;
+    shipPower.value += shipPowerRecovery * gameRef.level.playerPowerRegenMultiplier * dt;
   }
 
   @override
@@ -144,7 +144,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   }
 
   _thrustConsumePower() {
-    shipPower.value -= gameRef.level.thrustMultiplier * thrustPowerConsumption;
+    shipPower.value -= gameRef.level.playerThrustMultiplier * thrustPowerConsumption;
   }
 
   _handleKeyPresses() {
@@ -176,7 +176,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
         initialPosition: position + nosePoint,
         timeToLive: 1));
 
-    fireTimeout = gameRef.level.bulletFireLifetimeSecs * scaleFireTimeout;
+    fireTimeout = gameRef.level.playerBulletFireLifetimeSecs * scaleFireTimeout;
 
     _fireConsumePower();
 
@@ -184,7 +184,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   }
 
   void _fireConsumePower() {
-    shipPower.value -= gameRef.level.fireMultiplier * 2.0;
+    shipPower.value -= gameRef.level.playerFireMultiplier * 2.0;
   }
 
   int thrustThrottleCount = 0; // just throttling the thrust playing not every frame
