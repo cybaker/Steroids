@@ -47,7 +47,7 @@ class WinLevelScreen extends StatelessWidget {
             const Center(
               child: Text(
                 'Level completed!',
-                style: TextStyle(fontFamily: 'Permanent Marker', fontSize: 50),
+                style: TextStyle(fontFamily: 'AstroSpace', fontSize: 50),
               ),
             ),
             gap,
@@ -56,7 +56,7 @@ class WinLevelScreen extends StatelessWidget {
                 'Score: ${score.score}\n'
                 'Time: ${score.formattedTime}',
                 style: const TextStyle(
-                    fontFamily: 'Permanent Marker', fontSize: 20),
+                    fontFamily: 'AstroSpace', fontSize: 20),
               ),
             ),
           ],

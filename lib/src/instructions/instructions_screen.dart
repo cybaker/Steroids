@@ -28,7 +28,7 @@ class InstructionsScreen extends StatelessWidget {
               'Instructions',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontFamily: 'Permanent Marker',
+                fontFamily: 'AstroSpace',
                 fontSize: 55,
                 height: 1,
               ),
@@ -45,7 +45,7 @@ Use the arrow keys for movement:
 - Blast larger asteroids into smaller ones. Avoid larger asteroids as they damage your ship.
 - Dock with the space station at the center to deposit your booty and regenerate ship power.
 - Don't let you ship power fall to zero. You'll lose the level.
-    ''', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, fontFamily: 'Permanent Marker'),),
+    ''', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, fontFamily: 'AstroSpace'),),
             _gap,
           ],
         ),

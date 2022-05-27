@@ -33,7 +33,7 @@ class SettingsScreen extends StatelessWidget {
               'Settings',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontFamily: 'Permanent Marker',
+                fontFamily: 'AstroSpace',
                 fontSize: 55,
                 height: 1,
               ),
@@ -131,7 +131,7 @@ class _NameChangeLine extends StatelessWidget {
           children: [
             Text(title,
                 style: const TextStyle(
-                  fontFamily: 'Permanent Marker',
+                  fontFamily: 'AstroSpace',
                   fontSize: 30,
                 )),
             const Spacer(),
@@ -140,7 +140,7 @@ class _NameChangeLine extends StatelessWidget {
               builder: (context, name, child) => Text(
                 '‘$name’',
                 style: const TextStyle(
-                  fontFamily: 'Permanent Marker',
+                  fontFamily: 'AstroSpace',
                   fontSize: 30,
                 ),
               ),
@@ -173,7 +173,7 @@ class _SettingsLine extends StatelessWidget {
           children: [
             Text(title,
                 style: const TextStyle(
-                  fontFamily: 'Permanent Marker',
+                  fontFamily: 'AstroSpace',
                   fontSize: 30,
                 )),
             const Spacer(),
