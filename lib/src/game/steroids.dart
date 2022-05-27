@@ -4,12 +4,13 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:steroids/src/game/util/enemy_factory.dart';
 import '../level_selection/levels.dart';
 import 'components/background_sound.dart';
 import 'components/game_edge.dart';
-import 'components/powerup_spawn.dart';
+import 'util/powerup_factory.dart';
 import 'components/stars_parallax.dart';
-import 'widgets/asteroid_factory.dart';
+import 'util/asteroid_factory.dart';
 import 'player/player_component.dart';
 import 'station/station_component.dart';
 
@@ -30,8 +31,8 @@ class SteroidsLevel extends FlameGame
   late Set<LogicalKeyboardKey> pressedKeySet;
   bool isGameOver = false;
 
-  late Player singlePlayer = Player(level: level); // Global only one player
-  late Station singleStation = Station(level: level); // Global only one player
+  late Player singlePlayer = Player(); // Global only one player
+  late Station singleStation = Station(); // Global only one player
 
   @override
   Future<void>? onLoad() async {
@@ -45,11 +46,12 @@ class SteroidsLevel extends FlameGame
     );
 
     final asteroidFactory = AsteroidFactory();
+    add(EnemyFactory(player: singlePlayer));
 
     await add(StarsParallax());
 
     await add(GameEdge(level: level));
-    await add(BackgroundSound(level: 1));
+    await add(BackgroundSound());
 
     await add(singlePlayer..y = 40);
 
@@ -59,7 +61,7 @@ class SteroidsLevel extends FlameGame
         ..y = 0,
     );
     await addAll(asteroidFactory.makeAsteroids(level));
-    await add(Powerups());
+    await add(PowerupFactory());
 
     camera.followComponent(singlePlayer);
   }

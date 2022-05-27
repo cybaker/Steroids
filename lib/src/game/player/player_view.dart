@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:steroids/src/game/player/player_component.dart';
+import 'package:steroids/src/game_internals/level_state.dart';
 
 class PlayerViewPanel extends StatelessWidget {
-  const PlayerViewPanel({required this.player, Key? key}) : super(key: key);
+  const PlayerViewPanel({required this.player, required this.levelState, Key? key}) : super(key: key);
 
+  final LevelState levelState;
   final Player player;
 
   @override
@@ -26,6 +28,8 @@ class PlayerViewPanel extends StatelessWidget {
             ValueListenableBuilder<double>(
               valueListenable: player.shipPower,
               builder: (context, value, child) {
+                levelState.setShipPower(value);
+                levelState.evaluate();
                 return Column(children: [
                   Text('Ship Power'),
                   SliderTheme(

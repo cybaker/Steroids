@@ -32,7 +32,7 @@ class LevelSelectionScreen extends StatelessWidget {
                 child: Text(
                   'Select level',
                   style:
-                      TextStyle(fontFamily: 'Permanent Marker', fontSize: 30),
+                      TextStyle(fontFamily: 'AstroSpace', fontSize: 30),
                 ),
               ),
             ),

@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:steroids/src/level_selection/levels.dart';
-
 import '../components/polygonAsteroid.dart';
 import '../extensions/component_effects.dart';
 
@@ -13,21 +11,21 @@ import 'package:flutter/services.dart';
 import '../components/bullet.dart';
 import '../station/station_component.dart';
 import '../steroids.dart';
-import '../components/powerup.dart';
+import '../components/powerups.dart';
 import '../util/sounds.dart';
 
 class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLevel>, CollisionCallbacks {
-  Player({required this.level})
+  Player()
       : super(
           size: Vector2(30, 60),
           priority: 3,
         );
 
-  final GameLevel level;
 
   Vector2 direction = Vector2.zero();
   Vector2 deltaPosition = Vector2.zero();
-  double bulletTimeout = 0;
+  double fireTimeout = 0;
+  double scaleFireTimeout = 1;
 
   static const halfPi = pi / 2;
   static const speed = 2.0;
@@ -61,13 +59,13 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     deltaPosition = position - newPosition;
     position = newPosition;
 
-    bulletTimeout -= dt;
+    fireTimeout -= dt;
     _handleKeyPresses();
     _powerRegeneration(dt);
   }
 
   void _powerRegeneration(double dt) {
-    shipPower.value += shipPowerRecovery * level.powerRegenMultiplier * dt;
+    shipPower.value += shipPowerRecovery * gameRef.level.playerPowerRegenMultiplier * dt;
   }
 
   @override
@@ -87,8 +85,13 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   }
 
   void collideWithPowerup(PowerUp powerup) {
-    //TODO add powerup
     gameRef.remove(powerup);
+    if (powerup is FasterShot) {
+      scaleFireTimeout *= 0.8;
+    }
+    if (powerup is Shield) {
+      shipPower.value = maxShipPower;
+    }
   }
 
   void collideWithAsteroid(PolygonAsteroid asteroid) {
@@ -98,9 +101,9 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
 
   void applyAsteroidHit(PolygonAsteroid asteroid) {
     if (asteroid.isSmallAsteroid) {
-      storeMaterial(asteroid.size.x / 2);
+      storeMaterial(asteroid.radius);
     } else {
-      damageShip(asteroid.size.x / 2);
+      damageShip(asteroid.radius);
       shake();
     }
   }
@@ -110,19 +113,14 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   }
 
   void damageShip(double damage) {
-    var power = shipPower.value;
-    power -= damage * level.asteroidDamageMultiplier;
-    if (power <= 0) {
-      power = 0;
-      // TODO end turn?
-    }
-    shipPower.value = power;
+    shipPower.value -= damage * gameRef.level.asteroidDamageMultiplier;
   }
 
   void storeMaterial(double amount) {
     var value = shipStorage.value + amount;
     if (value > maxShipStorage) value = maxShipStorage;
     shipStorage.value = value;
+    debugPrint('Ship storage adding $amount');
   }
 
   void transferMaterialToStation(Station station) {
@@ -142,10 +140,11 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
       direction = total;
     }
     _thrustConsumePower();
+    _makeThrustSound();
   }
 
   _thrustConsumePower() {
-    shipPower.value -= level.thrustMultiplier * thrustPowerConsumption;
+    shipPower.value -= gameRef.level.playerThrustMultiplier * thrustPowerConsumption;
   }
 
   _handleKeyPresses() {
@@ -158,29 +157,26 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     }
     if (gameRef.pressedKeySet.contains(LogicalKeyboardKey.arrowUp)) {
       _thrustShip(angle, 1);
-      _makeThrustSound();
     } else if (gameRef.pressedKeySet.contains(LogicalKeyboardKey.arrowDown)) {
       _thrustShip(angle, -0.1);
-      _makeThrustSound();
     }
     if (gameRef.pressedKeySet.contains(LogicalKeyboardKey.space)) {
       if (_canFireBullet) _fireBullet();
     }
   }
 
-  bool get _canFireBullet => bulletTimeout <= 0;
+  bool get _canFireBullet => fireTimeout <= 0;
 
   void _fireBullet() {
     final shipDirection = Vector2(cos(angle - pi / 2), sin(angle - pi / 2));
     final nosePoint = Vector2(15, 0)..rotate(angle - pi / 2);
     gameRef.add(Bullet(
         radius: 2,
-        direction: shipDirection,
-        initialSpeed: deltaPosition,
+        velocityVector: shipDirection * 200,
         initialPosition: position + nosePoint,
         timeToLive: 1));
 
-    bulletTimeout = 0.5;
+    fireTimeout = gameRef.level.playerBulletFireLifetimeSecs * scaleFireTimeout;
 
     _fireConsumePower();
 
@@ -188,12 +184,12 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   }
 
   void _fireConsumePower() {
-    shipPower.value -= level.fireMultiplier * 2.0;
+    shipPower.value -= gameRef.level.playerFireMultiplier * 2.0;
   }
 
-  int thrustCount = 0; // just throttling the thrust playing not every frame
+  int thrustThrottleCount = 0; // just throttling the thrust playing not every frame
   void _makeThrustSound() {
-    if (thrustCount++ % 10 == 0) {
+    if (thrustThrottleCount++ % 2 == 0) {
       Sounds.playPlayerThrustSound();
     }
   }

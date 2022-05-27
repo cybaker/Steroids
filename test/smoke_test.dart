@@ -38,11 +38,11 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Select level'), findsOneWidget);
 
-    // Tap level 1.
+    // Tap top level.
     await tester.tap(find.text('Training'));
     await tester.pumpAndSettle();
 
-    // Find the first level's "tutorial" text.
-    // expect(find.text('Drag the slider to 5% or above!'), findsOneWidget);
+    // Find the first level's text.
+    expect(find.text('Ship Power'), findsOneWidget);
   });
 }

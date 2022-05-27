@@ -4,9 +4,7 @@ import '../util/sounds.dart';
 import '../steroids.dart';
 
 class BackgroundSound extends Component with HasGameRef<SteroidsLevel> {
-  BackgroundSound({required this.level}) : super();
-
-  final int level;
+  BackgroundSound() : super();
 
   @override
   void update(double dt) {

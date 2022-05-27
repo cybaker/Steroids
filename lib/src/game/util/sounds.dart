@@ -7,11 +7,10 @@ import 'package:flutter/services.dart';
 
 
 class Sounds {
-  Sounds({required this.level}) {
+  Sounds() {
     // init();
   }
 
-  final int level;
 
   Future<void> init() async {
     final assets = await rootBundle.loadString('AssetManifest.json');

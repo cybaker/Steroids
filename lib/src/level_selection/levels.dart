@@ -15,9 +15,20 @@ const gameLevels = [
     minAsteroidSize: 5,
     asteroidDamageMultiplier: 1,
     winStorageTarget: 100,
-    thrustMultiplier: 1,
-    fireMultiplier: 1,
-    powerRegenMultiplier: 1,
+    playerThrustMultiplier: 1,
+    playerFireMultiplier: 1,
+    playerBulletFireLifetimeSecs: 0.5,
+    playerBulletDamageToEnemy: 1,
+    playerPowerRegenMultiplier: 1,
+    powerupAverageSpawnTimeSec: 20,
+    powerupAverageLifetimeSec: 10,
+    enemyAverageSpawnTimeSec: 5,
+    enemyPathChangeIntervalSec: 10,
+    enemyPower: 1,
+    enemySpeed: 20,
+    enemyBulletSpeed: 200,
+    enemyBulletDamageToPlayer: 1,
+    enemyBulletLifetimeSecs: 0.6,
     // TODO: When ready, change these achievement IDs.
     // You configure this in App Store Connect.
     achievementIdIOS: 'first_win',
@@ -36,9 +47,20 @@ const gameLevels = [
     minAsteroidSize: 5,
     asteroidDamageMultiplier: 2,
     winStorageTarget: 150,
-    thrustMultiplier: 1,
-    fireMultiplier: 1,
-    powerRegenMultiplier: 1,
+    playerThrustMultiplier: 1,
+    playerFireMultiplier: 1,
+    playerBulletFireLifetimeSecs: 0.6,
+    playerBulletDamageToEnemy: 1,
+    playerPowerRegenMultiplier: 1,
+    powerupAverageSpawnTimeSec: 15,
+    powerupAverageLifetimeSec: 10,
+    enemyAverageSpawnTimeSec: 20,
+    enemyPathChangeIntervalSec: 8,
+    enemyPower: 2,
+    enemySpeed: 3,
+    enemyBulletSpeed: 10,
+    enemyBulletDamageToPlayer: 1,
+    enemyBulletLifetimeSecs: 0.6,
   ),
   GameLevel(
     number: 3,
@@ -52,9 +74,20 @@ const gameLevels = [
     minAsteroidSize: 5,
     asteroidDamageMultiplier: 3,
     winStorageTarget: 300,
-    thrustMultiplier: 1,
-    fireMultiplier: 1,
-    powerRegenMultiplier: 1,
+    playerThrustMultiplier: 1,
+    playerFireMultiplier: 1,
+    playerBulletFireLifetimeSecs: 0.7,
+    playerBulletDamageToEnemy: 1,
+    playerPowerRegenMultiplier: 1,
+    powerupAverageSpawnTimeSec: 30,
+    powerupAverageLifetimeSec: 10,
+    enemyAverageSpawnTimeSec: 15,
+    enemyPathChangeIntervalSec: 6,
+    enemyPower: 3,
+    enemySpeed: 4,
+    enemyBulletSpeed: 10,
+    enemyBulletDamageToPlayer: 1,
+    enemyBulletLifetimeSecs: 0.6,
     achievementIdIOS: 'finished',
     achievementIdAndroid: 'CdfIhE96aspNWLGSQg',
   ),
@@ -76,9 +109,23 @@ class GameLevel {
 
   final double winStorageTarget;
 
-  final double thrustMultiplier;
-  final double fireMultiplier;
-  final double powerRegenMultiplier;
+  final double playerThrustMultiplier;
+  final double playerFireMultiplier;
+  final double playerPowerRegenMultiplier;
+  final double playerBulletFireLifetimeSecs;
+  final double playerBulletDamageToEnemy;
+
+  final double powerupAverageSpawnTimeSec;
+  final double powerupAverageLifetimeSec;
+
+
+  final double enemyAverageSpawnTimeSec;
+  final double enemyPathChangeIntervalSec;
+  final double enemyPower;
+  final double enemySpeed;
+  final double enemyBulletSpeed;
+  final double enemyBulletLifetimeSecs;
+  final double enemyBulletDamageToPlayer;
 
   /// The achievement to unlock when the level is finished, if any.
   final String? achievementIdIOS;
@@ -101,9 +148,22 @@ class GameLevel {
     required this.asteroidDamageMultiplier,
 
     required this.winStorageTarget,
-    required this.fireMultiplier,
-    required this.powerRegenMultiplier,
-    required this.thrustMultiplier,
+    required this.playerFireMultiplier,
+    required this.playerBulletFireLifetimeSecs,
+    required this.playerPowerRegenMultiplier,
+    required this.playerThrustMultiplier,
+    required this.playerBulletDamageToEnemy,
+
+    required this.powerupAverageSpawnTimeSec,
+    required this.powerupAverageLifetimeSec,
+
+    required this.enemyAverageSpawnTimeSec,
+    required this.enemyPathChangeIntervalSec,
+    required this.enemyPower,
+    required this.enemySpeed,
+    required this.enemyBulletSpeed,
+    required this.enemyBulletLifetimeSecs,
+    required this.enemyBulletDamageToPlayer,
 
     this.achievementIdIOS,
     this.achievementIdAndroid,

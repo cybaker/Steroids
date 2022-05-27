@@ -34,7 +34,7 @@ class MainMenuScreen extends StatelessWidget {
               'Steroids',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontFamily: 'Permanent Marker',
+                fontFamily: 'AstroSpace',
                 fontSize: 78,
                 height: 1,
                 color: palette.darkPen,

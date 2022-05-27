@@ -16,13 +16,13 @@ Use the arrow keys for movement:
 - turn right (arrow up)
 - thrust (arrow up)
 - Use the space bar to fire a dumb torpedo.
-- Collect small asteroids
-- Avoid larger asteroids as your ship can't collect that material. Your ship will be damaged.
-- Dock with the space station at the center to deposit your booty.
+- Collect small blue asteroids by scooping them up.
+- Blast larger asteroids into smaller ones. Avoid larger asteroids as they damage your ship.
+- Dock with the space station at the center to deposit your booty and regenerate ship power.
+- Don't let you ship power fall to zero. You'll lose the level.
 
 # Development
 
-- TODO Player and Station view looks
 - TODO upgrades like faster rotation, shorter shot recharging, shields, etc
 - TODO Disruptor powerup - like flechette, shatters all roids down to smallest on hit
 

@@ -13,10 +13,10 @@ import '../in_app_purchase/in_app_purchase.dart';
 import '../style/palette.dart';
 import '../style/responsive_screen.dart';
 
-class WinGameScreen extends StatelessWidget {
+class LoseLevelScreen extends StatelessWidget {
   final Score score;
 
-  const WinGameScreen({
+  const LoseLevelScreen({
     super.key,
     required this.score,
   });
@@ -46,8 +46,8 @@ class WinGameScreen extends StatelessWidget {
             gap,
             const Center(
               child: Text(
-                'Level completed!',
-                style: TextStyle(fontFamily: 'Permanent Marker', fontSize: 50),
+                'Level Lost! No points for you!',
+                style: TextStyle(fontFamily: 'AstroSpace', fontSize: 50),
               ),
             ),
             gap,
@@ -56,16 +56,16 @@ class WinGameScreen extends StatelessWidget {
                 'Score: ${score.score}\n'
                 'Time: ${score.formattedTime}',
                 style: const TextStyle(
-                    fontFamily: 'Permanent Marker', fontSize: 20),
+                    fontFamily: 'AstroSpace', fontSize: 20),
               ),
             ),
           ],
         ),
         rectangularMenuArea: ElevatedButton(
+          child: const Text('Continue'),
           onPressed: () {
             GoRouter.of(context).pop();
           },
-          child: const Text('Continue'),
         ),
       ),
     );

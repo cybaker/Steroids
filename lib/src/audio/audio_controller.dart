@@ -137,6 +137,8 @@ class AudioController {
   /// [SettingsController.muted] is `true` or if its
   /// [SettingsController.soundsOn] is `false`.
   void playSfx(SfxType type) {
+    return;
+
     final muted = _settings?.muted.value ?? true;
     if (muted) {
       _log.info(() => 'Ignoring playing sound ($type) because audio is muted.');

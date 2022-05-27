@@ -4,27 +4,21 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:steroids/src/game/extensions/component_effects.dart';
-import 'package:steroids/src/game/widgets/asteroid_factory.dart';
+import 'package:steroids/src/game/util/asteroid_factory.dart';
 
-import '../../level_selection/levels.dart';
 import '../steroids.dart';
 import '../util/sounds.dart';
 
 class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {
-  final GameLevel level;
 
   PolygonAsteroid(
-      {required this.level,
-      required this.listOfVertices,
-      required this.initialPosition,
-      required this.initialSpeed,
+      { required this.listOfVertices,
       required this.radius,
       required this.minimumRadius})
       : super(listOfVertices);
 
   final List<Vector2> listOfVertices;
-  final Vector2 initialPosition;
-  final Vector2 initialSpeed;
+  late Vector2 initialSpeed;
   final double radius;
   final double minimumRadius;
 
@@ -32,12 +26,11 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
   Future<void> onLoad() async {
     await super.onLoad();
     setShapeColor();
-    position = initialPosition;
     await add(PolygonHitbox(vertices));
   }
 
   void setShapeColor() {
-    if (radius < level.minAsteroidSize) {
+    if (radius < gameRef.level.minAsteroidSize) {
       paint
         ..color = Colors.blue
         ..style = PaintingStyle.fill;
@@ -55,7 +48,6 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
   }
 
   void updatePositionWithinBounds() {
-    keepWithinGameBounds(level);
     position = position - initialSpeed;
   }
 
@@ -72,24 +64,21 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
   void splitAsteroid() {
     var newSize = radius / 2;
     gameRef
-      ..add(smallerAsteroid(newSize))
-      ..add(smallerAsteroid(newSize))
-      ..add(smallerAsteroid(newSize));
+      ..add(newAsteroid(newSize))
+      ..add(newAsteroid(newSize))
+      ..add(newAsteroid(newSize));
   }
 
-  PolygonAsteroid smallerAsteroid(double radius) {
-    var vertices = AsteroidFactory.randomPolygonSweep(16, (radius - 2), (radius + 2));
-    return PolygonAsteroid(
-      level: level,
-      initialPosition: position,
-      initialSpeed: Vector2(
-        randomVelocity,
-        randomVelocity,
-      ),
+  PolygonAsteroid newAsteroid(double radius) {
+    var vertices = AsteroidFactory.randomPolygonSweepCircle(16, (radius - 2), (radius + 2));
+    var asteroid = PolygonAsteroid(
       radius: radius,
-      minimumRadius: level.minAsteroidSize,
+      minimumRadius: gameRef.level.minAsteroidSize,
       listOfVertices: vertices,
     );
+    asteroid.initialSpeed = asteroid.randomSpeedPlusMinusWithin(randomVelocity);
+    asteroid.position = this.position;
+    return asteroid;
   }
 
   double get randomVelocity => Random().nextDouble() * 1 - 0.5;

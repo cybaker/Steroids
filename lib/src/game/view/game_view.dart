@@ -28,7 +28,7 @@ class GameViewState extends State<GameView> {
 
   static final _log = Logger('PlaySessionScreen');
 
-  static const _celebrationDuration = Duration(milliseconds: 2000);
+  static const _celebrationDuration = Duration(milliseconds: 0);
 
   static const _preCelebrationDuration = Duration(milliseconds: 500);
 
@@ -49,6 +49,7 @@ class GameViewState extends State<GameView> {
     _levelState = LevelState(
       goal: widget.level.winStorageTarget,
       onWin: _playerWonLevel,
+      onLose: _playerLostLevel,
     );
 
     _startOfPlay = DateTime.now();
@@ -60,7 +61,7 @@ class GameViewState extends State<GameView> {
       game: _steroidsLevel,
     );
 
-    Sounds(level: widget.level.number);
+    Sounds();
   }
 
   @override
@@ -96,7 +97,7 @@ class GameViewState extends State<GameView> {
                 height: double.infinity,
                 child: Column(
                   children: [
-                    PlayerViewPanel(player: _steroidsLevel.singlePlayer),
+                    PlayerViewPanel(player: _steroidsLevel.singlePlayer, levelState: _levelState,),
                     Expanded(
                         child: StationViewPanel(
                       station: _steroidsLevel.singleStation,
@@ -155,5 +156,18 @@ class GameViewState extends State<GameView> {
 
     GoRouter.of(context).pop();
     GoRouter.of(context).go('/play/won', extra: {'score': score});
+  }
+
+  Future<void> _playerLostLevel() async {
+    _log.info('Level ${widget.level.number} lost');
+    debugPrint('GameView.playerLostLevel ${widget.level.number}');
+
+    final score = Score(
+      widget.level.number,
+      0,
+      DateTime.now().difference(_startOfPlay),
+    );
+    GoRouter.of(context).pop();
+    GoRouter.of(context).go('/play/lost', extra: {'score': score});
   }
 }

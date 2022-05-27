@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:steroids/src/instructions/instructions_screen.dart';
+import 'package:steroids/src/win_game/lose_level_screen.dart';
 import 'src/game/view/game_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
@@ -32,7 +33,7 @@ import 'src/settings/settings_screen.dart';
 import 'src/style/my_transition.dart';
 import 'src/style/palette.dart';
 import 'src/style/snack_bar.dart';
-import 'src/win_game/win_game_screen.dart';
+import 'src/win_game/win_level_screen.dart';
 
 Future<void> main() async {
   // Uncomment the following lines to enable Firebase Crashlytics.
@@ -156,14 +157,29 @@ class SteroidsApp extends StatelessWidget {
                       final score = map['score'] as Score;
 
                       return buildMyTransition(
-                        child: WinGameScreen(
+                        child: WinLevelScreen(
                           score: score,
-                          key: const Key('win game'),
+                          key: const Key('win level'),
                         ),
                         color: context.watch<Palette>().backgroundPlaySession,
                       );
                     },
-                  )
+                  ),
+                  GoRoute(
+                    path: 'lost',
+                    pageBuilder: (context, state) {
+                      final map = state.extra! as Map<String, dynamic>;
+                      final score = map['score'] as Score;
+
+                      return buildMyTransition(
+                        child: LoseLevelScreen(
+                          score: score,
+                          key: const Key('lost level'),
+                        ),
+                        color: context.watch<Palette>().backgroundPlaySession,
+                      );
+                    },
+                  ),
                 ]),
             GoRoute(
               path: 'settings',
@@ -244,7 +260,7 @@ class SteroidsApp extends StatelessWidget {
           final palette = context.watch<Palette>();
 
           return MaterialApp.router(
-            title: 'Flutter Demo',
+            title: 'Steroids',
             theme: ThemeData.from(
               colorScheme: ColorScheme.fromSeed(
                 seedColor: palette.darkPen,
