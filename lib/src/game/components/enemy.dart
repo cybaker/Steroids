@@ -1,9 +1,5 @@
 import 'dart:math';
 
-import 'package:steroids/src/level_selection/levels.dart';
-
-import '../extensions/component_effects.dart';
-
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
@@ -13,13 +9,12 @@ import '../steroids.dart';
 import '../util/sounds.dart';
 
 class Enemy extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {
-  Enemy({required this.level, required this.player})
+  Enemy({required this.player})
       : super(
           size: Vector2(20, 20),
           priority: 3,
         );
 
-  final GameLevel level;
   final Player player;
 
   double fireTimeout = 0;
@@ -34,7 +29,7 @@ class Enemy extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
   static const firePowerConsumption = 2;
   static const thrustPowerConsumption = 0.1;
 
-  late double shipPower = level.enemyPower;
+  late double shipPower = gameRef.level.enemyPower;
 
   late double playerAngle;
 
@@ -43,7 +38,6 @@ class Enemy extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
     await super.onLoad();
 
     sprite = await gameRef.loadSprite('enemy_D.png');
-    this.setRandomPositionBetween(0, 2*level.playfieldDimension/4);
 
     await add(CircleHitbox());
   }
@@ -60,7 +54,7 @@ class Enemy extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
   void move(double dt, double playerAngle) {
     moveTimeout -= dt;
     if (_canChangeDirection) {
-      moveVector = enemyVector * level.enemySpeed;
+      moveVector = enemyVector * gameRef.level.enemySpeed;
     }
     position = position + moveVector * dt;
   }
@@ -84,7 +78,7 @@ class Enemy extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
 
   double get enemyAngle => atan2(player.position.x - this.position.x, player.position.y - this.position.y);
 
-  Vector2 get enemyVector => Vector2(cos(playerAngle), sin(playerAngle));
+  Vector2 get enemyVector => Vector2(sin(playerAngle), cos(playerAngle));
 
   bool get _canFireBullet => fireTimeout <= 0;
   bool get _canChangeDirection => moveTimeout <= 0;
@@ -93,19 +87,12 @@ class Enemy extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
     final bulletDirection = enemyVector;
     gameRef.add(Bullet(
         radius: 2,
-        velocityVector: bulletDirection * level.enemyBulletSpeed,
+        velocityVector: bulletDirection * gameRef.level.enemyBulletSpeed,
         initialPosition: position,
-        timeToLive: level.enemyBulletLifetimeSecs));
+        timeToLive: gameRef.level.enemyBulletLifetimeSecs));
 
-    fireTimeout = level.bulletFireLifetimeSecs * scaleFireTimeout;
+    fireTimeout = gameRef.level.bulletFireLifetimeSecs * scaleFireTimeout;
 
     Sounds.playBulletSound();
-  }
-
-  int thrustThrottleCount = 0; // just throttling the thrust playing not every frame
-  void _makeEnemyThrustSound() {
-    if (thrustThrottleCount++ % 2 == 0) {
-      Sounds.playPlayerThrustSound();
-    }
   }
 }

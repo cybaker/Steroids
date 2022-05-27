@@ -6,16 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:steroids/src/game/extensions/component_effects.dart';
 import 'package:steroids/src/game/util/asteroid_factory.dart';
 
-import '../../level_selection/levels.dart';
 import '../steroids.dart';
 import '../util/sounds.dart';
 
 class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {
-  final GameLevel level;
 
   PolygonAsteroid(
-      {required this.level,
-      required this.listOfVertices,
+      { required this.listOfVertices,
       required this.radius,
       required this.minimumRadius})
       : super(listOfVertices);
@@ -33,7 +30,7 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
   }
 
   void setShapeColor() {
-    if (radius < level.minAsteroidSize) {
+    if (radius < gameRef.level.minAsteroidSize) {
       paint
         ..color = Colors.blue
         ..style = PaintingStyle.fill;
@@ -51,7 +48,6 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
   }
 
   void updatePositionWithinBounds() {
-    keepWithinGameBounds(level);
     position = position - initialSpeed;
   }
 
@@ -76,12 +72,11 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
   PolygonAsteroid newAsteroid(double radius) {
     var vertices = AsteroidFactory.randomPolygonSweepCircle(16, (radius - 2), (radius + 2));
     var asteroid = PolygonAsteroid(
-      level: level,
       radius: radius,
-      minimumRadius: level.minAsteroidSize,
+      minimumRadius: gameRef.level.minAsteroidSize,
       listOfVertices: vertices,
     );
-    asteroid.initialSpeed = asteroid.randomSpeed(randomVelocity);
+    asteroid.initialSpeed = asteroid.randomSpeedPlusMinusWithin(randomVelocity);
     asteroid.position = this.position;
     return asteroid;
   }

@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:flame/components.dart';
+import 'package:steroids/src/game/extensions/component_effects.dart';
 import '../../level_selection/levels.dart';
 import '../components/enemy.dart';
 
@@ -36,8 +37,8 @@ class EnemyFactory extends Component
   }
 
   PositionComponent makeRandomEnemy() {
-    var enemy = Enemy(level: level, player: player);
-    // enemy.setRandomPositionBetween(level.playfieldDimension*0.5, 3*level.playfieldDimension/8);
+    var enemy = Enemy(player: player);
+    enemy.setRandomPositionBetween(level.playfieldDimension.toDouble(), 6*level.playfieldDimension/8);
     return enemy;
   }
 }

@@ -24,7 +24,7 @@ const gameLevels = [
     enemyAverageSpawnTimeSec: 5,
     enemyPathChangeIntervalSec: 10,
     enemyPower: 1,
-    enemySpeed: 100,
+    enemySpeed: 20,
     enemyBulletSpeed: 200,
     enemyBulletLifetimeSecs: 0.6,
     // TODO: When ready, change these achievement IDs.
