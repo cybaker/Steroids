@@ -175,12 +175,11 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     final nosePoint = Vector2(15, 0)..rotate(angle - pi / 2);
     gameRef.add(Bullet(
         radius: 2,
-        direction: shipDirection,
-        initialSpeed: deltaPosition,
+        velocityVector: shipDirection * 200,
         initialPosition: position + nosePoint,
         timeToLive: 1));
 
-    fireTimeout = level.fireInitialTimeout * scaleFireTimeout;
+    fireTimeout = level.bulletFireLifetimeSecs * scaleFireTimeout;
 
     _fireConsumePower();
 

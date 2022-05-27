@@ -4,7 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:steroids/src/game/extensions/component_effects.dart';
-import 'package:steroids/src/game/widgets/asteroid_factory.dart';
+import 'package:steroids/src/game/util/asteroid_factory.dart';
 
 import '../../level_selection/levels.dart';
 import '../steroids.dart';

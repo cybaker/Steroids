@@ -14,15 +14,12 @@ class Bullet extends CircleComponent
         CollisionCallbacks {
   Bullet({
     required double radius,
-    required this.direction,
+    required this.velocityVector,
     required this.initialPosition,
     required this.timeToLive,
-    required this.initialSpeed
   }) : super(radius: radius);
 
-  static const bulletSpeed = 200.0;
-  final Vector2 initialSpeed;
-  final Vector2 direction;
+  final Vector2 velocityVector;
   final Vector2 initialPosition;
   late double timeToLive;
 
@@ -51,7 +48,7 @@ class Bullet extends CircleComponent
   void update(double deltaTime) {
     super.update(deltaTime);
 
-    position = position - initialSpeed + direction * bulletSpeed * deltaTime;
+    position = position + velocityVector * deltaTime;
 
     updateTimeToLive(deltaTime);
   }

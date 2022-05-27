@@ -4,12 +4,13 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:steroids/src/game/util/enemy_factory.dart';
 import '../level_selection/levels.dart';
 import 'components/background_sound.dart';
 import 'components/game_edge.dart';
-import 'widgets/powerup_factory.dart';
+import 'util/powerup_factory.dart';
 import 'components/stars_parallax.dart';
-import 'widgets/asteroid_factory.dart';
+import 'util/asteroid_factory.dart';
 import 'player/player_component.dart';
 import 'station/station_component.dart';
 
@@ -45,6 +46,7 @@ class SteroidsLevel extends FlameGame
     );
 
     final asteroidFactory = AsteroidFactory();
+    add(EnemyFactory(level: level, player: singlePlayer));
 
     await add(StarsParallax());
 

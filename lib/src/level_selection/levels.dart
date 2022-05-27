@@ -17,10 +17,16 @@ const gameLevels = [
     winStorageTarget: 100,
     thrustMultiplier: 1,
     fireMultiplier: 1,
-    fireInitialTimeout: 0.5,
+    bulletFireLifetimeSecs: 0.5,
     powerRegenMultiplier: 1,
     powerupAverageSpawnTimeSec: 20,
     powerupAverageLifetimeSec: 10,
+    enemyAverageSpawnTimeSec: 5,
+    enemyPathChangeIntervalSec: 10,
+    enemyPower: 1,
+    enemySpeed: 100,
+    enemyBulletSpeed: 200,
+    enemyBulletLifetimeSecs: 0.6,
     // TODO: When ready, change these achievement IDs.
     // You configure this in App Store Connect.
     achievementIdIOS: 'first_win',
@@ -41,10 +47,16 @@ const gameLevels = [
     winStorageTarget: 150,
     thrustMultiplier: 1,
     fireMultiplier: 1,
-    fireInitialTimeout: 0.6,
+    bulletFireLifetimeSecs: 0.6,
     powerRegenMultiplier: 1,
     powerupAverageSpawnTimeSec: 15,
     powerupAverageLifetimeSec: 10,
+    enemyAverageSpawnTimeSec: 20,
+    enemyPathChangeIntervalSec: 8,
+    enemyPower: 2,
+    enemySpeed: 3,
+    enemyBulletSpeed: 10,
+    enemyBulletLifetimeSecs: 0.6,
   ),
   GameLevel(
     number: 3,
@@ -60,10 +72,16 @@ const gameLevels = [
     winStorageTarget: 300,
     thrustMultiplier: 1,
     fireMultiplier: 1,
-    fireInitialTimeout: 0.7,
+    bulletFireLifetimeSecs: 0.7,
     powerRegenMultiplier: 1,
     powerupAverageSpawnTimeSec: 30,
     powerupAverageLifetimeSec: 10,
+    enemyAverageSpawnTimeSec: 15,
+    enemyPathChangeIntervalSec: 6,
+    enemyPower: 3,
+    enemySpeed: 4,
+    enemyBulletSpeed: 10,
+    enemyBulletLifetimeSecs: 0.6,
     achievementIdIOS: 'finished',
     achievementIdAndroid: 'CdfIhE96aspNWLGSQg',
   ),
@@ -88,10 +106,18 @@ class GameLevel {
   final double thrustMultiplier;
   final double fireMultiplier;
   final double powerRegenMultiplier;
-  final double fireInitialTimeout;
+  final double bulletFireLifetimeSecs;
 
   final double powerupAverageSpawnTimeSec;
   final double powerupAverageLifetimeSec;
+
+
+  final double enemyAverageSpawnTimeSec;
+  final double enemyPathChangeIntervalSec;
+  final double enemyPower;
+  final double enemySpeed;
+  final double enemyBulletSpeed;
+  final double enemyBulletLifetimeSecs;
 
   /// The achievement to unlock when the level is finished, if any.
   final String? achievementIdIOS;
@@ -115,12 +141,19 @@ class GameLevel {
 
     required this.winStorageTarget,
     required this.fireMultiplier,
-    required this.fireInitialTimeout,
+    required this.bulletFireLifetimeSecs,
     required this.powerRegenMultiplier,
     required this.thrustMultiplier,
 
     required this.powerupAverageSpawnTimeSec,
     required this.powerupAverageLifetimeSec,
+
+    required this.enemyAverageSpawnTimeSec,
+    required this.enemyPathChangeIntervalSec,
+    required this.enemyPower,
+    required this.enemySpeed,
+    required this.enemyBulletSpeed,
+    required this.enemyBulletLifetimeSecs,
 
     this.achievementIdIOS,
     this.achievementIdAndroid,
