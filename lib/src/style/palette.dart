@@ -24,14 +24,30 @@ import 'package:flutter/material.dart';
 /// or even get the colors from the network.
 class Palette {
   Color get pen => Color(0xff1d75fb);
+
   Color get darkPen => const Color(0xFF0050bc);
+
   Color get redPen => const Color(0xFFd10841);
+
   Color get inkFullOpacity => const Color(0xff352b42);
+
   Color get ink => const Color(0xee352b42);
-  Color get backgroundMain => const Color(0x22222222);
-  Color get backgroundLevelSelection => const Color(0xff1d75fb);
-  Color get backgroundPlaySession => const Color(0x22222222);
+
+  Color get backgroundMain => const Color(0xff222222);
+
+  Color get backgroundLevelSelection => const Color(0xff444444);
+
+  Color get backgroundPlaySession => const Color(0xff222222);
+
   Color get background4 => const Color(0xffffd7ff);
+
   Color get backgroundSettings => const Color(0xffbfc8e3);
+
   Color get trueWhite => const Color(0xffffffff);
+
+  TextStyle get mainTitle => TextStyle( fontFamily: 'AstroSpace', fontSize: 78, color: pen,);
+
+  TextStyle get title => TextStyle(fontFamily: 'AstroSpace', fontSize: 30, color: pen,);
+
+  TextStyle get subtitle => TextStyle(fontFamily: 'AstroSpace', fontSize: 24, color: pen,);
 }

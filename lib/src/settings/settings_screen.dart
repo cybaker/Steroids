@@ -24,19 +24,15 @@ class SettingsScreen extends StatelessWidget {
     final palette = context.watch<Palette>();
 
     return Scaffold(
-      backgroundColor: palette.backgroundSettings,
+      backgroundColor: palette.backgroundMain,
       body: ResponsiveScreen(
         squarishMainArea: ListView(
           children: [
             _gap,
-            const Text(
+            Text(
               'Settings',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'AstroSpace',
-                fontSize: 55,
-                height: 1,
-              ),
+              style: palette.title,
             ),
             _gap,
             const _NameChangeLine(
@@ -46,7 +42,7 @@ class SettingsScreen extends StatelessWidget {
               valueListenable: settings.soundsOn,
               builder: (context, soundsOn, child) => _SettingsLine(
                 'Sound FX',
-                Icon(soundsOn ? Icons.graphic_eq : Icons.volume_off),
+                Icon(soundsOn ? Icons.graphic_eq : Icons.volume_off, color: palette.pen,),
                 onSelected: () => settings.toggleSoundsOn(),
               ),
             ),
@@ -54,7 +50,7 @@ class SettingsScreen extends StatelessWidget {
               valueListenable: settings.backgroundMusicOn,
               builder: (context, musicOn, child) => _SettingsLine(
                 'Music',
-                Icon(musicOn ? Icons.music_note : Icons.music_off),
+                Icon(musicOn ? Icons.music_note : Icons.music_off, color: palette.pen,),
                 onSelected: () => settings.toggleMusicOn(),
               ),
             ),
@@ -87,7 +83,7 @@ class SettingsScreen extends StatelessWidget {
             }),
             _SettingsLine(
               'Reset progress',
-              const Icon(Icons.delete),
+              Icon(Icons.delete,  color: palette.pen,),
               onSelected: () {
                 context.read<PlayerProgress>().reset();
 
@@ -120,6 +116,7 @@ class _NameChangeLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsController>();
+    final palette = context.watch<Palette>();
 
     return InkResponse(
       highlightShape: BoxShape.rectangle,
@@ -129,20 +126,13 @@ class _NameChangeLine extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(title,
-                style: const TextStyle(
-                  fontFamily: 'AstroSpace',
-                  fontSize: 30,
-                )),
+            Text(title, style: palette.subtitle),
             const Spacer(),
             ValueListenableBuilder(
               valueListenable: settings.playerName,
               builder: (context, name, child) => Text(
                 '‘$name’',
-                style: const TextStyle(
-                  fontFamily: 'AstroSpace',
-                  fontSize: 30,
-                ),
+                style: palette.subtitle,
               ),
             ),
           ],
@@ -163,6 +153,7 @@ class _SettingsLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = context.watch<Palette>();
     return InkResponse(
       highlightShape: BoxShape.rectangle,
       onTap: onSelected,
@@ -171,11 +162,7 @@ class _SettingsLine extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(title,
-                style: const TextStyle(
-                  fontFamily: 'AstroSpace',
-                  fontSize: 30,
-                )),
+            Text(title, style: palette.subtitle),
             const Spacer(),
             icon,
           ],

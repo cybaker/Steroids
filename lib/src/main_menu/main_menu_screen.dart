@@ -33,12 +33,7 @@ class MainMenuScreen extends StatelessWidget {
             child: Text(
               'Steroids',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'AstroSpace',
-                fontSize: 78,
-                height: 1,
-                color: palette.darkPen,
-              ),
+              style: palette.mainTitle,
             ),
           ),
         ),
@@ -88,7 +83,7 @@ class MainMenuScreen extends StatelessWidget {
                 builder: (context, muted, child) {
                   return IconButton(
                     onPressed: () => settingsController.toggleMuted(),
-                    icon: Icon(muted ? Icons.volume_off : Icons.volume_up),
+                    icon: Icon(muted ? Icons.volume_off : Icons.volume_up, color: palette.pen,),
                   );
                 },
               ),

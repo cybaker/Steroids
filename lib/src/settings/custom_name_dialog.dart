@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../style/palette.dart';
 import 'settings.dart';
 import 'package:provider/provider.dart';
 
@@ -28,18 +29,20 @@ class _CustomNameDialogState extends State<CustomNameDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final palette = context.watch<Palette>();
     return ScaleTransition(
       scale: CurvedAnimation(
         parent: widget.animation,
         curve: Curves.easeOutCubic,
       ),
       child: SimpleDialog(
-        title: const Text('Change name'),
+        title: Text('Change name', style: palette.subtitle,),
         children: [
           TextField(
+            style: palette.subtitle,
             controller: _controller,
             autofocus: true,
-            maxLength: 12,
+            maxLength: 20,
             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             textAlign: TextAlign.center,
             textCapitalization: TextCapitalization.words,

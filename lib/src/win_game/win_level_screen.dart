@@ -28,10 +28,10 @@ class WinLevelScreen extends StatelessWidget {
         context.watch<InAppPurchaseController?>()?.adRemoval.active ?? false;
     final palette = context.watch<Palette>();
 
-    const gap = SizedBox(height: 10);
+    const _gap = SizedBox(height: 10);
 
     return Scaffold(
-      backgroundColor: palette.backgroundPlaySession,
+      backgroundColor: palette.backgroundMain,
       body: ResponsiveScreen(
         squarishMainArea: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -43,20 +43,19 @@ class WinLevelScreen extends StatelessWidget {
                 ),
               ),
             ],
-            gap,
-            const Center(
+            _gap,
+            Center(
               child: Text(
                 'Level completed!',
-                style: TextStyle(fontFamily: 'AstroSpace', fontSize: 50),
+                style: palette.title,
               ),
             ),
-            gap,
+            _gap,
             Center(
               child: Text(
                 'Score: ${score.score}\n'
                 'Time: ${score.formattedTime}',
-                style: const TextStyle(
-                    fontFamily: 'AstroSpace', fontSize: 20),
+                style: palette.subtitle,
               ),
             ),
           ],
