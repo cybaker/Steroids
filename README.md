@@ -22,10 +22,9 @@ Use the arrow keys for movement:
 - Watch for powerups: power restore and fire faster.
 - Don't let your ship power fall to zero. You'll lose the level.
 
-# Development
+![Screenshot](https://github.com/cybaker/Steroids/assets/docs/screenshot.jpg)
 
-- TODO upgrades like faster rotation, shorter shot recharging, shields, etc
-- TODO Disruptor powerup - like flechette, shatters all roids down to smallest on hit
+# Development
 
 To run the app in debug mode:
 
