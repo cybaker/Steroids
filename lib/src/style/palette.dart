@@ -50,4 +50,6 @@ class Palette {
   TextStyle get title => TextStyle(fontFamily: 'AstroSpace', fontSize: 30, color: pen,);
 
   TextStyle get subtitle => TextStyle(fontFamily: 'AstroSpace', fontSize: 24, color: pen,);
+
+  TextStyle get subtitleSmall => TextStyle(fontFamily: 'AstroSpace', fontSize: 20, color: pen,);
 }
