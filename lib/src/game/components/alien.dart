@@ -6,10 +6,10 @@ import 'package:flame/components.dart';
 import '../player/player_component.dart';
 import '../steroids.dart';
 import '../util/sounds.dart';
-import 'enemy_bullet.dart';
+import 'alien_bullet.dart';
 
-class Enemy extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {
-  Enemy({required this.player})
+class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {
+  Alien({required this.player})
       : super(
           size: Vector2(20, 20),
           priority: 3,

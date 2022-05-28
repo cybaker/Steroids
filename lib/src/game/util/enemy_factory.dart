@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:steroids/src/game/extensions/component_effects.dart';
-import '../components/enemy.dart';
+import '../components/alien.dart';
 
 import '../player/player_component.dart';
 import '../steroids.dart';
@@ -36,7 +36,7 @@ class EnemyFactory extends Component
   }
 
   PositionComponent makeRandomEnemy() {
-    var enemy = Enemy(player: player);
+    var enemy = Alien(player: player);
     enemy.setRandomPositionBetween(gameRef.level.playfieldDimension.toDouble(), 6*gameRef.level.playfieldDimension/8);
     return enemy;
   }
