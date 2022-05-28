@@ -8,15 +8,15 @@ import '../components/alien.dart';
 import '../player/player_component.dart';
 import '../steroids.dart';
 
-class EnemyFactory extends Component
+class AlienFactory extends Component
     with HasGameRef<SteroidsLevel> {
-  EnemyFactory({required this.player}) : super(priority: 5);
+  AlienFactory({required this.player}) : super(priority: 5);
 
   final Player player;
 
   double futureSpawnTime = 0;
 
-  double get randomSpawnTime => gameRef.level.enemyAverageSpawnTimeSec*(0.5 + Random().nextDouble());
+  double get randomSpawnTime => gameRef.level.alienAverageSpawnTimeSec*(0.5 + Random().nextDouble());
 
   @override
   Future<void> onLoad() async {

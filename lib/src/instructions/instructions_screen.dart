@@ -15,16 +15,18 @@ class InstructionsScreen extends StatelessWidget {
   static const _gap = SizedBox(height: 60);
 
   final String instructions = '''
-Tap play, select a level, and fly your ship to collect minerals from asteroids.
-Use the arrow keys for movement: 
-- turn left (arrow up).
-- turn right (arrow up).
-- thrust (arrow up).
-- Use the space bar to fire a dumb torpedo.
+- Tap play, select a level, and fly your ship to collect minerals from asteroids.
+- Use the arrow keys for movement:
+  - turn left (arrow up).
+  - turn right (arrow up).
+  - thrust (arrow up).
+  - Use the space bar to fire a dumb torpedo.
+
 - Collect small blue asteroids by scooping them up.
 - Blast larger asteroids into smaller ones. Avoid hitting larger asteroids as they damage your ship.
 - Dock with the space station at the center to deposit your booty and get more ship power.
 - Watch for powerups: power restore and fire faster.
+- Watch out for Aliens and Pirates! Pirates take your booty. Aliens want to blow you out of space.
 - Don't let your ship power fall to zero. You'll lose the level.
     ''';
 

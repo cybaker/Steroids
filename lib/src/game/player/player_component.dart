@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../components/pirate.dart';
 import '../components/polygonAsteroid.dart';
 import '../extensions/component_effects.dart';
 
@@ -75,13 +76,14 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
       transferMaterialToStation(other);
       restoreShields();
     }
-    if (other is PolygonAsteroid) {
-      collideWithAsteroid(other);
-    }
-    if (other is PowerUp) {
-      collideWithPowerup(other);
-    }
+    else if (other is PolygonAsteroid) collideWithAsteroid(other);
+    else if (other is PowerUp) collideWithPowerup(other);
+    else if (other is Pirate) collideWithPirate(other);
     super.onCollision(intersectionPoints, other);
+  }
+
+  collideWithPirate(Pirate pirate) {
+    shipStorage.value = 0;
   }
 
   void collideWithPowerup(PowerUp powerup) {

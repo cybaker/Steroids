@@ -5,13 +5,11 @@ import 'package:flame/components.dart';
 
 import '../player/player_component.dart';
 import '../steroids.dart';
-import '../util/sounds.dart';
-import 'alien_bullet.dart';
 
-class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {
-  Alien({required this.player})
+class Pirate extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {
+  Pirate({required this.player})
       : super(
-          size: Vector2(20, 20),
+          size: Vector2(20, 15),
           priority: 3,
         );
 
@@ -29,15 +27,15 @@ class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
   static const firePowerConsumption = 2;
   static const thrustPowerConsumption = 0.1;
 
-  late double shipPower = gameRef.level.alienPower;
+  late double shipPower = gameRef.level.piratePower;
 
-  late double playerAngle;
+  late double pirateAngle;
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
 
-    sprite = await gameRef.loadSprite('enemy_D.png');
+    sprite = await gameRef.loadSprite('skull.png');
 
     await add(CircleHitbox());
   }
@@ -46,23 +44,17 @@ class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
   void update(double dt) {
     super.update(dt);
 
-    playerAngle = enemyAngle;
-    move(dt, playerAngle);
-    _calculateBullets(dt, playerAngle);
+    pirateAngle = enemyAngle;
+    move(dt, pirateAngle);
   }
 
   void move(double dt, double playerAngle) {
     moveTimeout -= dt;
     if (_canChangeDirection) {
-      moveVector = enemyVector * gameRef.level.alienSpeed;
-      moveTimeout = gameRef.level.alienPathChangeIntervalSec;
+      moveVector = enemyVector * gameRef.level.pirateSpeed;
+      moveTimeout = gameRef.level.piratePathChangeIntervalSec;
     }
     position = position + moveVector * dt;
-  }
-
-  void _calculateBullets(double dt, double playerAngle) {
-    fireTimeout -= dt;
-    if (_canFireBullet) _fireBullet(playerAngle);
   }
 
   @override
@@ -80,21 +72,7 @@ class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
 
   double get enemyAngle => atan2(player.position.x - this.position.x, player.position.y - this.position.y);
 
-  Vector2 get enemyVector => Vector2(sin(playerAngle), cos(playerAngle));
+  Vector2 get enemyVector => Vector2(sin(pirateAngle), cos(pirateAngle));
 
-  bool get _canFireBullet => fireTimeout <= 0;
   bool get _canChangeDirection => moveTimeout <= 0;
-
-  void _fireBullet(double playerAngle) {
-    final bulletVector = enemyVector;
-    gameRef.add(EnemyBullet(
-        radius: 2,
-        velocityVector: bulletVector * gameRef.level.alienBulletSpeed,
-        initialPosition: position + bulletVector * 2,
-        timeToLive: gameRef.level.alienBulletLifetimeSecs));
-
-    fireTimeout = gameRef.level.playerBulletFireLifetimeSecs * scaleFireTimeout;
-
-    Sounds.playBulletSound();
-  }
 }
