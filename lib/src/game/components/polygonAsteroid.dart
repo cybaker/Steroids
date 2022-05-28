@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
@@ -76,12 +74,10 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
       minimumRadius: gameRef.level.minAsteroidSize,
       listOfVertices: vertices,
     );
-    asteroid.initialSpeed = asteroid.randomSpeedPlusMinusWithin(randomVelocity);
+    asteroid.initialSpeed = asteroid.randomSpeedPlusMinusWithin(gameRef.level.maxAsteroidSpeed);
     asteroid.position = this.position;
     return asteroid;
   }
-
-  double get randomVelocity => Random().nextDouble() * 1 - 0.5;
 
   bool get isSmallAsteroid => radius <= minimumRadius;
 }

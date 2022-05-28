@@ -16,7 +16,7 @@ class EnemyFactory extends Component
 
   double futureSpawnTime = 0;
 
-  double get randomSpawnTime => gameRef.level.powerupAverageSpawnTimeSec*(0.5 + Random().nextDouble());
+  double get randomSpawnTime => gameRef.level.enemyAverageSpawnTimeSec*(0.5 + Random().nextDouble());
 
   @override
   Future<void> onLoad() async {
