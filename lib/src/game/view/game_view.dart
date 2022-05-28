@@ -128,6 +128,7 @@ class GameViewState extends State<GameView> {
 
     final playerProgress = context.read<PlayerProgress>();
     playerProgress.setLevelReached(widget.level.number);
+    playerProgress.setTotalScoreReached(score.score.toDouble());
 
     // Let the player see the game just after winning for a bit.
     await Future<void>.delayed(_preCelebrationDuration);

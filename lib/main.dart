@@ -222,7 +222,7 @@ class SteroidsApp extends StatelessWidget {
           ChangeNotifierProvider(
             create: (context) {
               var progress = PlayerProgress(playerProgressPersistence);
-              progress.getLatestFromStore();
+              progress.getHighestLevelFromStore();
               return progress;
             },
           ),

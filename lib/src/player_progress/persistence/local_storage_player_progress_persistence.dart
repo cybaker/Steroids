@@ -9,18 +9,33 @@ import 'player_progress_persistence.dart';
 /// An implementation of [PlayerProgressPersistence] that uses
 /// `package:shared_preferences`.
 class LocalStoragePlayerProgressPersistence extends PlayerProgressPersistence {
+  final String highestScoreReached = 'highestScoreReached';
+  final String highestLevelReached = 'highestLevelReached';
+
   final Future<SharedPreferences> instanceFuture =
       SharedPreferences.getInstance();
 
   @override
   Future<int> getHighestLevelReached() async {
     final prefs = await instanceFuture;
-    return prefs.getInt('highestLevelReached') ?? 0;
+    return prefs.getInt(highestLevelReached) ?? 0;
   }
 
   @override
   Future<void> saveHighestLevelReached(int level) async {
     final prefs = await instanceFuture;
-    await prefs.setInt('highestLevelReached', level);
+    await prefs.setInt(highestLevelReached, level);
+  }
+
+  @override
+  Future<double> getTotalScore() async {
+    final prefs = await instanceFuture;
+    return prefs.getDouble(highestScoreReached) ?? 0;
+  }
+
+  @override
+  Future<void> saveTotalScore(double score) async {
+    final prefs = await instanceFuture;
+    await prefs.setDouble(highestScoreReached, score);
   }
 }
