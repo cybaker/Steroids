@@ -22,7 +22,7 @@ Use the arrow keys for movement:
 - Watch for powerups: power restore and fire faster.
 - Don't let your ship power fall to zero. You'll lose the level.
 
-![Screenshot](https://github.com/cybaker/Steroids/assets/docs/screenshot.jpg)
+![Screenshot](https://github.com/cybaker/Steroids/blob/main/assets/docs/screenshot.jpg)
 
 # Development
 
