@@ -22,17 +22,16 @@ class LevelSelectionScreen extends StatelessWidget {
     final playerProgress = context.watch<PlayerProgress>();
 
     return Scaffold(
-      backgroundColor: palette.backgroundLevelSelection,
+      backgroundColor: palette.backgroundMain,
       body: ResponsiveScreen(
         squarishMainArea: Column(
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(16),
               child: Center(
                 child: Text(
                   'Select level',
-                  style:
-                      TextStyle(fontFamily: 'AstroSpace', fontSize: 30),
+                  style: palette.title,
                 ),
               ),
             ),
@@ -42,17 +41,15 @@ class LevelSelectionScreen extends StatelessWidget {
                 children: [
                   for (final level in gameLevels)
                     ListTile(
-                      enabled: playerProgress.highestLevelReached >=
-                          level.number - 1,
+                      enabled: playerProgress.highestLevelReached >= level.number - 1,
                       onTap: () {
                         final audioController = context.read<AudioController>();
                         audioController.playSfx(SfxType.buttonTap);
 
-                        GoRouter.of(context)
-                            .go('/play/session/${level.number}');
+                        GoRouter.of(context).go('/play/session/${level.number}');
                       },
-                      leading: Text(level.number.toString()),
-                      title: Text('${level.name}'),
+                      leading: Text(level.number.toString(), style: palette.subtitle,),
+                      title: Text('${level.name}', style: palette.subtitle,),
                     )
                 ],
               ),
