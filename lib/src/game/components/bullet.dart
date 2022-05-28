@@ -25,7 +25,7 @@ class Bullet extends CircleComponent
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    paint = BasicPalette.red.paint()
+    paint = BasicPalette.green.paint()
       ..style = PaintingStyle.fill;
     position = initialPosition;
     await add(CircleHitbox());
