@@ -9,26 +9,36 @@ const gameLevels = [
     difficulty: 5,
     cameraDimension: 600,
     playfieldDimension: 300,
+    winStorageTarget: 100,
+
     asteroidCount: 10,
     maxAsteroidSpeed: 1,
     maxAsteroidSize: 20,
     minAsteroidSize: 5,
     asteroidDamageMultiplier: 1,
-    winStorageTarget: 100,
+
     playerThrustMultiplier: 1,
     playerFireMultiplier: 1,
     playerBulletFireLifetimeSecs: 0.5,
     playerBulletDamageToEnemy: 1,
     playerPowerRegenMultiplier: 1,
+
     powerupAverageSpawnTimeSec: 20,
     powerupAverageLifetimeSec: 10,
-    enemyAverageSpawnTimeSec: 60,
-    enemyPathChangeIntervalSec: 10,
-    enemyPower: 1,
-    enemySpeed: 20,
-    enemyBulletSpeed: 200,
-    enemyBulletDamageToPlayer: 1,
-    enemyBulletLifetimeSecs: 0.6,
+
+    alienAverageSpawnTimeSec: 60,
+    alienPathChangeIntervalSec: 10,
+    alienPower: 0.9,
+    alienSpeed: 20,
+    alienBulletSpeed: 200,
+    alienBulletDamageToPlayer: 1,
+    alienBulletLifetimeSecs: 0.6,
+
+    pirateAverageSpawnTimeSec: 60,
+    piratePathChangeIntervalSec: 5,
+    piratePower: 0.9,
+    pirateSpeed: 50,
+
     // TODO: When ready, change these achievement IDs.
     // You configure this in App Store Connect.
     achievementIdIOS: 'first_win',
@@ -41,26 +51,35 @@ const gameLevels = [
     difficulty: 42,
     cameraDimension: 600,
     playfieldDimension: 400,
+    winStorageTarget: 150,
+
     asteroidCount: 15,
     maxAsteroidSpeed: 1.5,
     maxAsteroidSize: 20,
     minAsteroidSize: 5,
     asteroidDamageMultiplier: 2,
-    winStorageTarget: 150,
+
     playerThrustMultiplier: 1,
     playerFireMultiplier: 1,
     playerBulletFireLifetimeSecs: 0.8,
     playerBulletDamageToEnemy: 1,
     playerPowerRegenMultiplier: 1,
+
     powerupAverageSpawnTimeSec: 15,
     powerupAverageLifetimeSec: 10,
-    enemyAverageSpawnTimeSec: 30,
-    enemyPathChangeIntervalSec: 8,
-    enemyPower: 2,
-    enemySpeed: 30,
-    enemyBulletSpeed: 200,
-    enemyBulletDamageToPlayer: 1,
-    enemyBulletLifetimeSecs: 0.8,
+
+    alienAverageSpawnTimeSec: 30,
+    alienPathChangeIntervalSec: 8,
+    alienPower: 2,
+    alienSpeed: 30,
+    alienBulletSpeed: 200,
+    alienBulletDamageToPlayer: 1,
+    alienBulletLifetimeSecs: 0.8,
+
+    pirateAverageSpawnTimeSec: 30,
+    piratePathChangeIntervalSec: 3,
+    piratePower: 1.9,
+    pirateSpeed: 100,
   ),
   GameLevel(
     number: 3,
@@ -68,26 +87,37 @@ const gameLevels = [
     difficulty: 100,
     cameraDimension: 600,
     playfieldDimension: 600,
+
     asteroidCount: 20,
     maxAsteroidSpeed: 2,
     maxAsteroidSize: 20,
     minAsteroidSize: 5,
     asteroidDamageMultiplier: 3,
+
     winStorageTarget: 300,
+
     playerThrustMultiplier: 1,
     playerFireMultiplier: 1,
     playerBulletFireLifetimeSecs: 1,
     playerBulletDamageToEnemy: 1,
     playerPowerRegenMultiplier: 1,
+
     powerupAverageSpawnTimeSec: 30,
     powerupAverageLifetimeSec: 10,
-    enemyAverageSpawnTimeSec: 20,
-    enemyPathChangeIntervalSec: 6,
-    enemyPower: 3,
-    enemySpeed: 44,
-    enemyBulletSpeed: 300,
-    enemyBulletDamageToPlayer: 1,
-    enemyBulletLifetimeSecs: 1,
+
+    alienAverageSpawnTimeSec: 20,
+    alienPathChangeIntervalSec: 6,
+    alienPower: 3,
+    alienSpeed: 44,
+    alienBulletSpeed: 300,
+    alienBulletDamageToPlayer: 1,
+    alienBulletLifetimeSecs: 1,
+
+    pirateAverageSpawnTimeSec: 20,
+    piratePathChangeIntervalSec: 5,
+    piratePower: 1.9,
+    pirateSpeed: 100,
+
     achievementIdIOS: 'finished',
     achievementIdAndroid: 'CdfIhE96aspNWLGSQg',
   ),
@@ -118,14 +148,18 @@ class GameLevel {
   final double powerupAverageSpawnTimeSec;
   final double powerupAverageLifetimeSec;
 
+  final double alienAverageSpawnTimeSec;
+  final double alienPathChangeIntervalSec;
+  final double alienPower;
+  final double alienSpeed;
+  final double alienBulletSpeed;
+  final double alienBulletLifetimeSecs;
+  final double alienBulletDamageToPlayer;
 
-  final double enemyAverageSpawnTimeSec;
-  final double enemyPathChangeIntervalSec;
-  final double enemyPower;
-  final double enemySpeed;
-  final double enemyBulletSpeed;
-  final double enemyBulletLifetimeSecs;
-  final double enemyBulletDamageToPlayer;
+  final double pirateAverageSpawnTimeSec;
+  final double piratePathChangeIntervalSec;
+  final double piratePower;
+  final double pirateSpeed;
 
   /// The achievement to unlock when the level is finished, if any.
   final String? achievementIdIOS;
@@ -157,13 +191,18 @@ class GameLevel {
     required this.powerupAverageSpawnTimeSec,
     required this.powerupAverageLifetimeSec,
 
-    required this.enemyAverageSpawnTimeSec,
-    required this.enemyPathChangeIntervalSec,
-    required this.enemyPower,
-    required this.enemySpeed,
-    required this.enemyBulletSpeed,
-    required this.enemyBulletLifetimeSecs,
-    required this.enemyBulletDamageToPlayer,
+    required this.alienAverageSpawnTimeSec,
+    required this.alienPathChangeIntervalSec,
+    required this.alienPower,
+    required this.alienSpeed,
+    required this.alienBulletSpeed,
+    required this.alienBulletLifetimeSecs,
+    required this.alienBulletDamageToPlayer,
+
+    required this.pirateAverageSpawnTimeSec,
+    required this.piratePathChangeIntervalSec,
+    required this.piratePower,
+    required this.pirateSpeed,
 
     this.achievementIdIOS,
     this.achievementIdAndroid,

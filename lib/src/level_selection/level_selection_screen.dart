@@ -36,6 +36,16 @@ class LevelSelectionScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 50),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: Center(
+                child: Text(
+                  'Total Score: ${playerProgress.highestScoreReached}',
+                  style: palette.subtitle,
+                ),
+              ),
+            ),
+            const SizedBox(height: 50),
             Expanded(
               child: ListView(
                 children: [

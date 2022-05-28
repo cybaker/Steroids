@@ -38,7 +38,7 @@ class EnemyBullet extends CircleComponent
   }
 
   hitPlayer(Player player) {
-    player.damageShip(gameRef.level.enemyBulletDamageToPlayer);
+    player.damageShip(gameRef.level.alienBulletDamageToPlayer);
     gameRef.remove(this);
   }
 

@@ -20,6 +20,7 @@ Use the arrow keys for movement:
 - Blast larger asteroids into smaller ones. Avoid hitting larger asteroids as they damage your ship.
 - Dock with the space station at the center to deposit your booty and get more ship power.
 - Watch for powerups: power restore and fire faster.
+- Watch out for Aliens and Pirates! Pirates take your booty. Aliens want to blow you out of space.
 - Don't let your ship power fall to zero. You'll lose the level.
 
 ![Screenshot](https://github.com/cybaker/Steroids/blob/main/assets/docs/screenshot.jpg)

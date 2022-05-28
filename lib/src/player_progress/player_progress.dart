@@ -15,6 +15,7 @@ class PlayerProgress extends ChangeNotifier {
   final PlayerProgressPersistence _store;
 
   int _highestLevelReached = 0;
+  double _highestScoreReached = 0;
 
   /// Creates an instance of [PlayerProgress] backed by an injected
   /// persistence [store].
@@ -23,14 +24,28 @@ class PlayerProgress extends ChangeNotifier {
   /// The highest level that the player has reached so far.
   int get highestLevelReached => _highestLevelReached;
 
+  /// The highest score that the player has reached so far.
+  double get highestScoreReached => _highestScoreReached;
+
   /// Fetches the latest data from the backing persistence store.
-  Future<void> getLatestFromStore() async {
+  Future<void> getHighestLevelFromStore() async {
     final level = await _store.getHighestLevelReached();
     if (level > _highestLevelReached) {
       _highestLevelReached = level;
       notifyListeners();
     } else if (level < _highestLevelReached) {
       await _store.saveHighestLevelReached(_highestLevelReached);
+    }
+  }
+
+  /// Fetches the latest data from the backing persistence store.
+  Future<void> getHighestScoreFromStore() async {
+    final score = await _store.getTotalScore();
+    if (score > _highestScoreReached) {
+      _highestScoreReached = score;
+      notifyListeners();
+    } else if (score < _highestScoreReached) {
+      await _store.saveTotalScore(_highestScoreReached);
     }
   }
 
@@ -52,6 +67,19 @@ class PlayerProgress extends ChangeNotifier {
       notifyListeners();
 
       unawaited(_store.saveHighestLevelReached(level));
+    }
+  }
+
+  /// Registers [level] as reached.
+  ///
+  /// If this is higher than [highestLevelReached], it will update that
+  /// value and save it to the injected persistence store.
+  void setTotalScoreReached(double score) {
+    if (score > _highestScoreReached) {
+      _highestScoreReached = score;
+      notifyListeners();
+
+      unawaited(_store.saveTotalScore(score));
     }
   }
 }
