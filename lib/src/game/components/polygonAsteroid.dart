@@ -1,11 +1,11 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
+import 'package:steroids/src/audio/sounds.dart';
 import 'package:steroids/src/game/extensions/component_effects.dart';
 import 'package:steroids/src/game/util/asteroid_factory.dart';
 
 import '../steroids.dart';
-import '../util/sounds.dart';
 
 class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {
 
@@ -52,9 +52,7 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
   void hitAsteroid() {
     if (radius > minimumRadius) {
       splitAsteroid();
-      Sounds.playAsteroidSound();
-    } else {
-      Sounds.playMineralSound();
+      gameRef.audio.playSfx(SfxType.asteroid);
     }
     gameRef.remove(this);
   }

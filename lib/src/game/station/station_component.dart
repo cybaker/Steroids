@@ -3,7 +3,7 @@ import 'package:flame/components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../util/sounds.dart';
+import '../../audio/sounds.dart';
 import '../steroids.dart';
 
 ///
@@ -40,8 +40,7 @@ class Station extends SpriteComponent with HasGameRef<SteroidsLevel> {
   void addStorage(double material) {
     debugPrint('Station receiving $material');
     stationStorage.value += material;
-    Sounds.playStationReceiveStorage();
+    gameRef.audio.playSfx(SfxType.stationStore);
     var completionPercent = stationStorage.value * 100 / gameRef.level.winStorageTarget;
-    Sounds.levelCompletionPercent(completionPercent.toInt());
   }
 }

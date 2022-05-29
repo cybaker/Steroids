@@ -4,12 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
+import '../../audio/audio_controller.dart';
 import '../../game_internals/level_state.dart';
 import '../../games_services/games_services.dart';
 import '../../games_services/score.dart';
 import '../../level_selection/levels.dart';
 import '../../player_progress/player_progress.dart';
-import '../util/sounds.dart';
 import '../player/player_view.dart';
 import '../steroids.dart';
 import '../station/station_view.dart';
@@ -41,10 +41,10 @@ class GameViewState extends State<GameView> {
   late GameWidget _gameWidget;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
-    _steroidsLevel = SteroidsLevel(level: widget.level);
+    _steroidsLevel = SteroidsLevel(level: widget.level, audio: context.read<AudioController>());
 
     _levelState = LevelState(
       goal: widget.level.winStorageTarget,
@@ -60,14 +60,11 @@ class GameViewState extends State<GameView> {
       focusNode: gameFocusNode,
       game: _steroidsLevel,
     );
-
-    Sounds();
   }
 
   @override
   void dispose() {
     gameFocusNode.dispose();
-    Sounds.levelCompletionPercent(0);
     super.dispose();
   }
 

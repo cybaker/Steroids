@@ -4,23 +4,39 @@
 
 List<String> soundTypeToFilename(SfxType type) {
   switch (type) {
-    case SfxType.asteroid:
+    case SfxType.bullet:
       return const [
+        'fire.wav',
       ];
-    case SfxType.wssh:
+    case SfxType.thrust:
       return const [
+        'thrust.wav',
       ];
     case SfxType.buttonTap:
       return const [
+        'extraShip.wav',
       ];
-    case SfxType.congrats:
+    case SfxType.stationStore:
       return const [
+        'saucerBig.wav',
       ];
-    case SfxType.erase:
+    case SfxType.beat1:
       return const [
+        'beat1.wav',
       ];
-    case SfxType.swishSwish:
+    case SfxType.beat2:
       return const [
+        'beat2.wav',
+      ];
+    case SfxType.asteroid:
+      return const [
+        'bangLarge.wav',
+        'bangSmall.wav',
+        'bangMedium.wav',
+      ];
+    case SfxType.playerStore:
+      return const [
+        'saucerSmall.wav',
       ];
   }
 }
@@ -28,23 +44,27 @@ List<String> soundTypeToFilename(SfxType type) {
 /// Allows control over loudness of different SFX types.
 double soundTypeToVolume(SfxType type) {
   switch (type) {
-    case SfxType.asteroid:
+    case SfxType.bullet:
       return 0.4;
-    case SfxType.wssh:
-      return 0.2;
+    case SfxType.thrust:
+      return 1.0;
     case SfxType.buttonTap:
-    case SfxType.congrats:
-    case SfxType.erase:
-    case SfxType.swishSwish:
+    case SfxType.stationStore:
+    case SfxType.beat1:
+    case SfxType.beat2:
+    case SfxType.asteroid:
+    case SfxType.playerStore:
       return 1.0;
   }
 }
 
 enum SfxType {
-  asteroid,
-  wssh,
+  bullet,
+  thrust,
   buttonTap,
-  congrats,
-  erase,
-  swishSwish,
+  stationStore,
+  beat1,
+  beat2,
+  asteroid,
+  playerStore,
 }
