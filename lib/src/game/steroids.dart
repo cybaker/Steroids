@@ -8,7 +8,6 @@ import 'package:steroids/src/audio/audio_controller.dart';
 import 'package:steroids/src/game/util/alien_factory.dart';
 import 'package:steroids/src/game/util/pirate_factory.dart';
 import '../level_selection/levels.dart';
-import 'components/background_sound.dart';
 import 'components/game_edge.dart';
 import 'util/powerup_factory.dart';
 import 'components/stars_parallax.dart';
@@ -55,7 +54,6 @@ class SteroidsLevel extends FlameGame
     await add(StarsParallax());
 
     await add(GameEdge(level: level));
-    await add(BackgroundSound());
 
     await add(singlePlayer..y = 40);
 

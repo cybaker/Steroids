@@ -37,6 +37,8 @@ class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
   Future<void> onLoad() async {
     await super.onLoad();
 
+    anchor = Anchor.center;
+
     sprite = await gameRef.loadSprite('enemy_D.png');
 
     await add(CircleHitbox());

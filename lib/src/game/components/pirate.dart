@@ -35,6 +35,8 @@ class Pirate extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCa
   Future<void> onLoad() async {
     await super.onLoad();
 
+    anchor = Anchor.center;
+
     sprite = await gameRef.loadSprite('skull.png');
 
     await add(CircleHitbox());
