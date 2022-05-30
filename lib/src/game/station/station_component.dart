@@ -28,13 +28,14 @@ class Station extends SpriteComponent with HasGameRef<SteroidsLevel> {
 
     anchor = Anchor.center;
 
-    sprite = await gameRef.loadSprite('station_C.png');
+    sprite = await gameRef.loadSprite('station_B.png');
   }
 
   @override
   void update(double dt) {
     super.update(dt);
     angle += rotationSpeed * dt;
+    backgroundBeat();
   }
 
   void addStorage(double material) {
@@ -49,9 +50,6 @@ class Station extends SpriteComponent with HasGameRef<SteroidsLevel> {
 
   // background beats faster as level completes
   static int completionPercent = 0;
-
-  static void levelCompletionPercent(int percent) {
-  }
 
   static const int _slowInterval = 60;
   static int _frameCount = 0;
