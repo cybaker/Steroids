@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:steroids/src/audio/sounds.dart';
+
 import '../components/pirate.dart';
 import '../components/polygonAsteroid.dart';
 import '../extensions/component_effects.dart';
@@ -13,7 +15,6 @@ import '../components/bullet.dart';
 import '../station/station_component.dart';
 import '../steroids.dart';
 import '../components/powerups.dart';
-import '../util/sounds.dart';
 
 class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLevel>, CollisionCallbacks {
   Player()
@@ -182,7 +183,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
 
     _fireConsumePower();
 
-    Sounds.playBulletSound();
+    gameRef.audio.playSfx(SfxType.bullet);
   }
 
   void _fireConsumePower() {
@@ -191,8 +192,8 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
 
   int thrustThrottleCount = 0; // just throttling the thrust playing not every frame
   void _makeThrustSound() {
-    if (thrustThrottleCount++ % 2 == 0) {
-      Sounds.playPlayerThrustSound();
+    if (thrustThrottleCount++ % 30 == 0) {
+      gameRef.audio.playSfx(SfxType.thrust);
     }
   }
 }

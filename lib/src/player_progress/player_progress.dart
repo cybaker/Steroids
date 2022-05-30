@@ -82,4 +82,8 @@ class PlayerProgress extends ChangeNotifier {
       unawaited(_store.saveTotalScore(score));
     }
   }
+
+  Future<double> getTotalScore() async {
+    return await _store.getTotalScore();
+  }
 }

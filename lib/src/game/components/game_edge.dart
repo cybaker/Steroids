@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
-import 'package:flutter/foundation.dart';
 import 'package:steroids/src/game/extensions/component_effects.dart';
 
 import '../../level_selection/levels.dart';
@@ -27,11 +26,11 @@ class GameEdge extends PolygonComponent with HasGameRef<SteroidsLevel>, Collisio
       ..style = PaintingStyle.stroke
       ..strokeWidth = 20;
     await add(PolygonHitbox(vertices));
-    gameRef.add(TimerComponent(period: 1, repeat: true, onTick: keepComponentsInBounds));
+    gameRef.add(TimerComponent(period: 0.5, repeat: true, onTick: keepComponentsInBounds));
   }
 
   void keepComponentsInBounds() {
-    debugPrint('Updating Component boundaries');
+    // debugPrint('Updating Component boundaries');
     for (final child in gameRef.children) {
       if (child is PositionComponent && !(child is GameEdge)) {
         child.keepWithinGameBounds(gameRef.level);

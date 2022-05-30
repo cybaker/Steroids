@@ -47,6 +47,7 @@ flutter:
     - assets/images/
     - assets/music/
     - assets/audio/
+    - assets/sfx/
 
   fonts:
     - family: AstroSpace

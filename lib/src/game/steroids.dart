@@ -4,10 +4,10 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:steroids/src/audio/audio_controller.dart';
 import 'package:steroids/src/game/util/alien_factory.dart';
 import 'package:steroids/src/game/util/pirate_factory.dart';
 import '../level_selection/levels.dart';
-import 'components/background_sound.dart';
 import 'components/game_edge.dart';
 import 'util/powerup_factory.dart';
 import 'components/stars_parallax.dart';
@@ -25,9 +25,10 @@ final Map<LogicalKeyboardKey, LogicalKeyboardKey> playersKeys =
 
 class SteroidsLevel extends FlameGame
     with KeyboardEvents, HasCollisionDetection {
-  SteroidsLevel({required this.level});
+  SteroidsLevel({required this.level, required this.audio});
 
   final GameLevel level;
+  final AudioController audio;
 
   late Set<LogicalKeyboardKey> pressedKeySet;
   bool isGameOver = false;
@@ -53,7 +54,6 @@ class SteroidsLevel extends FlameGame
     await add(StarsParallax());
 
     await add(GameEdge(level: level));
-    await add(BackgroundSound());
 
     await add(singlePlayer..y = 40);
 

@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
+import '../../audio/sounds.dart';
 import '../player/player_component.dart';
 import '../steroids.dart';
-import '../util/sounds.dart';
 import 'alien_bullet.dart';
 
 class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {
@@ -36,6 +36,8 @@ class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+
+    anchor = Anchor.center;
 
     sprite = await gameRef.loadSprite('enemy_D.png');
 
@@ -95,6 +97,6 @@ class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
 
     fireTimeout = gameRef.level.playerBulletFireLifetimeSecs * scaleFireTimeout;
 
-    Sounds.playBulletSound();
+    gameRef.audio.playSfx(SfxType.bullet);
   }
 }
