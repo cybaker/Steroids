@@ -35,7 +35,9 @@ class Station extends SpriteComponent with HasGameRef<SteroidsLevel> {
   void update(double dt) {
     super.update(dt);
     angle += rotationSpeed * dt;
-    backgroundBeat();
+    if (gameRef.audio.settings?.soundMuted.value == false && gameRef.audio.settings?.backgroundMusicOn.value == true) {
+      backgroundBeat();
+    }
   }
 
   void addStorage(double material) {
@@ -54,12 +56,13 @@ class Station extends SpriteComponent with HasGameRef<SteroidsLevel> {
   static const int _slowInterval = 60;
   static int _frameCount = 0;
   static int _beatCount = 0;
+
   void backgroundBeat() {
-    final interval = _slowInterval * (1 - 4*completionPercent/500);
+    final interval = _slowInterval * (1 - 4 * completionPercent / 500);
     if (_frameCount++ >= interval) {
       _beatCount++;
       _frameCount = 0;
-      gameRef.audio.playSfx(_beatCount.isEven ? SfxType.beat1 : SfxType.beat2);
+      gameRef.audio.playSfxBackground(_beatCount.isEven ? SfxType.beat1 : SfxType.beat2);
     }
   }
 }

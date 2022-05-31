@@ -31,14 +31,16 @@ List<String> soundTypeToFilename(SfxType type) {
     case SfxType.asteroid:
       return const [
         'bangLarge.wav',
-        'bangSmall.wav',
         'bangMedium.wav',
       ];
     case SfxType.playerStore:
       return const [
         'saucerSmall.wav',
       ];
-  }
+    case SfxType.enemyDestroyed:
+      return const [
+        'bangSmall.wav',
+      ];  }
 }
 
 /// Allows control over loudness of different SFX types.
@@ -54,17 +56,19 @@ double soundTypeToVolume(SfxType type) {
     case SfxType.beat2:
     case SfxType.asteroid:
     case SfxType.playerStore:
-      return 1.0;
+    case SfxType.enemyDestroyed:
+      return 0.8;
   }
 }
 
 enum SfxType {
+  buttonTap,
   bullet,
   thrust,
-  buttonTap,
   stationStore,
   beat1,
   beat2,
   asteroid,
+  enemyDestroyed,
   playerStore,
 }

@@ -77,7 +77,10 @@ class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
 
   void damageShip(double damage) {
     shipPower -= damage;
-    if (shipPower < 0) gameRef.remove(this);
+    if (shipPower < 0) {
+      gameRef.remove(this);
+      gameRef.audio.playSfx(SfxType.enemyDestroyed);
+    }
   }
 
   double get enemyAngle => atan2(player.position.x - this.position.x, player.position.y - this.position.y);

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:steroids/src/audio/sounds.dart';
 
 import '../player/player_component.dart';
 import '../steroids.dart';
@@ -69,7 +70,10 @@ class Pirate extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCa
 
   void damageShip(double damage) {
     shipPower -= damage;
-    if (shipPower < 0) gameRef.remove(this);
+    if (shipPower < 0) {
+      gameRef.remove(this);
+      gameRef.audio.playSfx(SfxType.enemyDestroyed);
+    }
   }
 
   double get enemyAngle => atan2(player.position.x - this.position.x, player.position.y - this.position.y);
