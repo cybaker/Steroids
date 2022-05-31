@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../components/bullet.dart';
-import '../station/station_component.dart';
+import '../station/station.dart';
 import '../steroids.dart';
 import '../components/powerups.dart';
 
@@ -22,7 +22,6 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
           size: Vector2(30, 60),
           priority: 3,
         );
-
 
   Vector2 direction = Vector2.zero();
   Vector2 deltaPosition = Vector2.zero();

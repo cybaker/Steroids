@@ -4,7 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:steroids/src/audio/sounds.dart';
 
-import '../player/player_component.dart';
+import '../player/player.dart';
 import '../steroids.dart';
 
 class Pirate extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {

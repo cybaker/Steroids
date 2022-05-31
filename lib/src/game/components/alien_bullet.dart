@@ -5,7 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
 import 'package:steroids/src/game/components/polygonAsteroid.dart';
 
-import '../player/player_component.dart';
+import '../player/player.dart';
 import '../steroids.dart';
 
 class EnemyBullet extends CircleComponent

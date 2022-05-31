@@ -4,7 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
 import '../../audio/sounds.dart';
-import '../player/player_component.dart';
+import '../player/player.dart';
 import '../steroids.dart';
 import 'alien_bullet.dart';
 

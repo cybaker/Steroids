@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:steroids/src/settings/settings.dart';
 
 import '../../audio/audio_controller.dart';
 import '../../game_internals/level_state.dart';
@@ -40,11 +41,15 @@ class GameViewState extends State<GameView> {
 
   late GameWidget _gameWidget;
 
+  late String _playerName;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     _steroidsLevel = SteroidsLevel(level: widget.level, audio: context.read<AudioController>());
+
+    _playerName = context.read<SettingsController>().playerName.value;
 
     _levelState = LevelState(
       goal: widget.level.winStorageTarget,
@@ -94,7 +99,7 @@ class GameViewState extends State<GameView> {
                 height: double.infinity,
                 child: Column(
                   children: [
-                    PlayerViewPanel(player: _steroidsLevel.singlePlayer, levelState: _levelState,),
+                    PlayerViewPanel(player: _steroidsLevel.singlePlayer, playerName: _playerName, levelState: _levelState,),
                     Expanded(
                         child: StationViewPanel(
                       station: _steroidsLevel.singleStation,

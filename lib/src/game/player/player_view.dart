@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:steroids/src/game/player/player_component.dart';
+import 'package:steroids/src/game/player/player.dart';
 import 'package:steroids/src/game_internals/level_state.dart';
 
 import '../../style/palette.dart';
 
 class PlayerViewPanel extends StatelessWidget {
-  const PlayerViewPanel({required this.player, required this.levelState, Key? key}) : super(key: key);
+  const PlayerViewPanel({required this.player, required this.levelState, required this.playerName, Key? key})
+      : super(key: key);
 
   final LevelState levelState;
   final Player player;
+  final String playerName;
 
   static const _gap = SizedBox(height: 20);
 
@@ -23,11 +25,16 @@ class PlayerViewPanel extends StatelessWidget {
           width: 200,
           height: 200,
           padding: const EdgeInsets.all(16),
-          child: Hero(
-            tag: 'logo',
-            child: Image.asset(
-              'assets/images/ship_A.png',
-            ),
+          child: Row(
+            children: [
+              Hero(
+                tag: 'logo',
+                child: Image.asset(
+                  'assets/images/ship_A.png',
+                ),
+              ),
+              Flexible(child: Text(playerName, style: palette.subtitle, overflow: TextOverflow.ellipsis,)),
+            ],
           ),
         ),
         Column(
