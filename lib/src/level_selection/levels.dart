@@ -34,7 +34,7 @@ const gameLevels = [
     alienBulletDamageToPlayer: 1,
     alienBulletLifetimeSecs: 0.6,
 
-    pirateAverageSpawnTimeSec: 10,
+    pirateAverageSpawnTimeSec: 60,
     piratePathChangeIntervalSec: 5,
     piratePower: 0.9,
     pirateSpeed: 50,
