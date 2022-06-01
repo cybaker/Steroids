@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/particles.dart';
 import 'package:steroids/src/audio/sounds.dart';
+import 'package:steroids/src/game/components/explosion.dart';
 
 import '../player/player.dart';
 import '../steroids.dart';
@@ -73,6 +75,15 @@ class Pirate extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCa
     if (shipPower < 0) {
       gameRef.remove(this);
       gameRef.audio.playSfx(SfxType.enemyDestroyed);
+      gameRef.add(
+          ParticleSystemComponent(
+            particle: TranslatedParticle(
+              lifespan: 1,
+              offset: this.position,
+              child: explosion(),
+            ),
+          )
+      );
     }
   }
 

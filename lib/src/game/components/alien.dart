@@ -2,11 +2,13 @@ import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/particles.dart';
 
 import '../../audio/sounds.dart';
 import '../player/player.dart';
 import '../steroids.dart';
 import 'alien_bullet.dart';
+import 'explosion.dart';
 
 class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {
   Alien({required this.player})
@@ -80,6 +82,15 @@ class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
     if (shipPower < 0) {
       gameRef.remove(this);
       gameRef.audio.playSfx(SfxType.enemyDestroyed);
+      gameRef.add(
+          ParticleSystemComponent(
+            particle: TranslatedParticle(
+              lifespan: 1,
+              offset: this.position,
+              child: explosion(),
+            ),
+          )
+      );
     }
   }
 
