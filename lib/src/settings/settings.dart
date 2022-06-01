@@ -29,10 +29,7 @@ class SettingsController {
   Future<void> loadStateFromPersistence() async {
     await Future.wait([
       _persistence
-          // On the web, sound can only start after user interaction, so
-          // we start muted there.
-          // On any other platform, we start unmuted.
-          .getMuted(defaultValue: kIsWeb)
+          .getMuted(defaultValue: false)
           .then((value) => muted.value = value),
       _persistence.getSoundsOn().then((value) => soundsOn.value = value),
       // _persistence.getMusicOn().then((value) => backgroundMusicOn.value = value),
