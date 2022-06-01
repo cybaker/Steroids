@@ -46,9 +46,6 @@ Particle explosion() {
         child: ComputedParticle(
           renderer: (canvas, particle) {
             final paint = randomElement(paints);
-            // Override the color to dynamically update opacity
-            paint.color = paint.color.withOpacity(1 - particle.progress);
-
             canvas.drawCircle(
               Offset.zero,
               1 + (3 * particle.progress),
@@ -65,7 +62,7 @@ Particle explosion() {
 /// use of [ComputedParticle] within other particles,
 /// mixing predefined and fully custom behavior.
 Particle smashing(Vector2 initialSpeed) {
-  Vector2 cellSize = Vector2(20, 20);
+  Vector2 cellSize = Vector2(30, 30);
   final Random rnd = Random();
 
   /// Returns random [Vector2] within a virtual grid cell
@@ -86,7 +83,7 @@ Particle smashing(Vector2 initialSpeed) {
   }
 
   return Particle.generate(
-    count: 10,
+    count: 15,
     generator: (i) {
       final speed = randomCellVector2() + initialSpeed;
       final deceleration = speed; // * -1;
@@ -98,9 +95,6 @@ Particle smashing(Vector2 initialSpeed) {
         child: ComputedParticle(
           renderer: (canvas, particle) {
             final paint = randomElement(paints);
-            // Override the color to dynamically update opacity
-            paint.color = paint.color.withOpacity(1 - particle.progress);
-
             canvas.drawCircle(
               Offset.zero,
               1,
