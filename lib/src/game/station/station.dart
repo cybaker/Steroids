@@ -51,11 +51,11 @@ class Station extends SpriteComponent with HasGameRef<SteroidsLevel> {
   }
 
   // background beats faster as level completes
-  static int completionPercent = 0;
+  int completionPercent = 0;
 
   static const int _slowInterval = 60;
-  static int _frameCount = 0;
-  static int _beatCount = 0;
+  int _frameCount = 0;
+  int _beatCount = 0;
 
   void backgroundBeat() {
     final interval = _slowInterval * (1 - 4 * completionPercent / 500);
