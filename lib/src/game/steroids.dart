@@ -12,8 +12,8 @@ import 'components/game_edge.dart';
 import 'util/powerup_factory.dart';
 import 'components/stars_parallax.dart';
 import 'util/asteroid_factory.dart';
-import 'player/player_component.dart';
-import 'station/station_component.dart';
+import 'player/player.dart';
+import 'station/station.dart';
 
 final Map<LogicalKeyboardKey, LogicalKeyboardKey> playersKeys =
   {

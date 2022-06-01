@@ -13,11 +13,11 @@ class SettingsController {
 
   /// Whether or not the sound is on at all. This overrides both music
   /// and sound.
-  ValueNotifier<bool> muted = ValueNotifier(false);
+  ValueNotifier<bool> soundMuted = ValueNotifier(false);
 
   ValueNotifier<String> playerName = ValueNotifier('Player');
 
-  ValueNotifier<bool> soundsOn = ValueNotifier(false);
+  ValueNotifier<bool> sfxOn = ValueNotifier(false);
 
   ValueNotifier<bool> backgroundMusicOn = ValueNotifier(false);
 
@@ -29,13 +29,10 @@ class SettingsController {
   Future<void> loadStateFromPersistence() async {
     await Future.wait([
       _persistence
-          // On the web, sound can only start after user interaction, so
-          // we start muted there.
-          // On any other platform, we start unmuted.
-          .getMuted(defaultValue: kIsWeb)
-          .then((value) => muted.value = value),
-      _persistence.getSoundsOn().then((value) => soundsOn.value = value),
-      // _persistence.getMusicOn().then((value) => backgroundMusicOn.value = value),
+          .getMuted(defaultValue: false)
+          .then((value) => soundMuted.value = value),
+      _persistence.getSoundsOn().then((value) => sfxOn.value = value),
+      _persistence.getMusicOn().then((value) => backgroundMusicOn.value = value),
       _persistence.getPlayerName().then((value) => playerName.value = value),
     ]);
   }
@@ -51,12 +48,12 @@ class SettingsController {
   }
 
   void toggleMuted() {
-    muted.value = !muted.value;
-    _persistence.saveMuted(muted.value);
+    soundMuted.value = !soundMuted.value;
+    _persistence.saveMuted(soundMuted.value);
   }
 
   void toggleSoundsOn() {
-    soundsOn.value = !soundsOn.value;
-    _persistence.saveSoundsOn(soundsOn.value);
+    sfxOn.value = !sfxOn.value;
+    _persistence.saveSoundsOn(sfxOn.value);
   }
 }

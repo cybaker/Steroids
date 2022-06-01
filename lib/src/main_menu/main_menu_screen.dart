@@ -79,7 +79,7 @@ class MainMenuScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 32),
               child: ValueListenableBuilder<bool>(
-                valueListenable: settingsController.muted,
+                valueListenable: settingsController.soundMuted,
                 builder: (context, muted, child) {
                   return IconButton(
                     onPressed: () => settingsController.toggleMuted(),

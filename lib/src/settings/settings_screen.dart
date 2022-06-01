@@ -39,7 +39,7 @@ class SettingsScreen extends StatelessWidget {
               'Name',
             ),
             ValueListenableBuilder<bool>(
-              valueListenable: settings.soundsOn,
+              valueListenable: settings.sfxOn,
               builder: (context, soundsOn, child) => _SettingsLine(
                 'Sound FX',
                 Icon(soundsOn ? Icons.graphic_eq : Icons.volume_off, color: palette.pen,),

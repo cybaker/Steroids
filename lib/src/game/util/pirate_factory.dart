@@ -5,7 +5,7 @@ import 'package:flame/components.dart';
 import 'package:steroids/src/game/extensions/component_effects.dart';
 
 import '../components/pirate.dart';
-import '../player/player_component.dart';
+import '../player/player.dart';
 import '../steroids.dart';
 
 class PirateFactory extends Component

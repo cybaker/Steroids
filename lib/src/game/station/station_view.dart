@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:steroids/src/game/station/station_component.dart';
+import 'package:steroids/src/game/station/station.dart';
 import 'package:steroids/src/game_internals/level_state.dart';
 import 'package:steroids/src/level_selection/levels.dart';
 
