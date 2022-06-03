@@ -87,7 +87,7 @@ class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
             particle: TranslatedParticle(
               lifespan: 1,
               offset: this.position,
-              child: explosion(),
+              child: shipExplosion(),
             ),
           )
       );

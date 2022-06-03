@@ -60,10 +60,12 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
             particle: TranslatedParticle(
               lifespan: 1,
               offset: this.position,
-              child: smashing(this.initialSpeed),
+              child: asteroidParticles(this),
             ),
           )
       );
+    } else {
+      gameRef.audio.playSfx(SfxType.resourceScooped);
     }
     gameRef.remove(this);
   }

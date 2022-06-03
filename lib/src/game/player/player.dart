@@ -72,21 +72,25 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     // debugPrint('Collided with $other');
-    if (other is Station) {
-      transferMaterialToStation(other);
-      restoreShields();
-    }
-    else if (other is PolygonAsteroid) collideWithAsteroid(other);
-    else if (other is PowerUp) collideWithPowerup(other);
-    else if (other is Pirate) collideWithPirate(other);
+    if (other is Station) dockWithStation(other);
+    else if (other is PolygonAsteroid) _collideWithAsteroid(other);
+    else if (other is PowerUp) _collideWithPowerup(other);
+    else if (other is Pirate) _collideWithPirate(other);
     super.onCollision(intersectionPoints, other);
   }
 
-  collideWithPirate(Pirate pirate) {
-    shipStorage.value = 0;
+  dockWithStation(Station other) {
+    _transferMaterialToStation(other);
+    _restoreShields();
   }
 
-  void collideWithPowerup(PowerUp powerup) {
+  _collideWithPirate(Pirate pirate) {
+    shipStorage.value = 0;
+    pirate.damageShip(this.shipPower.value);
+  }
+
+  _collideWithPowerup(PowerUp powerup) {
+    gameRef.audio.playSfx(SfxType.powerup);
     gameRef.remove(powerup);
     if (powerup is FasterShot) {
       scaleFireTimeout *= 0.8;
@@ -96,36 +100,36 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     }
   }
 
-  void collideWithAsteroid(PolygonAsteroid asteroid) {
-    applyAsteroidHit(asteroid);
+  _collideWithAsteroid(PolygonAsteroid asteroid) {
+    _applyAsteroidCollision(asteroid);
     asteroid.hitAsteroid();
   }
 
-  void applyAsteroidHit(PolygonAsteroid asteroid) {
+  _applyAsteroidCollision(PolygonAsteroid asteroid) {
     if (asteroid.isSmallAsteroid) {
-      storeMaterial(asteroid.radius);
+      _storeMaterial(asteroid.radius);
     } else {
       damageShip(asteroid.radius);
       shake();
     }
   }
 
-  void restoreShields() {
+  _restoreShields() {
     shipPower.value = maxShipPower;
   }
 
-  void damageShip(double damage) {
+  damageShip(double damage) {
     shipPower.value -= damage * gameRef.level.asteroidDamageMultiplier;
   }
 
-  void storeMaterial(double amount) {
+  _storeMaterial(double amount) {
     var value = shipStorage.value + amount;
     if (value > maxShipStorage) value = maxShipStorage;
     shipStorage.value = value;
     debugPrint('Ship storage adding $amount');
   }
 
-  void transferMaterialToStation(Station station) {
+  _transferMaterialToStation(Station station) {
     // transfer all gathered asteroid material to station, recharge shields
     if (shipStorage.value > 0) {
       // debugPrint('Transferring ${shipStorage.value}');
@@ -134,7 +138,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     }
   }
 
-  void _thrustShip(double rotation, double thrust) {
+  _thrustShip(double rotation, double thrust) {
     final newThrust = Vector2(cos(rotation - halfPi) * thrust, sin(rotation - halfPi) * thrust);
     final total = direction + newThrust;
     if (total.x * total.x + total.y * total.y < 100 * 100) {
@@ -169,7 +173,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
 
   bool get _canFireBullet => fireTimeout <= 0;
 
-  void _fireBullet() {
+  _fireBullet() {
     final shipDirection = Vector2(cos(angle - pi / 2), sin(angle - pi / 2));
     final nosePoint = Vector2(15, 0)..rotate(angle - pi / 2);
     gameRef.add(Bullet(
@@ -185,12 +189,12 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     gameRef.audio.playSfx(SfxType.bullet);
   }
 
-  void _fireConsumePower() {
+  _fireConsumePower() {
     shipPower.value -= gameRef.level.playerFireMultiplier * 2.0;
   }
 
   int thrustThrottleCount = 0; // just throttling the thrust playing not every frame
-  void _makeThrustSound() {
+  _makeThrustSound() {
     if (thrustThrottleCount++ % 30 == 0) {
       gameRef.audio.playSfx(SfxType.thrust);
     }

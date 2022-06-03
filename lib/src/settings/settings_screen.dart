@@ -49,7 +49,7 @@ class SettingsScreen extends StatelessWidget {
             ValueListenableBuilder<bool>(
               valueListenable: settings.backgroundMusicOn,
               builder: (context, musicOn, child) => _SettingsLine(
-                'Music',
+                'Background music',
                 Icon(musicOn ? Icons.music_note : Icons.music_off, color: palette.pen,),
                 onSelected: () => settings.toggleMusicOn(),
               ),

@@ -25,71 +25,79 @@ class MainMenuScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: palette.backgroundMain,
-      body: ResponsiveScreen(
-        mainAreaProminence: 0.45,
-        squarishMainArea: Center(
-          child: Transform.rotate(
-            angle: -0.1,
-            child: Text(
-              'Steroids',
-              textAlign: TextAlign.center,
-              style: palette.mainTitle,
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/stars1.png"),
+            fit: BoxFit.fitWidth,
           ),
         ),
-        rectangularMenuArea: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                audioController.playSfx(SfxType.buttonTap);
-                GoRouter.of(context).go('/play');
-              },
-              child: const Text('Play'),
+        child: ResponsiveScreen(
+          mainAreaProminence: 0.45,
+          squarishMainArea: Center(
+            child: Transform.rotate(
+              angle: -0.1,
+              child: Text(
+                'Steroids',
+                textAlign: TextAlign.center,
+                style: palette.mainTitle,
+              ),
             ),
-            _gap,
-            if (gamesServicesController != null) ...[
-              _hideUntilReady(
-                ready: gamesServicesController.signedIn,
-                child: ElevatedButton(
-                  onPressed: () => gamesServicesController.showAchievements(),
-                  child: const Text('Achievements'),
-                ),
+          ),
+          rectangularMenuArea: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  audioController.playSfx(SfxType.buttonTap);
+                  GoRouter.of(context).go('/play');
+                },
+                child: const Text('Play'),
               ),
               _gap,
-              _hideUntilReady(
-                ready: gamesServicesController.signedIn,
-                child: ElevatedButton(
-                  onPressed: () => gamesServicesController.showLeaderboard(),
-                  child: const Text('Leaderboard'),
+              if (gamesServicesController != null) ...[
+                _hideUntilReady(
+                  ready: gamesServicesController.signedIn,
+                  child: ElevatedButton(
+                    onPressed: () => gamesServicesController.showAchievements(),
+                    child: const Text('Achievements'),
+                  ),
+                ),
+                _gap,
+                _hideUntilReady(
+                  ready: gamesServicesController.signedIn,
+                  child: ElevatedButton(
+                    onPressed: () => gamesServicesController.showLeaderboard(),
+                    child: const Text('Leaderboard'),
+                  ),
+                ),
+                _gap,
+              ],
+              ElevatedButton(
+                onPressed: () => GoRouter.of(context).go('/settings'),
+                child: const Text('Settings'),
+              ),
+              _gap,
+              ElevatedButton(
+                onPressed: () => GoRouter.of(context).go('/instructions'),
+                child: const Text('instructions'),
+              ),
+              _gap,
+              Padding(
+                padding: const EdgeInsets.only(top: 32),
+                child: ValueListenableBuilder<bool>(
+                  valueListenable: settingsController.soundMuted,
+                  builder: (context, muted, child) {
+                    return IconButton(
+                      onPressed: () => settingsController.toggleMuted(),
+                      icon: Icon(muted ? Icons.volume_off : Icons.volume_up, color: palette.pen,),
+                    );
+                  },
                 ),
               ),
               _gap,
             ],
-            ElevatedButton(
-              onPressed: () => GoRouter.of(context).go('/settings'),
-              child: const Text('Settings'),
-            ),
-            _gap,
-            ElevatedButton(
-              onPressed: () => GoRouter.of(context).go('/instructions'),
-              child: const Text('instructions'),
-            ),
-            _gap,
-            Padding(
-              padding: const EdgeInsets.only(top: 32),
-              child: ValueListenableBuilder<bool>(
-                valueListenable: settingsController.soundMuted,
-                builder: (context, muted, child) {
-                  return IconButton(
-                    onPressed: () => settingsController.toggleMuted(),
-                    icon: Icon(muted ? Icons.volume_off : Icons.volume_up, color: palette.pen,),
-                  );
-                },
-              ),
-            ),
-            _gap,
-          ],
+          ),
         ),
       ),
     );
