@@ -80,7 +80,7 @@ class Pirate extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCa
             particle: TranslatedParticle(
               lifespan: 1,
               offset: this.position,
-              child: explosion(),
+              child: shipExplosion(),
             ),
           )
       );

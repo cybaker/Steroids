@@ -3,11 +3,13 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/particles.dart';
 import 'package:flutter/material.dart';
+import 'package:steroids/src/game/components/polygonAsteroid.dart';
+import 'package:steroids/src/game/extensions/generic.dart';
 
-/// Not very realistic firework, yet it highlights
-/// use of [ComputedParticle] within other particles,
-/// mixing predefined and fully custom behavior.
-Particle explosion() {
+///
+/// explosives detonating after a ship is destroyed
+///
+Particle shipExplosion() {
   Vector2 cellSize = Vector2(20, 20);
   final Random rnd = Random();
 
@@ -28,24 +30,18 @@ Particle explosion() {
     Colors.blue,
   ].map((color) => Paint()..color = color).toList();
 
-  /// Returns a random element from a given list
-  T randomElement<T>(List<T> list) {
-    return list[rnd.nextInt(list.length)];
-  }
-
   return Particle.generate(
     count: 10,
     generator: (i) {
       final initialSpeed = randomCellVector2();
-      final deceleration = initialSpeed; // * -1;
       final gravity = Vector2(0, 0);
 
       return AcceleratedParticle(
         speed: initialSpeed,
-        acceleration: deceleration + gravity,
+        acceleration: gravity,
         child: ComputedParticle(
           renderer: (canvas, particle) {
-            final paint = randomElement(paints);
+            final paint = paints.randomElement();
             canvas.drawCircle(
               Offset.zero,
               1 + (3 * particle.progress),
@@ -58,17 +54,18 @@ Particle explosion() {
   );
 }
 
-/// Not very realistic firework, yet it highlights
-/// use of [ComputedParticle] within other particles,
-/// mixing predefined and fully custom behavior.
-Particle smashing(Vector2 initialSpeed) {
-  Vector2 cellSize = Vector2(30, 30);
+///
+/// particles after an asteroid splits
+///
+Particle asteroidSplitting(PolygonAsteroid asteroid) {
+  Vector2 cellSize = Vector2(40, 40);
   final Random rnd = Random();
 
   /// Returns random [Vector2] within a virtual grid cell
   Vector2 randomCellVector2() {
     return (Vector2.random() - Vector2.random())..multiply(cellSize);
   }
+
   final paints = [
     Colors.grey,
     Colors.black26,
@@ -77,26 +74,21 @@ Particle smashing(Vector2 initialSpeed) {
     Colors.blue,
   ].map((color) => Paint()..color = color).toList();
 
-  /// Returns a random element from a given list
-  T randomElement<T>(List<T> list) {
-    return list[rnd.nextInt(list.length)];
-  }
-
   return Particle.generate(
-    count: 15,
+    count: 5 + asteroid.radius.toInt(),
     generator: (i) {
-      final speed = randomCellVector2() + initialSpeed;
-      final deceleration = speed; // * -1;
+      final speed = randomCellVector2() + asteroid.initialSpeed;
       final gravity = Vector2(0, 0);
 
       return AcceleratedParticle(
         speed: speed,
-        acceleration: deceleration + gravity,
+        lifespan: 2,
+        acceleration: gravity,
         child: ComputedParticle(
           renderer: (canvas, particle) {
-            final paint = randomElement(paints);
+            final paint = paints.randomElement();
             canvas.drawCircle(
-              Offset.zero,
+              Offset(asteroid.radius, asteroid.radius),
               1,
               paint,
             );
