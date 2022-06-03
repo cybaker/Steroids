@@ -27,7 +27,7 @@ void main() {
     // Go to 'Settings'.
     await tester.tap(find.text('Settings'));
     await tester.pumpAndSettle();
-    expect(find.text('Music'), findsOneWidget);
+    expect(find.text('Background music'), findsOneWidget);
 
     // Go back to main menu.
     await tester.tap(find.text('Back'));
