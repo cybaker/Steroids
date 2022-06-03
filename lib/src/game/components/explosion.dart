@@ -14,7 +14,7 @@ Particle shipExplosion() {
   Vector2 randomCellVector2() {
     return (Vector2.random() - Vector2.random())..multiply(cellSize);
   }
-  // A pallete to paint over the "sky"
+
   final paints = [
     Colors.amber,
     Colors.amberAccent,
@@ -22,8 +22,6 @@ Particle shipExplosion() {
     Colors.redAccent,
     Colors.yellow,
     Colors.yellowAccent,
-    // Adds a nice "lense" tint
-    // to overall effect
     Colors.blue,
   ].map((color) => Paint()..color = color).toList();
 
