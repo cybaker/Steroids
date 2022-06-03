@@ -72,14 +72,16 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     // debugPrint('Collided with $other');
-    if (other is Station) {
-      transferMaterialToStation(other);
-      restoreShields();
-    }
+    if (other is Station) dockWithStation(other);
     else if (other is PolygonAsteroid) collideWithAsteroid(other);
     else if (other is PowerUp) collideWithPowerup(other);
     else if (other is Pirate) collideWithPirate(other);
     super.onCollision(intersectionPoints, other);
+  }
+
+  void dockWithStation(Station other) {
+    transferMaterialToStation(other);
+    restoreShields();
   }
 
   collideWithPirate(Pirate pirate) {
@@ -87,6 +89,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   }
 
   void collideWithPowerup(PowerUp powerup) {
+    gameRef.audio.playSfx(SfxType.powerup);
     gameRef.remove(powerup);
     if (powerup is FasterShot) {
       scaleFireTimeout *= 0.8;

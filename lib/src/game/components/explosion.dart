@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flame/components.dart';
 import 'package:flame/particles.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +9,6 @@ import 'package:steroids/src/game/extensions/generic.dart';
 ///
 Particle shipExplosion() {
   Vector2 cellSize = Vector2(20, 20);
-  final Random rnd = Random();
 
   /// Returns random [Vector2] within a virtual grid cell
   Vector2 randomCellVector2() {
@@ -57,9 +54,8 @@ Particle shipExplosion() {
 ///
 /// particles after an asteroid splits
 ///
-Particle asteroidSplitting(PolygonAsteroid asteroid) {
+Particle asteroidParticles(PolygonAsteroid asteroid) {
   Vector2 cellSize = Vector2(40, 40);
-  final Random rnd = Random();
 
   /// Returns random [Vector2] within a virtual grid cell
   Vector2 randomCellVector2() {
