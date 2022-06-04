@@ -93,7 +93,6 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
 
   _collideWithPirate(Pirate pirate) {
     shipStorage.value = 0;
-    pirate.damageShip(this.shipPower.value);
   }
 
   _collideWithPowerup(PowerUp powerup) {

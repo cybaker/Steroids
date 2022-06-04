@@ -5,6 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame/particles.dart';
 import 'package:steroids/src/audio/sounds.dart';
 import 'package:steroids/src/game/components/explosion.dart';
+import 'package:steroids/src/game/extensions/component_effects.dart';
 
 import '../player/player.dart';
 import '../steroids.dart';
@@ -27,10 +28,9 @@ class Pirate extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCa
   static const speed = 2.0;
   static const rotationSpeed = pi / 30;
 
-  static const firePowerConsumption = 2;
-  static const thrustPowerConsumption = 0.1;
-
   late double shipPower = gameRef.level.piratePower;
+
+  bool _escaping = false;
 
   late double pirateAngle;
 
@@ -54,38 +54,61 @@ class Pirate extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCa
     move(dt, pirateAngle);
   }
 
-  void move(double dt, double playerAngle) {
-    moveTimeout -= dt;
-    if (_canChangeDirection) {
-      moveVector = enemyVector * gameRef.level.pirateSpeed;
-      moveTimeout = gameRef.level.piratePathChangeIntervalSec;
-    }
-    position = position + moveVector * dt;
-  }
-
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Player) {
-      gameRef.remove(this);
+      _escapeFromScreen();
     }
     super.onCollision(intersectionPoints, other);
   }
 
-  void damageShip(double damage) {
+  void move(double dt, double playerAngle) {
+    moveTimeout -= dt;
+    _changeDirectionIfTime();
+    position = position + moveVector * dt;
+    _removeWhenEscaped();
+  }
+
+  void _changeDirectionIfTime() {
+    if (_canChangeDirection) {
+      moveVector = enemyVector * gameRef.level.pirateSpeed;
+      moveTimeout = gameRef.level.piratePathChangeIntervalSec;
+    }
+  }
+
+  void _removeWhenEscaped() {
+    if (_escaping) {
+      if (position.x.abs() > gameRef.level.playfieldDimension ||
+          position.y.abs() > gameRef.level.playfieldDimension) {
+        gameRef.remove(this);
+      }
+    }
+  }
+
+  _escapeFromScreen() {
+    _escaping = true;
+    moveVector = Vector2(this.randomFromTo(-1, 1), this.randomFromTo(-1, 1)) * 8 * gameRef.level.pirateSpeed;
+  }
+
+  damageShip(double damage) {
     shipPower -= damage;
     if (shipPower < 0) {
       gameRef.remove(this);
       gameRef.audio.playSfx(SfxType.enemyDestroyed);
-      gameRef.add(
-          ParticleSystemComponent(
-            particle: TranslatedParticle(
-              lifespan: 1,
-              offset: this.position,
-              child: shipExplosion(),
-            ),
-          )
-      );
+      _addExplosion();
     }
+  }
+
+  _addExplosion() {
+    gameRef.add(
+        ParticleSystemComponent(
+          particle: TranslatedParticle(
+            lifespan: 1.5,
+            offset: this.position,
+            child: shipExplosion(),
+          ),
+        )
+    );
   }
 
   double get enemyAngle => atan2(player.position.x - this.position.x, player.position.y - this.position.y);

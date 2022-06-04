@@ -37,6 +37,7 @@ Particle shipExplosion() {
         child: ComputedParticle(
           renderer: (canvas, particle) {
             final paint = paints.randomElement();
+            paint.color = paint.color.withOpacity(1 - particle.progress);
             canvas.drawCircle(
               Offset.zero,
               1 + (3 * particle.progress),
