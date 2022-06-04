@@ -96,7 +96,20 @@ class Pirate extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCa
       gameRef.remove(this);
       gameRef.audio.playSfx(SfxType.enemyDestroyed);
       _addExplosion();
+      _addDebris();
     }
+  }
+
+  _addDebris() {
+    var asteroid1 = gameRef.asteroidFactory.makePolygonAsteroid(gameRef.level, gameRef.level.minAsteroidSize-2);
+    asteroid1.initialSpeed = randomSpeed;
+    asteroid1.position = this.position;
+    gameRef.add(asteroid1);
+
+    var asteroid2 = gameRef.asteroidFactory.makePolygonAsteroid(gameRef.level, gameRef.level.minAsteroidSize-1);
+    asteroid2.initialSpeed = randomSpeed;
+    asteroid2.position = this.position;
+    gameRef.add(asteroid2);
   }
 
   _addExplosion() {
@@ -110,6 +123,9 @@ class Pirate extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCa
         )
     );
   }
+
+  Vector2 get randomSpeed => Vector2(this.randomFromTo(-gameRef.level.pirateSpeed, gameRef.level.pirateSpeed),
+      this.randomFromTo(-gameRef.level.pirateSpeed, gameRef.level.pirateSpeed)) / 60;
 
   double get enemyAngle => atan2(player.position.x - this.position.x, player.position.y - this.position.y);
 

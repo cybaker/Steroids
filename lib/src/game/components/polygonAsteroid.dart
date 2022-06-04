@@ -79,7 +79,7 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
       minimumRadius: gameRef.level.minAsteroidSize,
       listOfVertices: vertices,
     );
-    asteroid.initialSpeed = asteroid.randomSpeedPlusMinusWithin(gameRef.level.maxAsteroidSpeed);
+    asteroid.initialSpeed = asteroid.randomPlusMinusWithin(gameRef.level.maxAsteroidSpeed);
     asteroid.position = this.position;
     return asteroid;
   }

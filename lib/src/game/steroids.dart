@@ -35,6 +35,7 @@ class SteroidsLevel extends FlameGame
 
   late Player singlePlayer = Player(); // Global only one player
   late Station singleStation = Station(); // Global only one player
+  late AsteroidFactory asteroidFactory = AsteroidFactory();
 
   @override
   Future<void>? onLoad() async {
@@ -47,7 +48,6 @@ class SteroidsLevel extends FlameGame
       Vector2(resolution.x, resolution.y),
     );
 
-    final asteroidFactory = AsteroidFactory();
     add(AlienFactory(player: singlePlayer));
     add(PirateFactory(player: singlePlayer));
 

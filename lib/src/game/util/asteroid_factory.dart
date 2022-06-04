@@ -18,14 +18,17 @@ class AsteroidFactory {
   PositionComponent makeRandomPolygonAsteroid(GameLevel level) {
     var radius = _randomSize(level.maxAsteroidSize);
     var asteroid = makeRadiusRandomPolygonAsteroid(level, radius);
-    asteroid.initialSpeed = asteroid.randomSpeedPlusMinusWithin(level.maxAsteroidSpeed);
+    asteroid.initialSpeed = asteroid.randomPlusMinusWithin(level.maxAsteroidSpeed);
     asteroid.setRandomPositionBetween(level.playfieldDimension*1, level.playfieldDimension/2);
     return asteroid;
   }
 
   PolygonAsteroid makeRadiusRandomPolygonAsteroid(GameLevel level, double radius) {
     var radius = _randomSize(level.maxAsteroidSize);
+    return makePolygonAsteroid(level, radius);
+  }
 
+  PolygonAsteroid makePolygonAsteroid(GameLevel level, double radius) {
     var vertices = randomPolygonSweepCircle(16, radius - 3, radius + 3);
 
     var asteroid = PolygonAsteroid(
@@ -33,6 +36,7 @@ class AsteroidFactory {
       minimumRadius: level.minAsteroidSize,
       listOfVertices: vertices,
     );
+    asteroid.initialSpeed = asteroid.randomPlusMinusWithin(level.maxAsteroidSpeed);
     return asteroid;
   }
 
