@@ -20,7 +20,6 @@ class Pirate extends Enemy {
 
   @override
   void setupEnemyVariables() {
-    size = Vector2(20, 15);
     shipPower = gameRef.level.piratePower;
     speed = gameRef.level.pirateSpeed;
     moveTimeoutSetting = gameRef.level.piratePathChangeIntervalSec;
