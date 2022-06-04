@@ -20,7 +20,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   Player()
       : super(
           size: Vector2(30, 60),
-          priority: 3,
+          priority: 5,
         );
 
   Vector2 direction = Vector2.zero();
@@ -72,9 +72,12 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     // debugPrint('Collided with $other');
-    if (other is Station) dockWithStation(other);
-    else if (other is PolygonAsteroid) _collideWithAsteroid(other);
-    else if (other is PowerUp) _collideWithPowerup(other);
+    if (other is Station)
+      dockWithStation(other);
+    else if (other is PolygonAsteroid)
+      _collideWithAsteroid(other);
+    else if (other is PowerUp)
+      _collideWithPowerup(other);
     else if (other is Pirate) _collideWithPirate(other);
     super.onCollision(intersectionPoints, other);
   }
@@ -176,11 +179,8 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   _fireBullet() {
     final shipDirection = Vector2(cos(angle - pi / 2), sin(angle - pi / 2));
     final nosePoint = Vector2(15, 0)..rotate(angle - pi / 2);
-    gameRef.add(Bullet(
-        radius: 2,
-        velocityVector: shipDirection * 200,
-        initialPosition: position + nosePoint,
-        timeToLive: 1));
+    gameRef.add(
+        Bullet(radius: 2, velocityVector: shipDirection * 200, initialPosition: position + nosePoint, timeToLive: 1));
 
     fireTimeout = gameRef.level.playerBulletFireLifetimeSecs * scaleFireTimeout;
 

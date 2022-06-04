@@ -13,8 +13,8 @@ import 'explosion.dart';
 class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {
   Alien({required this.player})
       : super(
-          size: Vector2(20, 20),
           priority: 3,
+          size: Vector2(20, 20),
         );
 
   final Player player;
@@ -49,7 +49,6 @@ class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
   @override
   void update(double dt) {
     super.update(dt);
-
     playerAngle = enemyAngle;
     move(dt, playerAngle);
     _calculateBullets(dt, playerAngle);
@@ -82,15 +81,13 @@ class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
     if (shipPower < 0) {
       gameRef.remove(this);
       gameRef.audio.playSfx(SfxType.enemyDestroyed);
-      gameRef.add(
-          ParticleSystemComponent(
-            particle: TranslatedParticle(
-              lifespan: 1,
-              offset: this.position,
-              child: shipExplosion(),
-            ),
-          )
-      );
+      gameRef.add(ParticleSystemComponent(
+        particle: TranslatedParticle(
+          lifespan: 1,
+          offset: this.position,
+          child: shipExplosion(),
+        ),
+      ));
     }
   }
 
@@ -99,6 +96,7 @@ class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
   Vector2 get enemyVector => Vector2(sin(playerAngle), cos(playerAngle));
 
   bool get _canFireBullet => fireTimeout <= 0;
+
   bool get _canChangeDirection => moveTimeout <= 0;
 
   void _fireBullet(double playerAngle) {

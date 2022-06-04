@@ -8,10 +8,9 @@ import 'package:steroids/src/game/components/polygonAsteroid.dart';
 import '../player/player.dart';
 import '../steroids.dart';
 
-class EnemyBullet extends CircleComponent
-    with HasGameRef<SteroidsLevel>,
-        CollisionCallbacks {
+class EnemyBullet extends CircleComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {
   EnemyBullet({
+    priority = 4,
     required double radius,
     required this.velocityVector,
     required this.initialPosition,
@@ -25,8 +24,7 @@ class EnemyBullet extends CircleComponent
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    paint = BasicPalette.red.paint()
-      ..style = PaintingStyle.fill;
+    paint = BasicPalette.red.paint()..style = PaintingStyle.fill;
     position = initialPosition;
     await add(CircleHitbox());
   }

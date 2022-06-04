@@ -9,10 +9,9 @@ import '../steroids.dart';
 import 'alien.dart';
 import 'pirate.dart';
 
-class Bullet extends CircleComponent
-    with HasGameRef<SteroidsLevel>,
-        CollisionCallbacks {
+class Bullet extends CircleComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {
   Bullet({
+    priority: 4,
     required double radius,
     required this.velocityVector,
     required this.initialPosition,
@@ -26,16 +25,17 @@ class Bullet extends CircleComponent
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    paint = BasicPalette.green.paint()
-      ..style = PaintingStyle.fill;
+    paint = BasicPalette.green.paint()..style = PaintingStyle.fill;
     position = initialPosition;
     await add(CircleHitbox());
   }
 
   @override
   void onCollision(Set<Vector2> points, PositionComponent other) {
-    if (other is PolygonAsteroid) hitAsteroid(other);
-    else if (other is Alien) hitAlien(other);
+    if (other is PolygonAsteroid)
+      hitAsteroid(other);
+    else if (other is Alien)
+      hitAlien(other);
     else if (other is Pirate) hitPirate(other);
     super.onCollision(points, other);
   }

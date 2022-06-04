@@ -1,10 +1,10 @@
 import 'package:flame/components.dart';
 import 'package:flame/parallax.dart';
 
-class StarsParallax extends ParallaxComponent  {
+class StarsParallax extends ParallaxComponent {
   StarsParallax()
       : super(
-          priority: 1,
+          priority: 0,
         );
 
   Vector2 lastCameraPosition = Vector2.zero();

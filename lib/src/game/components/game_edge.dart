@@ -11,7 +11,7 @@ import '../steroids.dart';
 class GameEdge extends PolygonComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {
   final GameLevel level;
 
-  GameEdge({required this.level})
+  GameEdge({priority: 2, required this.level})
       : super([
           Vector2(level.playfieldDimension.toDouble(), level.playfieldDimension.toDouble()),
           Vector2(level.playfieldDimension.toDouble(), -level.playfieldDimension.toDouble()),
