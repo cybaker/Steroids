@@ -58,8 +58,8 @@ class LevelSelectionScreen extends StatelessWidget {
 
                         GoRouter.of(context).go('/play/session/${level.number}');
                       },
-                      leading: Text(level.number.toString(), style: palette.subtitle,),
-                      title: Text('${level.name}', style: palette.subtitle,),
+                      leading: Text(level.number.toString(), style: enabledDisabledStyle(playerProgress, level, palette)),
+                      title: Text('${level.name}', style: enabledDisabledStyle(playerProgress, level, palette)),
                     )
                 ],
               ),
@@ -74,5 +74,10 @@ class LevelSelectionScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  TextStyle enabledDisabledStyle(PlayerProgress playerProgress, GameLevel level, Palette palette) {
+    return playerProgress.highestLevelReached >= level.number - 1 ?
+                        palette.subtitle : palette.subtitleDisabled;
   }
 }
