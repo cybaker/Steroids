@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:steroids/src/audio/sounds.dart';
 
+import '../components/alien.dart';
 import '../components/pirate.dart';
 import '../components/polygonAsteroid.dart';
 import '../extensions/component_effects.dart';
@@ -74,17 +75,20 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     // debugPrint('Collided with $other');
     if (other is Station)
       dockWithStation(other);
-    else if (other is PolygonAsteroid)
-      _collideWithAsteroid(other);
-    else if (other is PowerUp)
-      _collideWithPowerup(other);
+    else if (other is PolygonAsteroid) _collideWithAsteroid(other);
+    else if (other is PowerUp) _collideWithPowerup(other);
     else if (other is Pirate) _collideWithPirate(other);
+    else if (other is Alien) _collideWithAlien(other);
     super.onCollision(intersectionPoints, other);
   }
 
   dockWithStation(Station other) {
     _transferMaterialToStation(other);
     _restoreShields();
+  }
+
+  _collideWithAlien(Alien alien) {
+    alien.damageShip(this.shipPower.value);
   }
 
   _collideWithPirate(Pirate pirate) {
