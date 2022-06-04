@@ -50,6 +50,7 @@ class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
   void update(double dt) {
     super.update(dt);
     playerAngle = enemyAngle;
+    angle = -enemyAngle + pi;
     move(dt, playerAngle);
     _calculateBullets(dt, playerAngle);
   }
@@ -59,7 +60,6 @@ class Alien extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCal
     if (_canChangeDirection) {
       moveVector = enemyVector * gameRef.level.alienSpeed;
       moveTimeout = gameRef.level.alienPathChangeIntervalSec;
-      angle = -playerAngle + pi/2;
     }
     position = position + moveVector * dt;
   }
