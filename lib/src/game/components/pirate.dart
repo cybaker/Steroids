@@ -58,6 +58,7 @@ class Pirate extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCa
     if (_canChangeDirection) {
       moveVector = enemyVector * gameRef.level.pirateSpeed;
       moveTimeout = gameRef.level.piratePathChangeIntervalSec;
+      angle = -playerAngle + pi/2;
     }
     position = position + moveVector * dt;
   }

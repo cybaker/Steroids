@@ -27,7 +27,7 @@ const gameLevels = [
     powerupAverageLifetimeSec: 10,
 
     alienAverageSpawnTimeSec: 60,
-    alienPathChangeIntervalSec: 10,
+    alienPathChangeIntervalSec: 5,
     alienPower: 0.9,
     alienSpeed: 20,
     alienBulletSpeed: 200,
