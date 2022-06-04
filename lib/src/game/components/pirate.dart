@@ -1,57 +1,29 @@
-import 'dart:math';
-
-import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame/particles.dart';
-import 'package:steroids/src/audio/sounds.dart';
-import 'package:steroids/src/game/components/explosion.dart';
+import 'package:flutter/foundation.dart';
 import 'package:steroids/src/game/extensions/component_effects.dart';
 
 import '../player/player.dart';
-import '../steroids.dart';
+import 'enemy.dart';
 
-class Pirate extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {
-  Pirate({required this.player})
-      : super(
-          size: Vector2(20, 15),
-          priority: 3,
-        );
+class Pirate extends Enemy {
+  Pirate({required this.player}) : super(player: player);
 
   final Player player;
 
-  double fireTimeout = 0;
-  double scaleFireTimeout = 1;
-  double moveTimeout = 0;
-  Vector2 moveVector = Vector2(0, 0);
-
-  static const halfPi = pi / 2;
-  static const speed = 2.0;
-  static const rotationSpeed = pi / 30;
-
-  late double shipPower = gameRef.level.piratePower;
-
   bool _escaping = false;
-
-  late double pirateAngle;
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-
-    anchor = Anchor.center;
-
     sprite = await gameRef.loadSprite('skull.png');
-
-    await add(CircleHitbox());
   }
 
   @override
-  void update(double dt) {
-    super.update(dt);
-
-    pirateAngle = enemyAngle;
-    angle = -enemyAngle + pi;
-    move(dt, pirateAngle);
+  void setupEnemyVariables() {
+    size = Vector2(20, 15);
+    shipPower = gameRef.level.piratePower;
+    speed = gameRef.level.pirateSpeed;
+    moveTimeoutSetting = gameRef.level.piratePathChangeIntervalSec;
   }
 
   @override
@@ -62,17 +34,13 @@ class Pirate extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCa
     super.onCollision(intersectionPoints, other);
   }
 
-  void move(double dt, double playerAngle) {
-    moveTimeout -= dt;
-    _changeDirectionIfTime();
-    position = position + moveVector * dt;
-    _removeWhenEscaped();
-  }
-
-  void _changeDirectionIfTime() {
-    if (_canChangeDirection) {
-      moveVector = enemyVector * gameRef.level.pirateSpeed;
-      moveTimeout = gameRef.level.piratePathChangeIntervalSec;
+  @override
+  void move(double dt) {
+    if (_escaping) {
+      position = position + moveVector * dt;
+      _removeWhenEscaped();
+    } else {
+      super.move(dt);
     }
   }
 
@@ -86,50 +54,10 @@ class Pirate extends SpriteComponent with HasGameRef<SteroidsLevel>, CollisionCa
   }
 
   _escapeFromScreen() {
-    _escaping = true;
-    moveVector = Vector2(this.randomFromTo(-1, 1), this.randomFromTo(-1, 1)) * 8 * gameRef.level.pirateSpeed;
-  }
-
-  damageShip(double damage) {
-    shipPower -= damage;
-    if (shipPower < 0) {
-      gameRef.remove(this);
-      gameRef.audio.playSfx(SfxType.enemyDestroyed);
-      _addExplosion();
-      _addDebris();
+    if(!_escaping) {
+      debugPrint('Pirate is escaping');
+      _escaping = true;
+      moveVector = Vector2(this.randomFromTo(-speed, speed), this.randomFromTo(-speed, speed)) * 8;
     }
   }
-
-  _addDebris() {
-    var asteroid1 = gameRef.asteroidFactory.makePolygonAsteroid(gameRef.level, gameRef.level.minAsteroidSize-2);
-    asteroid1.initialSpeed = randomSpeed;
-    asteroid1.position = this.position;
-    gameRef.add(asteroid1);
-
-    var asteroid2 = gameRef.asteroidFactory.makePolygonAsteroid(gameRef.level, gameRef.level.minAsteroidSize-1);
-    asteroid2.initialSpeed = randomSpeed;
-    asteroid2.position = this.position;
-    gameRef.add(asteroid2);
-  }
-
-  _addExplosion() {
-    gameRef.add(
-        ParticleSystemComponent(
-          particle: TranslatedParticle(
-            lifespan: 1.5,
-            offset: this.position,
-            child: shipExplosion(),
-          ),
-        )
-    );
-  }
-
-  Vector2 get randomSpeed => Vector2(this.randomFromTo(-gameRef.level.pirateSpeed, gameRef.level.pirateSpeed),
-      this.randomFromTo(-gameRef.level.pirateSpeed, gameRef.level.pirateSpeed)) / 60;
-
-  double get enemyAngle => atan2(player.position.x - this.position.x, player.position.y - this.position.y);
-
-  Vector2 get enemyVector => Vector2(sin(pirateAngle), cos(pirateAngle));
-
-  bool get _canChangeDirection => moveTimeout <= 0;
 }
