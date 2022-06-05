@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:steroids/src/audio/sounds.dart';
+import 'package:steroids/src/game/components/player_power_guage.dart';
 
 import '../components/alien.dart';
 import '../components/pirate.dart';
@@ -20,7 +21,7 @@ import '../components/powerups.dart';
 class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLevel>, CollisionCallbacks {
   Player()
       : super(
-          size: Vector2(30, 60),
+          size: Vector2(40, 40),
           priority: 5,
         );
 
@@ -51,6 +52,8 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     anchor = Anchor.center;
 
     sprite = await gameRef.loadSprite('ship_A.png');
+
+    add(PlayerPowerGuage(radius: size.x/2));
   }
 
   @override
