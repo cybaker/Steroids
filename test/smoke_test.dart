@@ -43,6 +43,6 @@ void main() {
     await tester.pumpAndSettle();
 
     // Find the first level's text.
-    expect(find.text('Ship Power'), findsOneWidget);
+    expect(find.textContaining('Station Storage'), findsOneWidget);
   });
 }

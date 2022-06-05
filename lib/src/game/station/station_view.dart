@@ -27,29 +27,11 @@ class StationViewPanel extends StatelessWidget {
       builder: (context, value, child) {
         levelState.setProgress(value.toInt());
         levelState.evaluate();
-        return Column(children: [
-          Text(
-            'Station Storage ${value.toInt()} / ${level.winStorageTarget}',
+        return Text(
+            'Storage ${100 * value ~/ level.winStorageTarget}%',
             style: palette.subtitleSmall,
             textAlign: TextAlign.center,
-          ),
-          SliderTheme(
-            child: Slider(
-              value: value,
-              onChanged: (_) {},
-              min: 0,
-              max: level.winStorageTarget,
-              divisions: 10,
-              inactiveColor: Colors.grey,
-              activeColor: Colors.green,
-            ),
-            data: SliderTheme.of(context).copyWith(
-                trackHeight: 20,
-                thumbShape: SliderComponentShape.noThumb,
-                trackShape: RectangularSliderTrackShape(),
-                activeTickMarkColor: Colors.white),
-          ),
-        ]);
+          );
       },
     );
   }
