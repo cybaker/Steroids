@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../audio/sounds.dart';
+import '../components/station_storage_guage.dart';
 import '../steroids.dart';
 
 ///
@@ -29,6 +30,8 @@ class Station extends SpriteComponent with HasGameRef<SteroidsLevel> {
     anchor = Anchor.center;
 
     sprite = await gameRef.loadSprite('station_B.png');
+
+    add(StationStorageGuage(radius: 20));
   }
 
   @override

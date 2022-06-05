@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-import 'package:steroids/src/settings/settings.dart';
 
 import '../../audio/audio_controller.dart';
 import '../../game_internals/level_state.dart';
@@ -11,7 +10,6 @@ import '../../games_services/games_services.dart';
 import '../../games_services/score.dart';
 import '../../level_selection/levels.dart';
 import '../../player_progress/player_progress.dart';
-import '../player/player_view.dart';
 import '../steroids.dart';
 import '../station/station_view.dart';
 
@@ -41,15 +39,11 @@ class GameViewState extends State<GameView> {
 
   late GameWidget _gameWidget;
 
-  late String _playerName;
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     _steroidsLevel = SteroidsLevel(level: widget.level, audio: context.read<AudioController>());
-
-    _playerName = context.read<SettingsController>().playerName.value;
 
     _levelState = LevelState(
       goal: widget.level.winStorageTarget,
@@ -82,10 +76,9 @@ class GameViewState extends State<GameView> {
           ),
         ],
         child: Scaffold(
-          body: Row(
+          body: Stack(
             children: [
-              Expanded(
-                child: MouseRegion(
+              MouseRegion(
                   onHover: (_) {
                     if (!gameFocusNode.hasFocus) {
                       gameFocusNode.requestFocus();
@@ -93,24 +86,12 @@ class GameViewState extends State<GameView> {
                   },
                   child: _gameWidget,
                 ),
-              ),
-              SizedBox(
-                width: 250,
-                height: double.infinity,
-                child: Column(
-                  children: [
-                    PlayerViewPanel(player: _steroidsLevel.singlePlayer, playerName: _playerName, levelState: _levelState,),
-                    Expanded(
-                        child: StationViewPanel(
-                      station: _steroidsLevel.singleStation,
-                      levelState: _levelState,
-                          level: widget.level,
-                    )),
-                    Consumer<LevelState>(
-                      builder: (context, levelState, child) => Text('Level progress: ${levelState.progress}'),
-                    ),
-                    const SizedBox(height: 8),
-                  ],
+              Padding(
+                padding: EdgeInsets.all(16),
+                child: StationViewPanel(
+                  station: _steroidsLevel.singleStation,
+                  levelState: _levelState,
+                  level: widget.level,
                 ),
               ),
             ],
