@@ -3,11 +3,10 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
 
-import '../station/station.dart';
 import '../steroids.dart';
 
-class StationPowerGuage extends CircleComponent with HasGameRef<SteroidsLevel> {
-  StationPowerGuage({
+class StationStorageGuage extends CircleComponent with HasGameRef<SteroidsLevel> {
+  StationStorageGuage({
     priority: 5,
     required double radius,
   }) : super(radius: radius);
@@ -18,11 +17,11 @@ class StationPowerGuage extends CircleComponent with HasGameRef<SteroidsLevel> {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    paint = BasicPalette.blue.paint()
+    paint = BasicPalette.magenta.paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0;
 
-    position = Vector2(0, 0);
+    position = Vector2((gameRef.singleStation.size.x - size.x) / 2, (gameRef.singleStation.size.y - size.y) / 2);
     lastStrength = storage;
   }
 
@@ -39,5 +38,5 @@ class StationPowerGuage extends CircleComponent with HasGameRef<SteroidsLevel> {
     }
   }
 
-  double get storage => (parent as Station).stationStorage.value;
+  double get storage => gameRef.singleStation.stationStorage.value;
 }

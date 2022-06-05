@@ -5,6 +5,7 @@ import 'package:steroids/src/game/components/player_power_guage.dart';
 
 import '../components/alien.dart';
 import '../components/pirate.dart';
+import '../components/player_storage_guage.dart';
 import '../components/polygonAsteroid.dart';
 import '../extensions/component_effects.dart';
 
@@ -47,13 +48,13 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   Future<void> onLoad() async {
     await super.onLoad();
 
-    await add(CircleHitbox());
-
     anchor = Anchor.center;
 
     sprite = await gameRef.loadSprite('ship_A.png');
 
-    add(PlayerPowerGuage(radius: size.x/2));
+    add(PlayerStorageGuage(radius: 15));
+    add(PlayerPowerGuage(radius: 20));
+    await add(CircleHitbox());
   }
 
   @override

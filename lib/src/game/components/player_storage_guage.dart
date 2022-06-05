@@ -5,37 +5,38 @@ import 'package:flame/palette.dart';
 
 import '../steroids.dart';
 
-class PlayerPowerGuage extends CircleComponent with HasGameRef<SteroidsLevel> {
-  PlayerPowerGuage({
+class PlayerStorageGuage extends CircleComponent with HasGameRef<SteroidsLevel> {
+  PlayerStorageGuage({
     priority: 5,
     required double radius,
   }) : super(radius: radius);
 
-  late double lastStrength;
+  double _maxStrokeWidth = 4;
+  late double lastStore;
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    paint = BasicPalette.green.paint()
+    paint = BasicPalette.magenta.paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 4;
+      ..strokeWidth = 0;
 
     position = Vector2((gameRef.singlePlayer.size.x - size.x) / 2, (gameRef.singlePlayer.size.y - size.y) / 2);
-    lastStrength = power;
+    lastStore = storage;
   }
 
   @override
   void update(double deltaTime) {
     super.update(deltaTime);
-  _updateStrokeWidth();
+    _updateStrokeWidth();
   }
 
   _updateStrokeWidth() {
-    if (lastStrength != power) {
-      paint.strokeWidth = power * .04;
-      lastStrength = power;
+    if (lastStore != storage) {
+      paint.strokeWidth = _maxStrokeWidth * storage / 100;
+      lastStore = storage;
     }
   }
 
-  double get power => gameRef.singlePlayer.shipPower.value;
+  double get storage => gameRef.singlePlayer.shipStorage.value;
 }
