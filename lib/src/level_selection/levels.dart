@@ -5,7 +5,7 @@
 const gameLevels = [
   GameLevel(
     number: 1,
-    name: 'Training',
+    name: 'Asteroids',
     difficulty: 5,
     cameraDimension: 600,
     playfieldDimension: 300,
@@ -26,18 +26,18 @@ const gameLevels = [
     powerupAverageSpawnTimeSec: 20,
     powerupAverageLifetimeSec: 10,
 
-    alienAverageSpawnTimeSec: 60,
-    alienPathChangeIntervalSec: 10,
+    alienAverageSpawnTimeSec: 1000,
+    alienPathChangeIntervalSec: 5,
     alienPower: 0.9,
     alienSpeed: 20,
     alienBulletSpeed: 200,
     alienBulletDamageToPlayer: 1,
     alienBulletLifetimeSecs: 0.6,
 
-    pirateAverageSpawnTimeSec: 60,
+    pirateAverageSpawnTimeSec: 1000,
     piratePathChangeIntervalSec: 5,
     piratePower: 0.9,
-    pirateSpeed: 50,
+    pirateSpeed: 20,
 
     // TODO: When ready, change these achievement IDs.
     // You configure this in App Store Connect.
@@ -45,9 +45,84 @@ const gameLevels = [
     // You get this string when you configure an achievement in Play Console.
     achievementIdAndroid: 'NhkIwB69ejkMAOOLDb',
   ),
+
   GameLevel(
     number: 2,
-    name: 'Cadet',
+    name: 'Pirates',
+    difficulty: 5,
+    cameraDimension: 600,
+    playfieldDimension: 300,
+    winStorageTarget: 100,
+
+    asteroidCount: 0,
+    maxAsteroidSpeed: 1,
+    maxAsteroidSize: 20,
+    minAsteroidSize: 5,
+    asteroidDamageMultiplier: 1,
+
+    playerThrustMultiplier: 1,
+    playerFireMultiplier: 1,
+    playerBulletFireLifetimeSecs: 0.5,
+    playerBulletDamageToEnemy: 1,
+    playerPowerRegenMultiplier: 1,
+
+    powerupAverageSpawnTimeSec: 20,
+    powerupAverageLifetimeSec: 10,
+
+    alienAverageSpawnTimeSec: 1000,
+    alienPathChangeIntervalSec: 5,
+    alienPower: 0.9,
+    alienSpeed: 20,
+    alienBulletSpeed: 200,
+    alienBulletDamageToPlayer: 1,
+    alienBulletLifetimeSecs: 0.6,
+
+    pirateAverageSpawnTimeSec: 4,
+    piratePathChangeIntervalSec: 3,
+    piratePower: 0.9,
+    pirateSpeed: 50,
+  ),
+
+  GameLevel(
+    number: 3,
+    name: 'Aliens',
+    difficulty: 5,
+    cameraDimension: 600,
+    playfieldDimension: 300,
+    winStorageTarget: 100,
+
+    asteroidCount: 1,
+    maxAsteroidSpeed: 1,
+    maxAsteroidSize: 20,
+    minAsteroidSize: 5,
+    asteroidDamageMultiplier: 1,
+
+    playerThrustMultiplier: 1,
+    playerFireMultiplier: 1,
+    playerBulletFireLifetimeSecs: 0.5,
+    playerBulletDamageToEnemy: 1,
+    playerPowerRegenMultiplier: 1,
+
+    powerupAverageSpawnTimeSec: 20,
+    powerupAverageLifetimeSec: 10,
+
+    alienAverageSpawnTimeSec: 5,
+    alienPathChangeIntervalSec: 4,
+    alienPower: 0.9,
+    alienSpeed: 50,
+    alienBulletSpeed: 200,
+    alienBulletDamageToPlayer: 2,
+    alienBulletLifetimeSecs: 0.6,
+
+    pirateAverageSpawnTimeSec: 1000,
+    piratePathChangeIntervalSec: 5,
+    piratePower: 0.9,
+    pirateSpeed: 50,
+  ),
+
+  GameLevel(
+    number: 4,
+    name: 'Asteroids and Pirates',
     difficulty: 42,
     cameraDimension: 600,
     playfieldDimension: 400,
@@ -68,7 +143,7 @@ const gameLevels = [
     powerupAverageSpawnTimeSec: 15,
     powerupAverageLifetimeSec: 10,
 
-    alienAverageSpawnTimeSec: 30,
+    alienAverageSpawnTimeSec: 1000,
     alienPathChangeIntervalSec: 8,
     alienPower: 2,
     alienSpeed: 30,
@@ -76,25 +151,100 @@ const gameLevels = [
     alienBulletDamageToPlayer: 1,
     alienBulletLifetimeSecs: 0.8,
 
-    pirateAverageSpawnTimeSec: 30,
+    pirateAverageSpawnTimeSec: 20,
     piratePathChangeIntervalSec: 3,
     piratePower: 1.9,
-    pirateSpeed: 100,
+    pirateSpeed: 50,
   ),
+
   GameLevel(
-    number: 3,
-    name: 'Difficult',
+    number: 5,
+    name: 'Asteroids and Aliens',
+    difficulty: 42,
+    cameraDimension: 600,
+    playfieldDimension: 400,
+    winStorageTarget: 150,
+
+    asteroidCount: 15,
+    maxAsteroidSpeed: 1.5,
+    maxAsteroidSize: 20,
+    minAsteroidSize: 5,
+    asteroidDamageMultiplier: 2,
+
+    playerThrustMultiplier: 1,
+    playerFireMultiplier: 1,
+    playerBulletFireLifetimeSecs: 0.8,
+    playerBulletDamageToEnemy: 1,
+    playerPowerRegenMultiplier: 1,
+
+    powerupAverageSpawnTimeSec: 15,
+    powerupAverageLifetimeSec: 10,
+
+    alienAverageSpawnTimeSec: 1000,
+    alienPathChangeIntervalSec: 8,
+    alienPower: 2,
+    alienSpeed: 30,
+    alienBulletSpeed: 200,
+    alienBulletDamageToPlayer: 1,
+    alienBulletLifetimeSecs: 0.8,
+
+    pirateAverageSpawnTimeSec: 20,
+    piratePathChangeIntervalSec: 3,
+    piratePower: 1.9,
+    pirateSpeed: 50,
+  ),
+
+  GameLevel(
+    number: 6,
+    name: 'Asteroids and Pirates and Aliens',
+    difficulty: 42,
+    cameraDimension: 600,
+    playfieldDimension: 400,
+    winStorageTarget: 200,
+
+    asteroidCount: 15,
+    maxAsteroidSpeed: 1.5,
+    maxAsteroidSize: 20,
+    minAsteroidSize: 5,
+    asteroidDamageMultiplier: 2,
+
+    playerThrustMultiplier: 1,
+    playerFireMultiplier: 1,
+    playerBulletFireLifetimeSecs: 0.8,
+    playerBulletDamageToEnemy: 1,
+    playerPowerRegenMultiplier: 1,
+
+    powerupAverageSpawnTimeSec: 15,
+    powerupAverageLifetimeSec: 10,
+
+    alienAverageSpawnTimeSec: 30,
+    alienPathChangeIntervalSec: 5,
+    alienPower: 2,
+    alienSpeed: 60,
+    alienBulletSpeed: 200,
+    alienBulletDamageToPlayer: 1,
+    alienBulletLifetimeSecs: 0.8,
+
+    pirateAverageSpawnTimeSec: 20,
+    piratePathChangeIntervalSec: 3,
+    piratePower: 1.9,
+    pirateSpeed: 60,
+  ),
+
+  GameLevel(
+    number: 7,
+    name: 'Challenge',
     difficulty: 100,
     cameraDimension: 600,
     playfieldDimension: 600,
 
-    asteroidCount: 20,
+    asteroidCount: 30,
     maxAsteroidSpeed: 2,
-    maxAsteroidSize: 20,
+    maxAsteroidSize: 30,
     minAsteroidSize: 5,
-    asteroidDamageMultiplier: 3,
+    asteroidDamageMultiplier: 5,
 
-    winStorageTarget: 300,
+    winStorageTarget: 200,
 
     playerThrustMultiplier: 1,
     playerFireMultiplier: 1,
@@ -105,12 +255,12 @@ const gameLevels = [
     powerupAverageSpawnTimeSec: 30,
     powerupAverageLifetimeSec: 10,
 
-    alienAverageSpawnTimeSec: 20,
+    alienAverageSpawnTimeSec: 10,
     alienPathChangeIntervalSec: 6,
     alienPower: 3,
-    alienSpeed: 44,
+    alienSpeed: 60,
     alienBulletSpeed: 300,
-    alienBulletDamageToPlayer: 1,
+    alienBulletDamageToPlayer: 2,
     alienBulletLifetimeSecs: 1,
 
     pirateAverageSpawnTimeSec: 20,

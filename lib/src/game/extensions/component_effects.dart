@@ -50,7 +50,7 @@ extension PositionComponentExtension on PositionComponent {
     }
   }
 
-  Vector2 randomSpeedPlusMinusWithin(double maxSpeed) {
+  Vector2 randomPlusMinusWithin(double maxSpeed) {
     return Vector2(randomFromTo(-maxSpeed, maxSpeed), randomFromTo(-maxSpeed, maxSpeed));
   }
 

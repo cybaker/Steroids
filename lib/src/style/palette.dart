@@ -37,7 +37,7 @@ class Palette {
 
   Color get backgroundLevelSelection => const Color(0xff444444);
 
-  Color get backgroundPlaySession => const Color(0xff222222);
+  Color get backgroundPlaySession => const Color(0xff111111);
 
   Color get background4 => const Color(0xffffd7ff);
 
@@ -50,6 +50,7 @@ class Palette {
   TextStyle get title => TextStyle(fontFamily: 'AstroSpace', fontSize: 30, color: pen,);
 
   TextStyle get subtitle => TextStyle(fontFamily: 'AstroSpace', fontSize: 24, color: pen,);
+  TextStyle get subtitleDisabled => TextStyle(fontFamily: 'AstroSpace', fontSize: 24, color: inkFullOpacity,);
 
   TextStyle get subtitleSmall => TextStyle(fontFamily: 'AstroSpace', fontSize: 20, color: pen,);
 }

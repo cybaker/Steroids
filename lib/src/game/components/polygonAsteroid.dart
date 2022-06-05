@@ -10,11 +10,7 @@ import '../steroids.dart';
 import 'explosion.dart';
 
 class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, CollisionCallbacks {
-
-  PolygonAsteroid(
-      { required this.listOfVertices,
-      required this.radius,
-      required this.minimumRadius})
+  PolygonAsteroid({priority = 1, required this.listOfVertices, required this.radius, required this.minimumRadius})
       : super(listOfVertices);
 
   final List<Vector2> listOfVertices;
@@ -55,15 +51,13 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
     if (radius > minimumRadius) {
       splitAsteroid();
       gameRef.audio.playSfx(SfxType.asteroid);
-      gameRef.add(
-          ParticleSystemComponent(
-            particle: TranslatedParticle(
-              lifespan: 1,
-              offset: this.position,
-              child: asteroidParticles(this),
-            ),
-          )
-      );
+      gameRef.add(ParticleSystemComponent(
+        particle: TranslatedParticle(
+          lifespan: 1,
+          offset: this.position,
+          child: asteroidParticles(this),
+        ),
+      ));
     } else {
       gameRef.audio.playSfx(SfxType.resourceScooped);
     }
@@ -85,7 +79,7 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
       minimumRadius: gameRef.level.minAsteroidSize,
       listOfVertices: vertices,
     );
-    asteroid.initialSpeed = asteroid.randomSpeedPlusMinusWithin(gameRef.level.maxAsteroidSpeed);
+    asteroid.initialSpeed = asteroid.randomPlusMinusWithin(gameRef.level.maxAsteroidSpeed);
     asteroid.position = this.position;
     return asteroid;
   }

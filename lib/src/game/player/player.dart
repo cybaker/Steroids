@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:steroids/src/audio/sounds.dart';
 
+import '../components/alien.dart';
 import '../components/pirate.dart';
 import '../components/polygonAsteroid.dart';
 import '../extensions/component_effects.dart';
@@ -20,7 +21,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   Player()
       : super(
           size: Vector2(30, 60),
-          priority: 3,
+          priority: 5,
         );
 
   Vector2 direction = Vector2.zero();
@@ -72,10 +73,12 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     // debugPrint('Collided with $other');
-    if (other is Station) dockWithStation(other);
+    if (other is Station)
+      dockWithStation(other);
     else if (other is PolygonAsteroid) _collideWithAsteroid(other);
     else if (other is PowerUp) _collideWithPowerup(other);
     else if (other is Pirate) _collideWithPirate(other);
+    else if (other is Alien) _collideWithAlien(other);
     super.onCollision(intersectionPoints, other);
   }
 
@@ -84,9 +87,12 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     _restoreShields();
   }
 
+  _collideWithAlien(Alien alien) {
+    alien.damageShip(this.shipPower.value);
+  }
+
   _collideWithPirate(Pirate pirate) {
     shipStorage.value = 0;
-    pirate.damageShip(this.shipPower.value);
   }
 
   _collideWithPowerup(PowerUp powerup) {
@@ -176,11 +182,8 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   _fireBullet() {
     final shipDirection = Vector2(cos(angle - pi / 2), sin(angle - pi / 2));
     final nosePoint = Vector2(15, 0)..rotate(angle - pi / 2);
-    gameRef.add(Bullet(
-        radius: 2,
-        velocityVector: shipDirection * 200,
-        initialPosition: position + nosePoint,
-        timeToLive: 1));
+    gameRef.add(
+        Bullet(radius: 2, velocityVector: shipDirection * 200, initialPosition: position + nosePoint, timeToLive: 1));
 
     fireTimeout = gameRef.level.playerBulletFireLifetimeSecs * scaleFireTimeout;
 
