@@ -75,7 +75,9 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   }
 
   void _powerRegeneration(double dt) {
-    shipPower.value += shipPowerRecovery * gameRef.level.playerPowerRegenMultiplier * dt;
+    var newPower = shipPower.value + gameRef.level.playerPowerRegenMultiplier * dt;
+    if (newPower > maxShipPower) newPower = maxShipPower;
+    shipPower.value = newPower;
   }
 
   @override
