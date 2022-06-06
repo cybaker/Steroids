@@ -1,11 +1,9 @@
 import 'dart:math';
 
 import 'package:steroids/src/audio/sounds.dart';
-import 'package:steroids/src/game/components/player_power_guage.dart';
 
 import '../components/alien.dart';
 import '../components/pirate.dart';
-import '../components/player_storage_guage.dart';
 import '../components/polygonAsteroid.dart';
 import '../extensions/component_effects.dart';
 
@@ -18,6 +16,9 @@ import '../components/bullet.dart';
 import '../station/station.dart';
 import '../steroids.dart';
 import '../components/powerups.dart';
+import 'player_power_guage.dart';
+import 'player_storage_guage.dart';
+import 'player_thrust.dart';
 
 class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLevel>, CollisionCallbacks {
   Player()
@@ -25,6 +26,9 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
           size: Vector2(40, 40),
           priority: 5,
         );
+
+  PlayerThrust _thrustComponent = PlayerThrust();
+  bool _isThrusting = false;
 
   Vector2 direction = Vector2.zero();
   Vector2 deltaPosition = Vector2.zero();
@@ -37,7 +41,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
 
   static const maxShipPower = 100.0;
   static const maxShipStorage = 100.0;
-  static const shipPowerRecovery = 1 / 60;
+  static const shipPowerRecovery = 1;
   static const firePowerConsumption = 2;
   static const thrustPowerConsumption = 0.1;
 
@@ -61,17 +65,26 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   void update(double dt) {
     super.update(dt);
 
+    _updatePosition(dt);
+    _updateFireTimeout(dt);
+    _handleKeyPresses();
+    _regeneratePower(dt);
+  }
+
+  void _updateFireTimeout(double dt) {
+    fireTimeout -= dt;
+  }
+
+  void _updatePosition(double dt) {
     final newPosition = position + direction * speed * dt;
     deltaPosition = position - newPosition;
     position = newPosition;
-
-    fireTimeout -= dt;
-    _handleKeyPresses();
-    _powerRegeneration(dt);
   }
 
-  void _powerRegeneration(double dt) {
-    shipPower.value += shipPowerRecovery * gameRef.level.playerPowerRegenMultiplier * dt;
+  void _regeneratePower(double dt) {
+    var newPower = shipPower.value + gameRef.level.playerPowerRegenMultiplier * dt;
+    if (newPower > maxShipPower) newPower = maxShipPower;
+    shipPower.value = newPower;
   }
 
   @override
@@ -157,6 +170,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     }
     _thrustConsumePower();
     _makeThrustSound();
+    _showThrust(true);
   }
 
   _thrustConsumePower() {
@@ -175,9 +189,25 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
       _thrustShip(angle, 1);
     } else if (gameRef.pressedKeySet.contains(LogicalKeyboardKey.arrowDown)) {
       _thrustShip(angle, -0.1);
+    } else {
+      _showThrust(false);
     }
     if (gameRef.pressedKeySet.contains(LogicalKeyboardKey.space)) {
       if (_canFireBullet) _fireBullet();
+    }
+  }
+
+  _showThrust(bool thrust) {
+    if (thrust) {
+      if (!_isThrusting) {
+        add(_thrustComponent);
+        _isThrusting = true;
+      }
+    } else {
+      if (_isThrusting) {
+        remove(_thrustComponent);
+        _isThrusting = false;
+      }
     }
   }
 
