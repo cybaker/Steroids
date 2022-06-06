@@ -21,7 +21,7 @@ const gameLevels = [
     playerFireMultiplier: 1,
     playerBulletFireLifetimeSecs: 0.5,
     playerBulletDamageToEnemy: 1,
-    playerPowerRegenMultiplier: 1,
+    playerPowerRegenMultiplier: 5,
 
     powerupAverageSpawnTimeSec: 20,
     powerupAverageLifetimeSec: 10,
@@ -64,7 +64,7 @@ const gameLevels = [
     playerFireMultiplier: 1,
     playerBulletFireLifetimeSecs: 0.5,
     playerBulletDamageToEnemy: 1,
-    playerPowerRegenMultiplier: 1,
+    playerPowerRegenMultiplier: 5,
 
     powerupAverageSpawnTimeSec: 20,
     powerupAverageLifetimeSec: 10,
@@ -101,7 +101,7 @@ const gameLevels = [
     playerFireMultiplier: 1,
     playerBulletFireLifetimeSecs: 0.5,
     playerBulletDamageToEnemy: 1,
-    playerPowerRegenMultiplier: 1,
+    playerPowerRegenMultiplier: 5,
 
     powerupAverageSpawnTimeSec: 20,
     powerupAverageLifetimeSec: 10,
@@ -138,7 +138,7 @@ const gameLevels = [
     playerFireMultiplier: 1,
     playerBulletFireLifetimeSecs: 0.8,
     playerBulletDamageToEnemy: 1,
-    playerPowerRegenMultiplier: 1,
+    playerPowerRegenMultiplier: 4,
 
     powerupAverageSpawnTimeSec: 15,
     powerupAverageLifetimeSec: 10,
@@ -175,7 +175,7 @@ const gameLevels = [
     playerFireMultiplier: 1,
     playerBulletFireLifetimeSecs: 0.8,
     playerBulletDamageToEnemy: 1,
-    playerPowerRegenMultiplier: 1,
+    playerPowerRegenMultiplier: 4,
 
     powerupAverageSpawnTimeSec: 15,
     powerupAverageLifetimeSec: 10,
@@ -212,7 +212,7 @@ const gameLevels = [
     playerFireMultiplier: 1,
     playerBulletFireLifetimeSecs: 0.8,
     playerBulletDamageToEnemy: 1,
-    playerPowerRegenMultiplier: 1,
+    playerPowerRegenMultiplier: 2,
 
     powerupAverageSpawnTimeSec: 15,
     powerupAverageLifetimeSec: 10,
