@@ -65,16 +65,23 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
   void update(double dt) {
     super.update(dt);
 
+    _updatePosition(dt);
+    _updateFireTimeout(dt);
+    _handleKeyPresses();
+    _regeneratePower(dt);
+  }
+
+  void _updateFireTimeout(double dt) {
+    fireTimeout -= dt;
+  }
+
+  void _updatePosition(double dt) {
     final newPosition = position + direction * speed * dt;
     deltaPosition = position - newPosition;
     position = newPosition;
-
-    fireTimeout -= dt;
-    _handleKeyPresses();
-    _powerRegeneration(dt);
   }
 
-  void _powerRegeneration(double dt) {
+  void _regeneratePower(double dt) {
     var newPower = shipPower.value + gameRef.level.playerPowerRegenMultiplier * dt;
     if (newPower > maxShipPower) newPower = maxShipPower;
     shipPower.value = newPower;
