@@ -37,7 +37,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
 
   static const halfPi = pi / 2;
   static const speed = 2.0;
-  static const rotationSpeed = pi / 30;
+  static const rotationSpeed = 2 * pi;
 
   static const maxShipPower = 100.0;
   static const maxShipStorage = 100.0;
@@ -67,7 +67,7 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
 
     _updatePosition(dt);
     _updateFireTimeout(dt);
-    _handleKeyPresses();
+    _handleKeyPresses(dt);
     _regeneratePower(dt);
   }
 
@@ -177,13 +177,13 @@ class Player extends SpriteComponent with KeyboardHandler, HasGameRef<SteroidsLe
     shipPower.value -= gameRef.level.playerThrustMultiplier * thrustPowerConsumption;
   }
 
-  _handleKeyPresses() {
+  _handleKeyPresses(double dt) {
     // debugPrint('onKeyEvent ${gameRef.pressedKeySet}');
 
     if (gameRef.pressedKeySet.contains(LogicalKeyboardKey.arrowLeft)) {
-      angle -= rotationSpeed;
+      angle -= rotationSpeed * dt;
     } else if (gameRef.pressedKeySet.contains(LogicalKeyboardKey.arrowRight)) {
-      angle += rotationSpeed;
+      angle += rotationSpeed * dt;
     }
     if (gameRef.pressedKeySet.contains(LogicalKeyboardKey.arrowUp)) {
       _thrustShip(angle, 1);
