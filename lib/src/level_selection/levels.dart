@@ -12,7 +12,7 @@ const gameLevels = [
     winStorageTarget: 100,
 
     asteroidCount: 10,
-    maxAsteroidSpeed: 1,
+    maxAsteroidSpeed: 30,
     maxAsteroidSize: 20,
     minAsteroidSize: 5,
     asteroidDamageMultiplier: 1,
@@ -55,7 +55,7 @@ const gameLevels = [
     winStorageTarget: 100,
 
     asteroidCount: 0,
-    maxAsteroidSpeed: 1,
+    maxAsteroidSpeed: 30,
     maxAsteroidSize: 20,
     minAsteroidSize: 5,
     asteroidDamageMultiplier: 1,
@@ -92,7 +92,7 @@ const gameLevels = [
     winStorageTarget: 100,
 
     asteroidCount: 1,
-    maxAsteroidSpeed: 1,
+    maxAsteroidSpeed: 30,
     maxAsteroidSize: 20,
     minAsteroidSize: 5,
     asteroidDamageMultiplier: 1,
@@ -129,7 +129,7 @@ const gameLevels = [
     winStorageTarget: 150,
 
     asteroidCount: 15,
-    maxAsteroidSpeed: 1.5,
+    maxAsteroidSpeed: 45,
     maxAsteroidSize: 20,
     minAsteroidSize: 5,
     asteroidDamageMultiplier: 2,
@@ -166,7 +166,7 @@ const gameLevels = [
     winStorageTarget: 150,
 
     asteroidCount: 15,
-    maxAsteroidSpeed: 1.5,
+    maxAsteroidSpeed: 45,
     maxAsteroidSize: 20,
     minAsteroidSize: 5,
     asteroidDamageMultiplier: 2,
@@ -203,7 +203,7 @@ const gameLevels = [
     winStorageTarget: 200,
 
     asteroidCount: 15,
-    maxAsteroidSpeed: 1.5,
+    maxAsteroidSpeed: 45,
     maxAsteroidSize: 20,
     minAsteroidSize: 5,
     asteroidDamageMultiplier: 2,
@@ -239,7 +239,7 @@ const gameLevels = [
     playfieldDimension: 600,
 
     asteroidCount: 30,
-    maxAsteroidSpeed: 2,
+    maxAsteroidSpeed: 60,
     maxAsteroidSize: 30,
     minAsteroidSize: 5,
     asteroidDamageMultiplier: 5,
