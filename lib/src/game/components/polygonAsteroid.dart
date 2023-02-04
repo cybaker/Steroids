@@ -22,7 +22,7 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
   Future<void> onLoad() async {
     await super.onLoad();
     setShapeColor();
-    await add(PolygonHitbox(vertices));
+    await add(PolygonHitbox(vertices)..isSolid=true);
   }
 
   void setShapeColor() {
@@ -40,11 +40,11 @@ class PolygonAsteroid extends PolygonComponent with HasGameRef<SteroidsLevel>, C
   @override
   void update(double dt) {
     super.update(dt);
-    updatePositionWithinBounds();
+    updatePositionWithinBounds(dt);
   }
 
-  void updatePositionWithinBounds() {
-    position = position - initialSpeed;
+  void updatePositionWithinBounds(double dt) {
+    position = position - initialSpeed * dt;
   }
 
   void hitAsteroid() {

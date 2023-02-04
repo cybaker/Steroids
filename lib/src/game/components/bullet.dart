@@ -27,7 +27,7 @@ class Bullet extends CircleComponent with HasGameRef<SteroidsLevel>, CollisionCa
     await super.onLoad();
     paint = BasicPalette.green.paint()..style = PaintingStyle.fill;
     position = initialPosition;
-    await add(CircleHitbox());
+    await add(CircleHitbox()..isSolid=true);
   }
 
   @override

@@ -56,7 +56,7 @@ class LevelSelectionScreen extends StatelessWidget {
                         final audioController = context.read<AudioController>();
                         audioController.playSfx(SfxType.buttonTap);
 
-                        GoRouter.of(context).go('/play/session/${level.number}');
+                        GoRouter.of(context).push('/play/session/${level.number}');
                       },
                       leading: Text(level.number.toString(), style: enabledDisabledStyle(playerProgress, level, palette)),
                       title: Text('${level.name}', style: enabledDisabledStyle(playerProgress, level, palette)),
